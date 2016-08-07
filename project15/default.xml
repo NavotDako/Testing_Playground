@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><domain fixed="false" fullWindow="true" name="default">
+<obj text="percent" version="1">
+<images enable="true">
+<image file="default\percent.PNG" jump="1" mainColor="-3a3a3b" max="0" min="0" scanner="Advance Similarity" similarity="97"/>
+</images>
+<text color="2147483647" enable="false" filter="false" ignoreCase="false" regexp="false" sensitivity="10" text=""/>
+<native aiIOS="" alIOS="" class="" classBB="" classIOS="UIAView" classWP="" contentDescription="" contentWP="" enable="false" enableBB="false" enableIOS="true" enableWP="false" hint="" id="" method="class" methodBB="class" methodIOS="xpath" methodWP="class" nameWP="" placeholderIOS="" scriptIOS="" text="" textBB="" textIOS="percent" textWP="" value="" xpath="" xpathIOS="//*[@text='percent']" xpathWP=""/>
+<web enable="false" method="" value=""/>
+</obj>
+</domain>

@@ -1,0 +1,10 @@
+#Mon Apr 11 10:10:06 EEST 2016
+mobile=true
+platform=GENERIC
+default.ios.user=root
+lastZone=default
+default.ios.password=alpine
+translator=Java (junit 4)
+version=2
+app.name=adb\:samsung Nexus 10
+last.test=aw

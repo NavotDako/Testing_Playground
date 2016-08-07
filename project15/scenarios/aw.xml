@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><commands>
+<command enable="true" name="SetDevice(Device)">
+<parameters>
+<parameter defaultValue="adb:Xiaomi MI 3W" description="Device name" name="Device" pattern="(.+)" type="application"/>
+</parameters>
+</command>
+<command enable="true" name="GetTextIn(Zone, Element, Index, TextZone, Direction, Width, Height, xOffset, yOffset)">
+<parameters>
+<parameter defaultValue="TEXT" description="Select Zone" name="Zone" pattern="(.+)" type="zone"/>
+<parameter defaultValue="xpath=//*[@id='url_text_field']" description="Select Element" name="Element" pattern="(.+)" type="element"/>
+<parameter defaultValue="0" description="Element index" name="Index" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="NATIVE" description="The zone to extract the text from" name="TextZone" pattern="(.+)" type="zone"/>
+<parameter defaultValue="Down" description="Direction to analyze" name="Direction" pattern="(.+)" type="direction"/>
+<parameter defaultValue="0" description="Width of the search (0 indicate until the end/start of the window)" name="Width" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="400" description="Height of the search (0 indicate until the end/start of the window)" name="Height" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="0" description="identification rectangle x offset" name="xOffset" pattern="((\d|-)+)" type="integer"/>
+<parameter defaultValue="0" description="identification rectangle y offset" name="yOffset" pattern="((\d|-)+)" type="integer"/>
+</parameters>
+</command>
+<command enable="true" name="Launch(activity, instrument, stopIfRunning)">
+<parameters>
+<parameter defaultValue="com.experitest.ExperiBank/.LoginActivity" description="The application main activity or URL" name="Activity/URL" pattern="(.+)" type="launch"/>
+<parameter defaultValue="true" description="If set to true then will launch in instrument mode" name="Instrument" pattern="(true|false)" type="bool"/>
+<parameter defaultValue="true" description="If set to true then will stop the running process before launching it" name="Stop If Running" pattern="(true|false)" type="bool"/>
+</parameters>
+</command>
+<command enable="true" name="Click(Zone, Element, Index, ClickCount)">
+<parameters>
+<parameter defaultValue="WEB" description="Select Zone" name="Zone" pattern="(.+)" type="zone"/>
+<parameter defaultValue="xpath=//*[@class='unknown_loc']" description="Select Element" name="Element" pattern="(.+)" type="element"/>
+<parameter defaultValue="0" description="Element Order" name="Index" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="1" description="Number of Clicks" name="Click Count" pattern="(\d+)" type="integer"/>
+</parameters>
+</command>
+<command enable="true" name="SetDefaultWebView(webViewLocator)">
+<parameters>
+<parameter defaultValue="1" description="The locator of the WebView, empty to reset" name="WebViewLocator" pattern="(.*)" type="string"/>
+</parameters>
+</command>
+<command enable="true" name="Click(Zone, Element, Index, ClickCount)">
+<parameters>
+<parameter defaultValue="WEB" description="Select Zone" name="Zone" pattern="(.+)" type="zone"/>
+<parameter defaultValue="text=GETTINGSTARTED" description="Select Element" name="Element" pattern="(.+)" type="element"/>
+<parameter defaultValue="0" description="Element Order" name="Index" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="1" description="Number of Clicks" name="Click Count" pattern="(\d+)" type="integer"/>
+</parameters>
+</command>
+<command enable="true" name="SetDefaultWebView(webViewLocator)">
+<parameters>
+<parameter defaultValue="0" description="The locator of the WebView, empty to reset" name="WebViewLocator" pattern="(.*)" type="string"/>
+</parameters>
+</command>
+<command enable="true" name="Click(Zone, Element, Index, ClickCount)">
+<parameters>
+<parameter defaultValue="WEB" description="Select Zone" name="Zone" pattern="(.+)" type="zone"/>
+<parameter defaultValue="xpath=//*[@class='gb_b gb_Pb']" description="Select Element" name="Element" pattern="(.+)" type="element"/>
+<parameter defaultValue="0" description="Element Order" name="Index" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="1" description="Number of Clicks" name="Click Count" pattern="(\d+)" type="integer"/>
+</parameters>
+</command>
+<command enable="true" name="Install(appPath,instrument,keepData)">
+<parameters>
+<parameter defaultValue="com.digitalchemy.calculator.freedecimal/com.digitalchemy.calculator.droidphone.CalculatorMainActivity" description="can be an APK/IPA etc. absolute path or an activity name from the application manager." name="Path" pattern="(.+)" type="install"/>
+<parameter defaultValue="false" description="If set to TRUE will sign the application (if not already instrumented)" name="Instrument" pattern="(true|false)" type="bool"/>
+<parameter defaultValue="false" description="If set to TRUE will keep application data" name="Keep Data" pattern="(true|false)" type="bool"/>
+</parameters>
+</command>
+<command enable="true" name="WaitForElement(Zone, Element, Index, Timeout)">
+<parameters>
+<parameter defaultValue="NATIVE" description="Select Zone" name="Zone" pattern="(.+)" type="zone"/>
+<parameter defaultValue="xpath=//*[@top]" description="Select Element to Wait For" name="Element" pattern="(.+)" type="element"/>
+<parameter defaultValue="0" description="Element Order" name="Index" pattern="(\d+)" type="integer"/>
+<parameter defaultValue="10000" description="Waiting Timeout in MiliSec" name="Timeout" pattern="(\d+)" type="integer"/>
+</parameters>
+</command>
+<command enable="true" name="SwipeWhileNotFound(Direction, Offset, SwipeTime, Zone, ElementToFind, ElementToFindIndex, Delay, Rounds, Click)">
+<parameters>
+<parameter defaultValue="" description="Direction to swipe" name="Direction" pattern="" type="direction_no_inside"/>
+<parameter defaultValue="0" description="Swipe offset" name="Offset" pattern="" type="integer"/>
+<parameter defaultValue="2000" description="Swipe operation time" name="Swipe Time" pattern="" type="integer"/>
+<parameter defaultValue="" description="Select Zone" name="Zone" pattern="" type="zone"/>
+<parameter defaultValue="" description="Select Element to Find" name="Element to find" pattern="" type="element"/>
+<parameter defaultValue="0" description="Element to Find Index" name="Element to find index" pattern="" type="integer"/>
+<parameter defaultValue="1000" description="Time to wait before sending a command (in MiliSec)" name="Delay" pattern="" type="integer"/>
+<parameter defaultValue="5" description="Maximum swipe rounds" name="Rounds" pattern="" type="integer"/>
+<parameter defaultValue="true" description="If TRUE then click" name="Click" pattern="" type="bool"/>
+</parameters>
+</command>
+</commands>

@@ -1,0 +1,23 @@
+1: ios_app:Ipad mini 2 white --- waitForDevice - IOS_APP --- 1935 --- AVG - 1935.0
+1: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@accessibilityLabel='Clock'] --- 4719 --- AVG - 4719.0
+2: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')] --- 1816 --- AVG - 3267.0
+3: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='Add' and @x>0 and @onScreen='true'] --- 2092 --- AVG - 2875.0
+4: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar'] --- 23222 --- AVG - 7962.0
+5: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='London, England'] --- 3048 --- AVG - 6979.0
+6: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='Edit'] --- 2247 --- AVG - 6190.0
+1: ios_app:Ipad mini 2 white --- verifyElementFound - IOS_APP - NATIVE --- 3785 --- AVG - 3785.0
+7: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[contains(@text,'Delete London')]  | //*[contains(@text,'London')]/*/*[@text='Remove clock'] --- 3197 --- AVG - 5763.0
+8: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='Delete'] --- 3166 --- AVG - 5438.0
+9: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@accessibilityLabel='World Clock'] --- 3008 --- AVG - 5168.0
+1: ios_app:Ipad mini 2 white --- Reboot - IOS_APP --- 191424 --- AVG - 191424.0
+2: ios_app:Ipad mini 2 white --- verifyElementFound - IOS_APP - NATIVE --- 2928 --- AVG - 3356.0
+10: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@accessibilityLabel='Clock'] --- 5623 --- AVG - 5213.0
+11: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')] --- 1563 --- AVG - 4881.0
+12: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='Add' and @x>0 and @onScreen='true'] --- 1586 --- AVG - 4607.0
+13: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar'] --- 12183 --- AVG - 5190.0
+14: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='London, England'] --- 2259 --- AVG - 4980.0
+15: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='Edit'] --- 2152 --- AVG - 4792.0
+3: ios_app:Ipad mini 2 white --- verifyElementFound - IOS_APP - NATIVE --- 2823 --- AVG - 3178.0
+16: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[contains(@text,'Delete London')]  | //*[contains(@text,'London')]/*/*[@text='Remove clock'] --- 2682 --- AVG - 4660.0
+17: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@text='Delete'] --- 3028 --- AVG - 4564.0
+18: ios_app:Ipad mini 2 white --- Click - NATIVE - xpath=//*[@accessibilityLabel='World Clock'] --- 3068 --- AVG - 4481.0
