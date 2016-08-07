@@ -13,3 +13,4 @@ SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-2: Iteration - 1
          ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
 *** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 6 - Success Rate: 0/6 = 0 ***
          ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
+sdgedfdfgh dhfg jrfygj yfjd
