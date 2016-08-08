@@ -42,6 +42,7 @@ public class EriBank extends AbsTest {
 		client.click("NATIVE", "text=Send Payment", 0, 1);
 		client.click("NATIVE", "text=Yes", 0, 1);
 		client.click("NATIVE", "text=Logout", 0, 1);
+		client.uninstall("com.experitest.ExperiBank/.LoginActivity");
 	}
 
 	@Override

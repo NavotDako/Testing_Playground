@@ -24,15 +24,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/jxl.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jsch-0.1.53.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -96,42 +87,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.7/clients/java/mobile-webdriver.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.7/clients/java/selenium-api-2.42.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.7/clients/java/selenium-support-2.44.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.7/clients/java/ws-commons-util-1.0.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.8/clients/java/imageClient.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -159,23 +114,19 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/junit-4.12.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/hamcrest-all-1.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/imageClient.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-4.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/mobile-webdriver.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/selenium-api-2.42.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/selenium-support-2.44.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/ws-commons-util-1.0.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/xmlrpc-client-3.1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/xmlrpc-common-3.1.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$USER_HOME$/Downloads/hamcrest-all-1.3-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/imageClient_doc.zip!/" />
         </JAVADOC>
-        <SOURCES>
-          <root url="jar://$USER_HOME$/Downloads/hamcrest-all-1.3-sources.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
