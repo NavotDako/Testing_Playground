@@ -18,8 +18,11 @@ public class Rebooting extends AbsTest {
 
         client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0);
         for (int i = 0; i < 3 ; i++) {
-
+        try{
             client.reboot(200000);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
             try{
                 client.sendText("{UNLOCK}");
                 client.sendText("{HOME}");
@@ -36,7 +39,11 @@ public class Rebooting extends AbsTest {
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
         for (int i = 0; i < 3 ; i++) {
 
-            client.reboot(120000);
+            try{
+                client.reboot(200000);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
             try {
                 client.sendText("{UNLOCK}");
                 client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);

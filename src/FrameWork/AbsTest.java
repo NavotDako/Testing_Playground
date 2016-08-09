@@ -2,10 +2,7 @@ package FrameWork;
 
 import org.junit.runners.Suite;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 /**
  * Created by navot.dako on 2/24/2016.
@@ -67,8 +64,10 @@ public abstract class AbsTest {
         System.err.println(device + " - StackTrace: "); System.err.println(device + " - "+e.getMessage()); e.printStackTrace();
 
         try {
-            Write("*** "+stringToWrite+" ***");
-            Write("         "+device + " - "+e.getMessage());
+            Write("\n*** "+stringToWrite+" ***");
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            Write("         "+device + " - "+errors.toString());
         } catch (IOException e1) {
             System.err.println(device + " - can't write stacktrace to report.txt :");
             e1.printStackTrace();

@@ -1,16 +1,13 @@
-*** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0 ***
-         ios_app:navot iphone 2 - Exception caught while executing verifyElementFound: Element xpath=//*[@accessibilityLabel='Settings'] wasn't found
-*** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 2 - Success Rate: 0/2 = 0 ***
-         ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
-*** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 3 - Success Rate: 0/3 = 0 ***
-         ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
-SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1
-*** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 4 - Success Rate: 0/4 = 0 ***
-         ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
-*** FAILURE - ios_app:iPad air 2 - Non-Instrumented - Thread-1: Iteration - 1 - Success Rate: 0/1 = 0 ***
-         ios_app:iPad air 2 - Exception caught while executing sendText: Failed to send '{UNLOCK}'
-*** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 5 - Success Rate: 0/5 = 0 ***
-         ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
-*** FAILURE - ios_app:navot iphone 2 - Non-Instrumented - Thread-0: Iteration - 6 - Success Rate: 0/6 = 0 ***
-         ios_app:navot iphone 2 - Exception caught while executing click: Element was not identified: 'xpath=//*[@accessibilityLabel='Clock']' at zone NATIVE
-sdgedfdfgh dhfg jrfygj yfjd
+SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1
+SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1
+SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1
+SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 4 - Success Rate: 4/4 = 1
+SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 5 - Success Rate: 5/5 = 1
+SUCCESS - ios_app:Ipad mini 2 white - LaunchBrowserLoop - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1
+SUCCESS - ios_app:Ipad mini 2 white - LaunchBrowserLoop - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1
+SUCCESS - ios_app:Ipad mini 2 white - LaunchBrowserLoop - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1
+SUCCESS - ios_app:Ipad mini 2 white - LaunchBrowserLoop - Thread-0: Iteration - 4 - Success Rate: 4/4 = 1
+SUCCESS - ios_app:Ipad mini 2 white - LaunchBrowserLoop - Thread-0: Iteration - 5 - Success Rate: 5/5 = 1
+
+*** FAILURE - ios_app:Ipad mini 2 white - Reboot - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0 ***
+         ios_app:Ipad mini 2 white - [Ljava.lang.StackTraceElement;@c5e52c

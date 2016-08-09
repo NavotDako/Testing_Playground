@@ -7,23 +7,20 @@ import org.junit.*;
 public class Junit {
     private String host = "localhost";
     private int port = 8889;
-    private String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project18";
     protected Client client = null;
 
     @Before
     public void setUp(){
         client = new Client(host, port, true);
-        client.setProjectBaseDirectory(projectBaseDirectory);
-        client.setReporter("xml", "C:\\temp\\reports", "junit");
-        String device = client.waitForDevice("@os = 'Android'", 10000);
-        client.startLoggingDevice(client.setReporter("xml", "C:\\temp\\reports", "junit")+"\\"+device+".log");
+        client.getDevicesInformation();
+        client.setReporter("xml", "C:\\temp\\Reports", "junit");
+        String device = client.waitForDevice("@os='android'", 10000);
         System.out.println("ThreadID "+Thread.currentThread().getId()+ " - "+ device.substring(device.indexOf(":")+1));
         client.openDevice();
     }
 
     @Test
     public void Instrumented(){
-
         client.install("http://192.168.2.72:8181/AndroidApps/com.experitest.ExperiBank.LoginActivity.2.apk",true,false);
         client.launch("com.experitest.ExperiBank/.LoginActivity", true, true);
         client.syncElements(3000,15000);
@@ -91,7 +88,7 @@ public class Junit {
     public void tearDown(){
 
         client.generateReport(false);
-  
+
         client.releaseClient();
     }
 }

@@ -36,15 +36,7 @@ public class NonInstrumented extends AbsTest {
         if (client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0))
             client.click("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0, 1);
 
-        try {
-            client.reboot(200000);
-
-        }catch(Exception e){
-            System.err.println("Reboot Failed");
-
-        }
-
-        client.sendText("{UNLOCK}");
+        client.sendText("{HOME}");
         client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0);
 
     }
@@ -67,16 +59,8 @@ public class NonInstrumented extends AbsTest {
         client.waitForElement("NATIVE", "xpath=/*//*[@text='London, England']", 0, 10000);
         client.click("NATIVE", "xpath=//*[@text='London, England']", 0, 1);
         deleteCountry("London");
-
-        try {
-            client.reboot(200000);
-        }catch(Exception e){
-            System.err.println(Thread.currentThread() + " - Reboot Failed");
-
-        }
-
         client.capture(); //TEST
-        client.sendText("{UNLOCK}");
+        client.sendText("{HOME}");
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
     }
 

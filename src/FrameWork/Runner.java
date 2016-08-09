@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Runner {
-	static int iOSDevicesNum = 3;
+	static int iOSDevicesNum = 2;
 	static int androidDevicesNum =0;
-	static int repNum = 10;
+	static int repNum = 5;
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 

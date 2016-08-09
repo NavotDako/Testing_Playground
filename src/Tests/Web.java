@@ -16,7 +16,7 @@ public class Web extends AbsTest {
 	protected void AndroidRunTest() {
 		final String searchBox = "xpath=//*[(@id='kw' and @name='_nkw') or @id='gh-ac-box2']";
 		final String searchButton = "xpath=//*[@id='searchTxtBtn' or @id='gh-btn' or @id='ghs-submit']";
-		final String tabElement = "xpath=//*[@class='srp-item__title' or @class='grVwBg']";
+		final String tabElement = "xpath=//*[@class='srp-item__title' or @class='grVwBg' or @class='s-item']";
 
 		client.launch("chrome:m.ebay.com", true, true);
 		client.hybridWaitForPageLoad(30000);
@@ -45,6 +45,7 @@ public class Web extends AbsTest {
 
 	@Override
 	protected void IOSRunTest() {
+		String search = "xpath=//*[@text='About Wikipedia' and @top='true' or @id='searchInput']";
 		client.launch("safari:m.ebay.com", true, true);
 		client.hybridWaitForPageLoad(30000);
 
@@ -62,7 +63,7 @@ public class Web extends AbsTest {
 		client.sleep(1000);
 		client.click("WEB", "xpath=//*[@class='transparent-shield cloaked-element']", 0, 1);
 		client.waitForElementToVanish("WEB", "xpath=//*[@text='About Wikipedia' and @top='true']", 0, 30000);
-		client.click("WEB", "xpath=//*[@placeholder='Search Wikipedia']", 0, 1);
+		client.click("WEB", search, 0, 1);
 		client.syncElements(2000, 15000);
 		try{
 			client.sendText("LONG RUN{ENTER}");
@@ -72,8 +73,8 @@ public class Web extends AbsTest {
 			client.sendText("LONG RUN{ENTER}");
 		}
 		client.syncElements(2000, 30000);
-		client.waitForElement("WEB", "xpath=/*//*[@id='ca-edit']", 0, 30000);
-		String[] str0 = client.getAllValues("WEB", "xpath=/*//*[@id='ca-edit']", "hidden");
+		client.waitForElement("WEB", "xpath=//*[@id='ca-edit']", 0, 30000);
+		String[] str0 = client.getAllValues("WEB", "xpath=//*[@id='ca-edit']", "hidden");
 
 		if(str0[0].equals("false")){
 			client.click("WEB", "id=ca-edit", 0, 1);
