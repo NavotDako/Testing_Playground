@@ -37,12 +37,14 @@ public class Rebooting extends AbsTest {
     @Override
     protected void IOSRunTest() {
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
+        String device = client.getDeviceProperty("device.name");
         for (int i = 0; i < 3 ; i++) {
 
             try{
                 client.reboot(200000);
             }catch(Exception e){
                 e.printStackTrace();
+                client.waitForDevice("@name='"+device+"'",30000);
             }
             try {
                 client.sendText("{UNLOCK}");

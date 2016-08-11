@@ -3,6 +3,8 @@ package FrameWork;
 import org.junit.runners.Suite;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by navot.dako on 2/24/2016.
@@ -58,7 +60,7 @@ public abstract class AbsTest {
 
     public void Failure(int i, Exception e) {
 
-        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  (success/(i+1));
+        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  (double)(success/(i+1));
 
         System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
         System.err.println(device + " - StackTrace: "); System.err.println(device + " - "+e.getMessage()); e.printStackTrace();
@@ -96,7 +98,8 @@ public abstract class AbsTest {
 
     public void Write(String stringToWrite) throws IOException {
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/report.txt", true)));
-        writer.append(stringToWrite+"\n");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        writer.append(sdf.format(new Date(System.currentTimeMillis())) +"   " + stringToWrite+"\n");
         writer.close();
 
     }
