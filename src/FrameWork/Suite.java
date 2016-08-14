@@ -33,10 +33,10 @@ public class Suite implements Runnable{
         clockTest.runTest();
         Web browserTest = new Web(SetUp(),device,repNum,reportFolder,deviceOS, "Web");
         browserTest.runTest();
-     /*   LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),device,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
+        LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),device,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
         launchBrowser.runTest();
         Rebooting rebootTest = new Rebooting(SetUp(),device,repNum,reportFolder,deviceOS,"Reboot");
-        rebootTest.runTest();*/
+        rebootTest.runTest();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 

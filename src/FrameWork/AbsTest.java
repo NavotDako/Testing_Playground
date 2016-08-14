@@ -25,21 +25,25 @@ public abstract class AbsTest {
         this.reportFolder = reportFolder;
         this.deviceOS = deviceOS;
         this.testName = testName;
+
     }
 
     public void runTest(){
+        long time =0;
         for (int i = 0; i < repNum; i++) {
             try{
                 System.out.println("STARTING - " +device+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1));
                 System.out.println("Set Reporter - " + client.setReporter("xml", reportFolder, device.substring(8) + " "+ deviceOS +" - "+ testName+ " - "+ (i+1) ));
+                long before =   System.currentTimeMillis();
                 if (deviceOS.equals("ios")){
                     IOSRunTest();
                 }
                 else{
                     AndroidRunTest();
                 }
+                time = System.currentTimeMillis() - before;
                 success ++;
-                String stringToWrite = "SUCCESS - " +device+" - "+testName +" - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+(success/(i+1));
+                String stringToWrite = "SUCCESS - " +device+" - "+testName +" - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+(success/(i+1)) + "    Time - "+time/1000 +"s";
                 System.out.println("############################ "+stringToWrite+" ##############################");
                 try {
                     Write(stringToWrite);
@@ -47,7 +51,7 @@ public abstract class AbsTest {
                     e1.printStackTrace();
                 }
             }catch(Exception e ){
-                Failure(i, e);
+                Failure(i, e,time);
             }
             System.out.println(device+" - "+"REPORT - "+ client.generateReport(false));
 
@@ -58,9 +62,9 @@ public abstract class AbsTest {
 
     }
 
-    public void Failure(int i, Exception e) {
+    public void Failure(int i, Exception e, long time) {
 
-        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  (double)(success/(i+1));
+        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  (double)(success/(i+1)) + "    Time - "+time/1000 +"s";
 
         System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
         System.err.println(device + " - StackTrace: "); System.err.println(device + " - "+e.getMessage()); e.printStackTrace();
@@ -99,7 +103,7 @@ public abstract class AbsTest {
     public void Write(String stringToWrite) throws IOException {
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/report.txt", true)));
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        writer.append(sdf.format(new Date(System.currentTimeMillis())) +"   " + stringToWrite+"\n");
+        writer.append(sdf.format(new Date(System.currentTimeMillis())) +": " + stringToWrite+"\n");
         writer.close();
 
     }

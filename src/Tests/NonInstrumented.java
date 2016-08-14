@@ -13,7 +13,7 @@ public class NonInstrumented extends AbsTest {
 
     @Override
     protected void AndroidRunTest() {
-        String settingsXpath = "xpath=//*[(contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button')]";
+        String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' ) and not(contains(@contentDescription,'settings.'))]";
         client.swipe("Up", 0, 500);
         if(!client.isElementFound("NATIVE", settingsXpath, 0)){
             client.swipe("Up", 0, 500);

@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 public class Runner {
 	static int iOSDevicesNum = 0;
 	static int androidDevicesNum =2;
-	static int repNum = 500;
+	static int repNum = 5;
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 
