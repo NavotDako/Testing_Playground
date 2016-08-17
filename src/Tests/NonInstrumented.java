@@ -21,6 +21,8 @@ public class NonInstrumented extends AbsTest {
         client.click("NATIVE", settingsXpath, 0, 1);
         client.syncElements(3000,10000);
         int i=0;
+        if (client.isElementFound("NATIVE","xpath=//*[@text='More']",0))
+            client.click("NATIVE","xpath=//*[@text='More']",0,1);
 
         if (client.isElementFound("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0))
             client.click("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0, 1);

@@ -19,21 +19,35 @@ public abstract class AbsTest {
     protected String testName;
 
     public AbsTest(MyClient client, String device, int repNum, String reportFolder, String deviceOS, String testName){
-        this.device=device;
+
         this.client = client;
         this.repNum  = repNum;
         this.reportFolder = reportFolder;
         this.deviceOS = deviceOS;
         this.testName = testName;
+        getDevice();
 
+    }
+
+    private void getDevice() {
+        device = client.waitForDevice("@os = '"+deviceOS+"'", 10000);
+        System.out.println(Thread.currentThread().getName()+ " - "+ device.substring(device.indexOf(":")));
+        client.openDevice();
+        client.sendText("{HOME}");
+
+        //client.setProjectBaseDirectory(projectBaseDirectory);
+        //( contains(@version,'9.') or contains(@version,'4.') )and
+
+        //client.setShowPassImageInReport(false);
+        // client.setProperty("on.device.xpath", "true");
     }
 
     public void runTest(){
         long time =0;
         for (int i = 0; i < repNum; i++) {
             try{
-                System.out.println("STARTING - " +device+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1));
-                System.out.println("Set Reporter - " + client.setReporter("xml", reportFolder, device.substring(8) + " "+ deviceOS +" - "+ testName+ " - "+ (i+1) ));
+                System.out.println(Thread.currentThread().getName() +"  STARTING - " +device+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1));
+                System.out.println(Thread.currentThread().getName() +"  Set Reporter - " + client.setReporter("xml", reportFolder, device.substring(8) + " "+ deviceOS +" - "+ testName+ " - "+ (i+1) ));
                 long before =   System.currentTimeMillis();
                 if (deviceOS.equals("ios")){
                     IOSRunTest();
@@ -44,7 +58,7 @@ public abstract class AbsTest {
                 time = System.currentTimeMillis() - before;
                 success ++;
                 String stringToWrite = "SUCCESS - " +device+" - "+testName +" - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+(success/(i+1)) + "    Time - "+time/1000 +"s";
-                System.out.println("############################ "+stringToWrite+" ##############################");
+                System.out.println(Thread.currentThread().getName() +"  ############################ "+stringToWrite+" ##############################");
                 try {
                     Write(stringToWrite);
                 } catch (IOException e1) {
@@ -52,9 +66,12 @@ public abstract class AbsTest {
                 }
             }catch(Exception e ){
                 Failure(i, e,time);
+            }try {
+                System.out.println(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + client.generateReport(false));
+            }catch(Exception e){
+                e.printStackTrace();
+                getDevice();
             }
-            System.out.println(device+" - "+"REPORT - "+ client.generateReport(false));
-
         }
         System.out.println("############################ Device - "+ device +" - "+testName +" - "+Thread.currentThread().getName() +" - Finished #############################" );
         //client.closeDevice();
@@ -65,7 +82,6 @@ public abstract class AbsTest {
     public void Failure(int i, Exception e, long time) {
 
         String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  (double)(success/(i+1)) + "    Time - "+time/1000 +"s";
-
         System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
         System.err.println(device + " - StackTrace: "); System.err.println(device + " - "+e.getMessage()); e.printStackTrace();
 

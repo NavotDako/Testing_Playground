@@ -27,14 +27,14 @@ public class Suite implements Runnable{
 
     @Override
     public void run() {
-        EriBank eriBank = new EriBank(SetUp(),device,repNum,reportFolder,deviceOS, "EriBank");
+       /* EriBank eriBank = new EriBank(SetUp(),device,repNum,reportFolder,deviceOS, "EriBank");
         eriBank.runTest();
         NonInstrumented clockTest = new NonInstrumented(SetUp(),device,repNum,reportFolder,deviceOS,"Non-Instrumented");
         clockTest.runTest();
         Web browserTest = new Web(SetUp(),device,repNum,reportFolder,deviceOS, "Web");
         browserTest.runTest();
         LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),device,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
-        launchBrowser.runTest();
+        launchBrowser.runTest();*/
         Rebooting rebootTest = new Rebooting(SetUp(),device,repNum,reportFolder,deviceOS,"Reboot");
         rebootTest.runTest();
 
@@ -58,22 +58,8 @@ public class Suite implements Runnable{
     public MyClient SetUp(){
         try{
             client = new MyClient(host, port, true,commandMap);
-            //client.setProjectBaseDirectory(projectBaseDirectory);
-            //( contains(@version,'9.') or contains(@version,'4.') )and
-            device = client.waitForDevice("@os = '"+deviceOS+"'"+ deviceQuery, 10000);
-            System.out.println("ThreadID "+Thread.currentThread().getId()+ " - "+ device.substring(8));
-            client.openDevice();
-            client.sendText("{UNLOCK}");
-            client.sendText("{HOME}");
-            //client.setShowPassImageInReport(false);
-           // client.setProperty("on.device.xpath", "true");
-
-            return client;}
-        catch(Exception e){
-            System.out.println("---------------" + device + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.out.println("---------------" + device + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.out.println("---------------" + device + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.out.println("---------------" + device + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            return client;
+        }catch(Exception e){
             System.out.println("---------------" + device + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return client;
         }

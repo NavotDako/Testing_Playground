@@ -17,42 +17,22 @@ public class Rebooting extends AbsTest {
     protected void AndroidRunTest() {
 
         client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0);
-        for (int i = 0; i < 3 ; i++) {
-        try{
-            client.reboot(200000);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-            try{
-                client.sendText("{UNLOCK}");
-                client.sendText("{HOME}");
-                if (!client.isElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0)) client.sendText("{UNLOCK}");
-                client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+        for (int i = 0; i < 2 ; i++) {
+            client.reboot(150000);
+            client.sendText("{HOME}");
+            client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0);
         }
     }
 
     @Override
     protected void IOSRunTest() {
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
-        String device = client.getDeviceProperty("device.name");
-        for (int i = 0; i < 3 ; i++) {
-
-            try{
-                client.reboot(200000);
-            }catch(Exception e){
-                e.printStackTrace();
-                client.waitForDevice("@name='"+device+"'",30000);
-            }
-            try {
-                client.sendText("{UNLOCK}");
-                client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-
+        for (int i = 0; i < 2 ; i++) {
+            client.reboot(150000);
+            if (client.isElementFound("NATIVE", "xpath=//*[contains(@text,'OK') or contains(@contentDescription,'OK')]", 0))
+                client.click("NATIVE", "xpath=//*[contains(@text,'OK') or contains(@contentDescription,'OK')]", 0,1);
+            client.sendText("{HOME}");
+            client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
         }
     }
 
