@@ -27,15 +27,15 @@ public class Suite implements Runnable{
 
     @Override
     public void run() {
-       /* EriBank eriBank = new EriBank(SetUp(),device,repNum,reportFolder,deviceOS, "EriBank");
-        eriBank.runTest();
-        NonInstrumented clockTest = new NonInstrumented(SetUp(),device,repNum,reportFolder,deviceOS,"Non-Instrumented");
+       /* EriBank eriBank = new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank");
+        eriBank.runTest();*/
+        NonInstrumented clockTest = new NonInstrumented(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Non-Instrumented");
         clockTest.runTest();
-        Web browserTest = new Web(SetUp(),device,repNum,reportFolder,deviceOS, "Web");
+        Web browserTest = new Web(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Web");
         browserTest.runTest();
-        LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),device,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
-        launchBrowser.runTest();*/
-        Rebooting rebootTest = new Rebooting(SetUp(),device,repNum,reportFolder,deviceOS,"Reboot");
+        LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
+        launchBrowser.runTest();
+        Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
         rebootTest.runTest();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");

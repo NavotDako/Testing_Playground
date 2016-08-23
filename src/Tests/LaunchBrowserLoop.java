@@ -9,8 +9,8 @@ import FrameWork.MyClient;
 public class LaunchBrowserLoop extends AbsTest {
     String google = "www.google.com";
     String ebay = "m.ebay.com";
-    public LaunchBrowserLoop(MyClient client, String device, int repNum, String reportFolder, String deviceToTest, String testName) {
-        super(client, device, repNum, reportFolder, deviceToTest, testName);
+    public LaunchBrowserLoop(MyClient client, String deviceQuery, int repNum, String reportFolder, String deviceToTest, String testName) {
+        super(client, deviceQuery, repNum, reportFolder, deviceToTest, testName);
     }
 
     @Override
@@ -23,7 +23,8 @@ public class LaunchBrowserLoop extends AbsTest {
             xpathToVerify  = (i%2==0) ? "//*[@alt='eBay Home page']" : "//*[@id='hplogo']";
             client.verifyElementFound("WEB", "xpath="+xpathToVerify, 0);
             client.sendText("{HOME}");
-            client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or @contentDescription='All apps' or @contentDescription='Xperia™ Home']", 0);
+            //HUAWEI - @id='dock_divider'
+            client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or @contentDescription='All apps' or @contentDescription='Xperia™ Home' or @id='dock_divider']", 0);
         }
 
     }

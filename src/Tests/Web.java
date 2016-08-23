@@ -88,7 +88,9 @@ public class Web extends AbsTest {
 			client.elementSendText("WEB", "id=wpRetype", 0, "123456");
 			client.swipeWhileNotFound("DOWN", 250, 1000, "WEB","id=wpEmail" ,0 , 0, 2, true);
 			client.elementSendText("WEB", "id=wpEmail", 0, "LONG@RUN.COM");
+			client.sendText("{PORTRAIT}");
 			client.sendText("{CLOSEKEYBOARD}");
+			client.sendText("{LANDSCAPE}");
 			client.swipeWhileNotFound("DOWN", 650, 1000, "WEB","xpath=//*[@id='wpCreateaccount' and @onScreen='true']" ,0 , 0, 2, true);
 			client.syncElements(1000, 20000);
 			client.verifyElementFound("WEB", "xpath=//*[@class='error']", 0);

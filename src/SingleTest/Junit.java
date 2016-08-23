@@ -1,27 +1,28 @@
-package SingleTest;//package <set your test package>;
+package SingleTest;//package <set your Memory package>;
 import com.experitest.client.*;
 import org.junit.*;
 /**
  *
  */
 public class Junit {
-    private String host = "localhost";
+    private String host = "192.168.2.63";
     private int port = 8889;
     protected Client client = null;
 
     @Before
     public void setUp(){
         client = new Client(host, port, true);
-        client.getDevicesInformation();
+
         client.setReporter("xml", "C:\\temp\\Reports", "junit");
-        String device = client.waitForDevice("@os='android'", 10000);
+        String device = client.waitForDevice("@os='android' and @version='6.0.1'", 10000);
         System.out.println("ThreadID "+Thread.currentThread().getId()+ " - "+ device.substring(device.indexOf(":")+1));
         client.openDevice();
+        client.sendText("{UNLOCK}");
     }
 
     @Test
     public void Instrumented(){
-        client.install("http://192.168.2.72:8181/AndroidApps/com.experitest.ExperiBank.LoginActivity.2.apk",true,false);
+        client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk",true,false);
         client.launch("com.experitest.ExperiBank/.LoginActivity", true, true);
         client.syncElements(3000,15000);
         client.verifyElementFound("NATIVE", "hint=Username", 0);

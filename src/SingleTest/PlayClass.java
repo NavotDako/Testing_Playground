@@ -1,4 +1,4 @@
-package SingleTest;//package <set your test package>;
+package SingleTest;//package <set your Memory package>;
 import SingleTest.MyRunnable;
 import org.junit.*;
 

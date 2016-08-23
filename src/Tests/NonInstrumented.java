@@ -1,4 +1,4 @@
-package Tests;//package <set your test package>;
+package Tests;//package <set your Memory package>;
 import static org.junit.Assert.fail;
 
 import FrameWork.AbsTest;
@@ -15,19 +15,25 @@ public class NonInstrumented extends AbsTest {
     protected void AndroidRunTest() {
         String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' ) and not(contains(@contentDescription,'settings.'))]";
         client.swipe("Up", 0, 500);
+
+
         if(!client.isElementFound("NATIVE", settingsXpath, 0)){
-            client.swipe("Up", 0, 500);
+            if (client.isElementFound("NATIVE","xpath=//*[@text='Shortcuts' and @id='toolbox_bt']",0))
+                client.click("NATIVE","xpath=//*[@text='Shortcuts' and @id='toolbox_bt']",0,1);
+            else client.swipe("Up", 0, 500);
         }
         client.click("NATIVE", settingsXpath, 0, 1);
         client.syncElements(3000,10000);
         int i=0;
-        if (client.isElementFound("NATIVE","xpath=//*[@text='More']",0))
-            client.click("NATIVE","xpath=//*[@text='More']",0,1);
+        //HUAWEI - @text='More' and not(@class='android.widget.TextView'
+
+        if (client.isElementFound("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0))
+            client.click("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0,1);
 
         if (client.isElementFound("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0))
             client.click("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0, 1);
 
-        client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 5, true);
+        client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, true);
 
         if (!client.isElementFound("NATIVE", "xpath=//*[@text='Android version' and @id='title']", 0)) {
             client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[(contains(@text,'oftware info'))]", 0, 1000, 5, true);

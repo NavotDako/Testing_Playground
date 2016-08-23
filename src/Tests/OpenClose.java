@@ -71,7 +71,7 @@ public class OpenClose {
 
     @After
     public void tearDown(){
-        // Generates a report of the test case.
+        // Generates a report of the Memory case.
         // For more information - https://docs.experitest.com/display/public/SA/Report+Of+Executed+Test
 
         // Releases the client so that other clients can approach the agent in the near future.

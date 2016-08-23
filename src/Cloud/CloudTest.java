@@ -31,7 +31,7 @@ public class CloudTest {
     public void testVisualDump() {
         List<String> devices = GetGoodDevices();
 
-        System.out.println("Devices found for test:");
+        System.out.println("Devices found for Memory:");
         for (int i =0;i<devices.size(); i++) {
             System.out.println(i+": "+devices.get(i));
 
