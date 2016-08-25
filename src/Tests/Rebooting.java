@@ -30,7 +30,7 @@ public class Rebooting extends AbsTest {
     protected void IOSRunTest() {
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
         for (int i = 0; i < 2 ; i++) {
-            client.reboot(10000);
+            client.reboot(150000);
             if (client.isElementFound("NATIVE", "xpath=//*[contains(@text,'OK') or contains(@contentDescription,'OK')]", 0))
                 client.click("NATIVE", "xpath=//*[contains(@text,'OK') or contains(@contentDescription,'OK')]", 0,1);
             client.sendText("{HOME}");

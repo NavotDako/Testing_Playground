@@ -85,7 +85,7 @@ public abstract class AbsTest {
         }
         long time = System.currentTimeMillis() - before;
         success++;
-        double successRate = (double)(success/(i+1));
+        double successRate = success/(i+1);
         String stringToWrite = "SUCCESS - " +device+" - "+testName +" - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+successRate + "    Time - "+time/1000 +"s";
         System.out.println(Thread.currentThread().getName() +"  ############################ "+stringToWrite+" ##############################");
         try {
@@ -101,27 +101,20 @@ public abstract class AbsTest {
 
         String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  successRaate + "    Time - "+time/1000 +"s";
         System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
-        System.err.println(device + " - StackTrace: "); System.err.println(device + " - "+e.getMessage()); e.printStackTrace();
+        StringWriter errors = new StringWriter();
+        e.printStackTrace(new PrintWriter(errors));
+        System.err.println(Thread.currentThread().getName()+ " "+device+ " - StackTrace: " + errors.toString());
 
         try {
             Write("\n*** "+stringToWrite+" ***");
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
             Write("  "+device + " - "+errors.toString());
         } catch (IOException e1) {
-            System.err.println(device + " - can't write stacktrace to report.txt :");
             e1.printStackTrace();
         }
         if (device!=null){
+            String dataPath =reportFolder+"\\SupportData_"+device+"_"+System.currentTimeMillis();
+            System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"SupportData - "+dataPath);
             try{
-                System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"Log - "+client.getDeviceLog());
-
-            }catch(Exception e1){
-                System.err.println(Thread.currentThread().getName()+ " "+device + " - Can't get Device Log");
-            }
-            try{
-                System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"SupportData - ");
-                String dataPath =reportFolder+"\\SupportData_"+device+"_"+System.currentTimeMillis();
                 client.collectSupportData(dataPath,"",device,"","","",true,true);
                 client.report(dataPath,true);
             }catch(Exception e1){
@@ -129,9 +122,6 @@ public abstract class AbsTest {
                 e1.printStackTrace();
             }
         }
-
-
-
     }
 
     protected abstract void AndroidRunTest();

@@ -4,14 +4,14 @@ import java.io.*;
 
 public class Runner {
 	static int iOSDevicesNum = 2;
-	static int androidDevicesNum =0;
+	static int androidDevicesNum =2;
 	static int repNum = 5;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		//deviceQuery= " and contains(@version,'4.4.2')";
+		//deviceQuery= " and contains(@version,'9.')";
 		System.out.println("Getting the studio.exe resources");
 		String resources = getResources();
 

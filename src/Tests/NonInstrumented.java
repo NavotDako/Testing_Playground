@@ -56,10 +56,12 @@ public class NonInstrumented extends AbsTest {
         client.click("NATIVE", "xpath=//*[@accessibilityLabel='Clock']", 0, 1);
         client.waitForElement("NATIVE", "xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')]", 0, 10000);
         client.click("NATIVE", "xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')]", 0, 1);
+
         if(!client.isElementFound("NATIVE", "xpath=/*//*[@text='Add' and @x>0 and @onScreen='true']")){
             String firstCountry = client.getAllValues("NATIVE", countriesString, "text")[0];
             deleteCountry(firstCountry);
         }
+        client.verifyElementFound("NATIVE", "xpath=/*//*[@text='Add' and @x>0 and @onScreen='true']", 0);
         client.click("NATIVE", "xpath=//*[@text='Add' and @x>0 and @onScreen='true']", 0, 1);
         client.click("NATIVE", "xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar']", 0, 1);
 
