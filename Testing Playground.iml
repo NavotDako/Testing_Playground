@@ -22,7 +22,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jsch-0.1.53.jar!/" />
@@ -31,7 +31,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jcabi-ssh-1.5.2.jar!/" />
@@ -40,7 +40,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/commons-lang3-3.1.jar!/" />
@@ -49,7 +49,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/commons-io-2.5.jar!/" />
@@ -58,7 +58,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jcabi-log-0.17.1.jar!/" />
@@ -67,7 +67,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/slf4j-api-1.7.21.jar!/" />
@@ -76,7 +76,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/mavenbuilder-1.0.jar!/" />
@@ -85,7 +85,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/junit-4.10.jar!/" />
@@ -94,20 +94,20 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/imageClient.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/junit-4.4.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/mobile-webdriver.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/selenium-api-2.42.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/selenium-support-2.44.0.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/ws-commons-util-1.0.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/xmlrpc-client-3.1.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/xmlrpc-common-3.1.2.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/imageClient.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/junit-4.4.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/mobile-webdriver.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/selenium-api-2.42.2.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/selenium-support-2.44.0.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/ws-commons-util-1.0.2.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/xmlrpc-client-3.1.2.jar!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/xmlrpc-common-3.1.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java/imageClient_doc.zip!/" />
+          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest10.0/clients/java/imageClient_doc.zip!/" />
         </JAVADOC>
         <SOURCES />
       </library>

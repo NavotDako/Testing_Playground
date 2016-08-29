@@ -1,100 +1,13 @@
-10:36:36: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Non-Instrumented - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 24s
-10:36:46: SUCCESS - adb:asus Nexus 7 - Non-Instrumented - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 34s
-10:37:04: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Non-Instrumented - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 23s
-10:37:19: SUCCESS - adb:asus Nexus 7 - Non-Instrumented - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 30s
-10:37:22: SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 71s
-10:37:30: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Non-Instrumented - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 23s
-10:37:52: SUCCESS - adb:asus Nexus 7 - Non-Instrumented - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 29s
-10:37:58: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Non-Instrumented - Thread-2: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 24s
-10:38:18: 
-*** FAILURE - ios_app:sheli.ashkenazi’s iPod - Non-Instrumented - Thread-1: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
-10:38:18:   ios_app:sheli.ashkenazi’s iPod - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar']' at zone NATIVE
+17:48:23: 
+*** FAILURE - ios_app:admin’s iPhone - GetTenFreeApps - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
+17:48:23:   ios_app:admin’s iPhone - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='Free']' at zone NATIVE
 	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
 	at com.experitest.client.Client.execute(Client.java:237)
 	at com.experitest.client.Client.click(Client.java:436)
 	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.NonInstrumented.IOSRunTest(NonInstrumented.java:66)
+	at Tests.TenFreeApps.IOSRunTest(TenFreeApps.java:53)
 	at FrameWork.AbsTest.Execute(AbsTest.java:81)
 	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:33)
+	at FrameWork.Suite.run(Suite.java:41)
 	at java.lang.Thread.run(Thread.java:745)
 
-10:38:25: SUCCESS - adb:asus Nexus 7 - Non-Instrumented - Thread-3: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 30s
-10:38:26: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Non-Instrumented - Thread-2: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 25s
-10:38:39: SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 72s
-10:39:02: SUCCESS - adb:asus Nexus 7 - Non-Instrumented - Thread-3: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 30s
-10:39:50: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Web - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 70s
-10:39:53: SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 70s
-10:40:21: SUCCESS - adb:asus Nexus 7 - Web - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 68s
-10:40:55: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Web - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 62s
-10:41:04: 
-*** FAILURE - ios_app:sheli.ashkenazi’s iPod - Non-Instrumented - Thread-1: Iteration - 2 - Success Rate: 0/2 = 0.0    Time - 0s ***
-10:41:04:   ios_app:sheli.ashkenazi’s iPod - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar']' at zone NATIVE
-	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
-	at com.experitest.client.Client.execute(Client.java:237)
-	at com.experitest.client.Client.click(Client.java:436)
-	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.NonInstrumented.IOSRunTest(NonInstrumented.java:66)
-	at FrameWork.AbsTest.Execute(AbsTest.java:81)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:33)
-	at java.lang.Thread.run(Thread.java:745)
-
-10:41:07: SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 70s
-10:41:31: SUCCESS - adb:asus Nexus 7 - Web - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 68s
-10:41:34: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Web - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 36s
-10:42:15: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Web - Thread-2: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 38s
-10:42:21: SUCCESS - ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 71s
-10:42:42: SUCCESS - adb:asus Nexus 7 - Web - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 68s
-10:42:55: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - Web - Thread-2: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 37s
-10:43:51: SUCCESS - adb:asus Nexus 7 - Web - Thread-3: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 67s
-10:45:02: SUCCESS - adb:asus Nexus 7 - Web - Thread-3: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 69s
-10:45:45: SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 181s
-10:46:25: 
-*** FAILURE - ios_app:sheli.ashkenazi’s iPod - Non-Instrumented - Thread-1: Iteration - 3 - Success Rate: 0/3 = 0.0    Time - 0s ***
-10:46:25:   ios_app:sheli.ashkenazi’s iPod - com.experitest.client.InternalException: Exception caught while executing click: Unexpected error in waiting for element: NullPointerException
-	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
-	at com.experitest.client.Client.execute(Client.java:237)
-	at com.experitest.client.Client.click(Client.java:436)
-	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.NonInstrumented.IOSRunTest(NonInstrumented.java:66)
-	at FrameWork.AbsTest.Execute(AbsTest.java:81)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:33)
-	at java.lang.Thread.run(Thread.java:745)
-
-10:46:54: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - LaunchBrowserLoop - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 230s
-10:48:46: SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 177s
-10:49:47: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - LaunchBrowserLoop - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 171s
-10:50:50: SUCCESS - adb:asus Nexus 7 - LaunchBrowserLoop - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 337s
-10:51:43: 
-*** FAILURE - ios_app:sheli.ashkenazi’s iPod - Non-Instrumented - Thread-1: Iteration - 4 - Success Rate: 0/4 = 0.0    Time - 0s ***
-10:51:43:   ios_app:sheli.ashkenazi’s iPod - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar']' at zone NATIVE
-	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
-	at com.experitest.client.Client.execute(Client.java:237)
-	at com.experitest.client.Client.click(Client.java:436)
-	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.NonInstrumented.IOSRunTest(NonInstrumented.java:66)
-	at FrameWork.AbsTest.Execute(AbsTest.java:81)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:33)
-	at java.lang.Thread.run(Thread.java:745)
-
-10:51:49: SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 178s
-10:53:13: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - LaunchBrowserLoop - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 203s
-10:54:32: 
-*** FAILURE - ios_app:sheli.ashkenazi’s iPod - Non-Instrumented - Thread-1: Iteration - 5 - Success Rate: 0/5 = 0.0    Time - 0s ***
-10:54:32:   ios_app:sheli.ashkenazi’s iPod - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@knownSuperClass='UISearchBarTextField' or @class='UIASearchBar']' at zone NATIVE
-	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
-	at com.experitest.client.Client.execute(Client.java:237)
-	at com.experitest.client.Client.click(Client.java:436)
-	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.NonInstrumented.IOSRunTest(NonInstrumented.java:66)
-	at FrameWork.AbsTest.Execute(AbsTest.java:81)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:33)
-	at java.lang.Thread.run(Thread.java:745)
-
-10:54:46: SUCCESS - ios_app:Ipad mini 2 white - Web - Thread-0: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 173s
-10:55:29: SUCCESS - adb:asus Nexus 7 - LaunchBrowserLoop - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 276s
-10:56:12: SUCCESS - adb:HUAWEI HUAWEI MT7-L09 - LaunchBrowserLoop - Thread-2: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 177s
