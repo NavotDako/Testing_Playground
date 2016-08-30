@@ -29,7 +29,7 @@ public class TenFreeApps extends AbsTest {
                 String temp = client.elementGetText("NATIVE", "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true']", i);
                 freeApps.add(temp);
             }
-            client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true' and contains(@text , '" + countOfOnScreenApps+1 + "')]" , 0 , 1000 , 1 , false);
+            client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true' and contains(@text , '" + countOfOnScreenApps+ 1 + "')]" , 0 , 1000 , 1 , false);
         }
 
         ArrayList<String> freeAppsNoDuplicate = removeDuplicate(freeApps);

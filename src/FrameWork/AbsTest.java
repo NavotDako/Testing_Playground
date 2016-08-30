@@ -1,7 +1,5 @@
 package FrameWork;
 
-import org.junit.runners.Suite;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +15,7 @@ public abstract class AbsTest {
     protected String reportFolder;
     protected String deviceOS;
     protected String testName;
-    String deviceQurey = "";
+    String deviceQuery = "";
 
 
     public AbsTest(MyClient client, String deviceQurey, int repNum, String reportFolder, String deviceOS, String testName){
@@ -27,14 +25,14 @@ public abstract class AbsTest {
         this.reportFolder = reportFolder;
         this.deviceOS = deviceOS;
         this.testName = testName;
-        this.deviceQurey = deviceQurey;
+        this.deviceQuery = deviceQurey;
         getDevice();
 
     }
 
     private void getDevice() {
         try {
-            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQurey, 10000);
+            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQuery, 10000);
             System.out.println(Thread.currentThread().getName() + " - " + device.substring(device.indexOf(":")));
             client.openDevice();
             client.sendText("{UNLOCK}");
