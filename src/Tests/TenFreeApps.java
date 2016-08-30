@@ -57,6 +57,7 @@ public class TenFreeApps extends AbsTest {
     protected void IOSRunTest() {
 
         client.launch("com.apple.AppStore", false, true);
+        client.setProperty("ios.non-instrumented.dump.parameters" , "20 , 500 , 25");
         client.sync(1000 , 0 , 10000);
         client.click("NATIVE" , "xpath=//*[@text='Top Charts']" , 0 , 2);
         if(client.isElementFound("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UIButton']" , 0))
@@ -77,7 +78,7 @@ public class TenFreeApps extends AbsTest {
             if(client.isElementFound("NATIVE" , "xpath=//*[@text='Free' and ./*[@class='UIAView']]" , 0))
                 client.elementSwipe("NATIVE", "xpath=//*[@text='Free' and ./*[@class='UIAView']]", 0 , "Down", 200 , 3500);
             else
-                client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "//*[@class='UIAView' and @knownSuperClass='UIView' and @enabled='true' and @y>0 and @width>0 and @height>0 and @hidden='false' and @onScreen='true']/../*/*/*[@text='GET' or @text='Download']/../../../*[contains(@text , '"+ (countOfOnScreenApps+1) + ",')]" , 0 , 1000 , 1 , false);
+                client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "//*[@class='UIAView' and @knownSuperClass='UIView' and @enabled='true' and @y>0 and @width>0 and @height>0 and @hidden='false' and @onScreen='true']/../*/*/*[@text='GET' or @text='Download']/../../../*[contains(@text , '"+ (countOfOnScreenApps+2) + ",')]" , 0 , 1000 , 1 , false);
         }
 
         ArrayList<String> toPrint = new ArrayList<>();
