@@ -13,23 +13,29 @@ public class CheckIdentificationMethod {
     private String host = "localhost";
     private int port = 8889;
     protected Client client = null;
+    String deviceName = "adb:samsung GT-I9301I";
 
     @Before
     public void setUp(){
         client = new Client(host, port, true);
         client.setReporter("xml", "reports", "Untitled");
-        client.setDevice("ios_app:navot iphone 2");
+        client.setDevice(deviceName);
     }
 
     @Test
-    public void AndroidTest(){
+    public void IdentificationTest(){
         Map<String,String> WEB;
-        Map<String,String> NATIVE;
+        Map<String,String> iOS_NATIVE;
+        Map<String,String> ANDROID_NATIVE;
 
-        NATIVE = BuildIOSNative();
+        iOS_NATIVE = BuildIOSNative();
         WEB = BuildWeb();
+        ANDROID_NATIVE = BuildAndroidNative();
 
-        StartExecuteZone(NATIVE);
+        if (deviceName.contains("ios")){
+            StartExecuteZone(iOS_NATIVE);
+        } else StartExecuteZone(ANDROID_NATIVE);
+
         System.out.println("===================================================================");
         System.out.println("===================================================================");
         StartExecuteZone(WEB);
@@ -45,7 +51,15 @@ public class CheckIdentificationMethod {
         NATIVE.put("NOT","accessibilityLabel=usernameTextField");
         return NATIVE;
     }
-
+    public  Map<String,String> BuildAndroidNative() {
+        Map<String,String> NATIVE = new HashMap<>();
+        NATIVE.put("ZONE","native");
+        NATIVE.put("APP","com.experitest.ExperiBank/.LoginActivity");
+        NATIVE.put("NORMAL","xpath=//*[@id='usernameTextField']");
+        NATIVE.put("LONG","xpath=//*[@id='usernameTextField' and @hint='Username' and @hidden='false' and @onScreen='true' and @top='true']");
+        NATIVE.put("NOT","id=usernameTextField");
+        return NATIVE;
+    }
     public  Map<String,String> BuildWeb() {
         Map<String,String> WEB = new HashMap<>();
         WEB.put("ZONE","web");
