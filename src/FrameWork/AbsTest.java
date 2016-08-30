@@ -1,5 +1,8 @@
 package FrameWork;
 
+import com.experitest.client.MobileListener;
+import org.junit.runners.Suite;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +18,7 @@ public abstract class AbsTest {
     protected String reportFolder;
     protected String deviceOS;
     protected String testName;
-    String deviceQuery = "";
+    String deviceQurey = "";
 
 
     public AbsTest(MyClient client, String deviceQurey, int repNum, String reportFolder, String deviceOS, String testName){
@@ -25,14 +28,14 @@ public abstract class AbsTest {
         this.reportFolder = reportFolder;
         this.deviceOS = deviceOS;
         this.testName = testName;
-        this.deviceQuery = deviceQurey;
+        this.deviceQurey = deviceQurey;
         getDevice();
 
     }
 
     private void getDevice() {
         try {
-            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQuery, 10000);
+            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQurey, 10000);
             System.out.println(Thread.currentThread().getName() + " - " + device.substring(device.indexOf(":")));
             client.openDevice();
             client.sendText("{UNLOCK}");
@@ -40,6 +43,13 @@ public abstract class AbsTest {
 
         }catch(Exception e){
             e.printStackTrace();
+            try {
+                System.out.println(Thread.currentThread().getName() + " - " + device.substring(device.indexOf(":")) + " getDevicesInformation - \n" + client.getDevicesInformation());
+            }catch (Exception e1){
+                e1.printStackTrace();
+            }
+            String dataPath = reportFolder+"\\SupportData_"+device+"_"+System.currentTimeMillis();
+            client.collectSupportData(dataPath,"",device,"","","",true,true);
         }
 
     }
@@ -83,7 +93,7 @@ public abstract class AbsTest {
         }
         long time = System.currentTimeMillis() - before;
         success++;
-        double successRate = success/(i+1);
+        double successRate = ((double)success/(double)(i+1));
         String stringToWrite = "SUCCESS - " +device+" - "+testName +" - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+successRate + "    Time - "+time/1000 +"s";
         System.out.println(Thread.currentThread().getName() +"  ############################ "+stringToWrite+" ##############################");
         try {
@@ -95,9 +105,8 @@ public abstract class AbsTest {
     }
 
     public void Failure(int i, Exception e, long time) {
-        double successRaate = (double)(success/(i+1));
-
-        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  successRaate + "    Time - "+time/1000 +"s";
+        double successRate = ((double)success/(double)(i+1));
+        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  successRate + "    Time - "+time/1000 +"s";
         System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
         StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));

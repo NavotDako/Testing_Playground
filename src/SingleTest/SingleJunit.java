@@ -8,13 +8,13 @@ import org.junit.*;
 public class SingleJunit {
     private String host = "localhost";
     private int port = 8889;
-   // private String projectBaseDirectory = "C:\\Users\\Admin.user13\\workspace\\project7";
+    // private String projectBaseDirectory = "C:\\Users\\Admin.user13\\workspace\\project7";
     protected Client client = null;
 
     @Before
     public void setUp(){
         client = new Client(host, port, true);
-       // client.setProjectBaseDirectory(projectBaseDirectory);
+        // client.setProjectBaseDirectory(projectBaseDirectory);
         client.setReporter("xml", "reports", "Untitled");
     }
 
@@ -25,11 +25,8 @@ public class SingleJunit {
 
 
     public void testUntitled(String device){
-        client.waitForDevice("@os = 'android'", 10000);
-        client.setProperty("report.image.width", "500");
-        client.openDevice();
-        client.sleep(5000);
-        client.closeDevice();
+        client.waitForDevice("@name = 'User’s iPhone'", 10000);
+        client.swipeWhileNotFound("DOWN", 200, 1000, "WEB","xpath=//*[@id='wpCreateaccount' and @onScreen='true']" ,0 , 0, 2, true);
     }
 
     @After

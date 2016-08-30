@@ -27,7 +27,7 @@ public class Suite implements Runnable{
 
     @Override
     public void run() {
-       /* EriBank eriBank = new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank");
+        EriBank eriBank = new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank");
         eriBank.runTest();
         NonInstrumented clockTest = new NonInstrumented(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Non-Instrumented");
         clockTest.runTest();
@@ -35,10 +35,11 @@ public class Suite implements Runnable{
         browserTest.runTest();
         LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
         launchBrowser.runTest();
-        Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
+        TenFreeApps ten = new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps");
+        ten.runTest();
+
+       /* Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
         rebootTest.runTest();*/
-        TenFreeApps freeAppsTest = new TenFreeApps(SetUp() , deviceQuery , repNum , reportFolder , deviceOS , "GetTenFreeApps");
-        freeAppsTest.runTest();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 
