@@ -1,12 +1,25 @@
-17:48:23: 
-*** FAILURE - ios_app:admin’s iPhone - GetTenFreeApps - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
-17:48:23:   ios_app:admin’s iPhone - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='Free']' at zone NATIVE
+18:04:43: 
+*** FAILURE - adb:HUAWEI HUAWEI MT7-L09 - GetTenFreeApps - Thread-1: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
+18:04:43:   adb:HUAWEI HUAWEI MT7-L09 - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
 	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
 	at com.experitest.client.Client.execute(Client.java:237)
 	at com.experitest.client.Client.click(Client.java:436)
 	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.TenFreeApps.IOSRunTest(TenFreeApps.java:53)
-	at FrameWork.AbsTest.Execute(AbsTest.java:81)
+	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:21)
+	at FrameWork.AbsTest.Execute(AbsTest.java:84)
+	at FrameWork.AbsTest.runTest(AbsTest.java:58)
+	at FrameWork.Suite.run(Suite.java:41)
+	at java.lang.Thread.run(Thread.java:745)
+
+18:05:10: 
+*** FAILURE - adb:HUAWEI HUAWEI MT7-L09 - GetTenFreeApps - Thread-1: Iteration - 2 - Success Rate: 0/2 = 0.0    Time - 0s ***
+18:05:10:   adb:HUAWEI HUAWEI MT7-L09 - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
+	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
+	at com.experitest.client.Client.execute(Client.java:237)
+	at com.experitest.client.Client.click(Client.java:436)
+	at FrameWork.MyClient.click(MyClient.java:65)
+	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:21)
+	at FrameWork.AbsTest.Execute(AbsTest.java:84)
 	at FrameWork.AbsTest.runTest(AbsTest.java:58)
 	at FrameWork.Suite.run(Suite.java:41)
 	at java.lang.Thread.run(Thread.java:745)

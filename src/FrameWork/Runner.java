@@ -6,7 +6,7 @@ public class Runner {
 
 	static int iOSDevicesNum = 1;
 	static int androidDevicesNum = 1;
-	static int repNum = 1;
+	static int repNum = 2;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";

@@ -39,7 +39,7 @@ public class TenFreeApps extends AbsTest {
                     counterOfEnteredApp++;
                 }
             }
-            client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true' and contains(@text , '" + countOfOnScreenApps+1 + "')]" , 0 , 1000 , 1 , false);
+            client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true' and contains(@text , '" + countOfOnScreenApps+ 1 + "')]" , 0 , 1000 , 1 , false);
         }
 
         System.out.println("------------------- 10's free apps today ------------------");
