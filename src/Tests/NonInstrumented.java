@@ -81,12 +81,8 @@ public class NonInstrumented extends AbsTest {
         client.click("NATIVE", "xpath=//*[@text='Edit']", 0, 1);
         client.verifyElementFound("NATIVE", deleteElement, 0);
         client.click("NATIVE", deleteElement, 0, 1);
-        try {
-            client.waitForElement("NATIVE", "xpath=//*[@text='Delete']", 0, 10000);
-            client.click("NATIVE", "xpath=//*[@text='Delete']", 0, 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        client.waitForElement("NATIVE", "xpath=//*[@text='Delete']", 0, 10000);
+        client.click("NATIVE", "xpath=//*[@text='Delete']", 0, 1);
         client.click("NATIVE", "xpath=//*[@accessibilityLabel='World Clock']", 0, 1);
     }
 }
