@@ -1,26 +1,68 @@
-18:04:43: 
-*** FAILURE - adb:HUAWEI HUAWEI MT7-L09 - GetTenFreeApps - Thread-1: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
-18:04:43:   adb:HUAWEI HUAWEI MT7-L09 - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
+09:45:31: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 61s
+09:45:39: SUCCESS- adb:samsung GT-I9301I - EriBank - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 70s
+09:46:01: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 85s
+09:46:24: SUCCESS- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 100s
+09:46:37: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 63s
+09:46:50: SUCCESS- adb:samsung GT-I9301I - EriBank - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 69s
+09:47:28: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 82s
+09:47:44: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 65s
+09:48:01: SUCCESS- adb:samsung GT-I9301I - EriBank - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 67s
+09:48:10: SUCCESS- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 99s
+09:48:50: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-2: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 63s
+09:48:56: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 79s
+09:49:11: SUCCESS- adb:samsung GT-I9301I - EriBank - Thread-3: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 67s
+09:49:55: SUCCESS- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 100s
+09:49:57: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-2: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 64s
+09:50:19: SUCCESS- adb:samsung GT-I9301I - EriBank - Thread-3: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 65s
+09:50:22: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 82s
+09:50:38: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 31s
+09:50:58: SUCCESS- adb:samsung GT-I9301I - Non-Instrumented - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 28s
+09:51:11: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 30s
+09:51:28: SUCCESS- adb:samsung GT-I9301I - Non-Instrumented - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 28s
+09:51:45: SUCCESS- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 105s
+09:51:47: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 32s
+09:51:51: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 85s
+09:51:58: SUCCESS- adb:samsung GT-I9301I - Non-Instrumented - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 27s
+09:52:20: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-2: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 30s
+09:52:26: SUCCESS- adb:samsung GT-I9301I - Non-Instrumented - Thread-3: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 26s
+09:52:50: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 37s
+09:52:54: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-2: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 31s
+09:52:55: SUCCESS- adb:samsung GT-I9301I - Non-Instrumented - Thread-3: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 25s
+09:53:29: SUCCESS- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 99s
+09:53:34: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 38s
+09:53:42: SUCCESS- adb:LGE Nexus 5X - Web - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 39s
+09:53:48: SUCCESS- adb:samsung GT-I9301I - Web - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 41s
+09:54:13: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 35s
+09:54:20: SUCCESS- adb:LGE Nexus 5X - Web - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 36s
+09:54:28: 
+*** FAILURE- adb:LGE Nexus 5X - Web - Thread-2: Iteration - 3 - Success Rate: 2/3 = 0.6666666666666666    Time - 36s ***
+09:54:28:   adb:LGE Nexus 5X - com.experitest.client.InternalException: Exception caught while executing launch: Failed to launch URL: chrome:m.ebay.com: Failed to identify package: com.android.chrome
 	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
 	at com.experitest.client.Client.execute(Client.java:237)
-	at com.experitest.client.Client.click(Client.java:436)
-	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:21)
+	at com.experitest.client.Client.launch(Client.java:1352)
+	at FrameWork.MyClient.launch(MyClient.java:55)
+	at Tests.Web.AndroidRunTest(Web.java:21)
 	at FrameWork.AbsTest.Execute(AbsTest.java:84)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:41)
+	at FrameWork.AbsTest.runTest(AbsTest.java:63)
+	at FrameWork.Suite.run(Suite.java:35)
 	at java.lang.Thread.run(Thread.java:745)
 
-18:05:10: 
-*** FAILURE - adb:HUAWEI HUAWEI MT7-L09 - GetTenFreeApps - Thread-1: Iteration - 2 - Success Rate: 0/2 = 0.0    Time - 0s ***
-18:05:10:   adb:HUAWEI HUAWEI MT7-L09 - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
-	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
-	at com.experitest.client.Client.execute(Client.java:237)
-	at com.experitest.client.Client.click(Client.java:436)
-	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:21)
-	at FrameWork.AbsTest.Execute(AbsTest.java:84)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:41)
-	at java.lang.Thread.run(Thread.java:745)
-
+09:54:28: Thread-2  adb:LGE Nexus 5X - REPORT - c:\temp\Reports\test39
+09:54:54: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 36s
+09:55:04: SUCCESS- adb:samsung GT-I9301I - Web - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 74s
+09:55:23: SUCCESS- ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 88s
+09:55:33: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 36s
+09:55:40: SUCCESS- adb:LGE Nexus 5X - Web - Thread-2: Iteration - 4 - Success Rate: 3/4 = 0.75    Time - 63s
+09:55:50: SUCCESS- adb:samsung GT-I9301I - Web - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 43s
+09:56:18: SUCCESS- adb:LGE Nexus 5X - Web - Thread-2: Iteration - 5 - Success Rate: 4/5 = 0.8    Time - 34s
+09:56:39: SUCCESS- adb:samsung GT-I9301I - Web - Thread-3: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 46s
+09:56:55: SUCCESS- ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 88s
+09:57:29: SUCCESS- adb:samsung GT-I9301I - Web - Thread-3: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 47s
+09:57:52: SUCCESS- ios_app:Iphone SE 93 - Web - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 118s
+09:58:25: SUCCESS- ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 86s
+09:59:50: SUCCESS- ios_app:Iphone SE 93 - Web - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 114s
+09:59:55: SUCCESS- ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 4 - Success Rate: 4/4 = 1.0    Time - 86s
+10:00:09: SUCCESS- adb:LGE Nexus 5X - LaunchBrowserLoop - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 221s
+10:01:24: SUCCESS- ios_app:Ipad mini 2 white - Non-Instrumented - Thread-0: Iteration - 5 - Success Rate: 5/5 = 1.0    Time - 86s
+10:01:45: SUCCESS- adb:samsung GT-I9301I - LaunchBrowserLoop - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 245s
+10:01:52: SUCCESS- ios_app:Iphone SE 93 - Web - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 117s

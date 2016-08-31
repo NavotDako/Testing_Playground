@@ -1,15 +1,9 @@
 package FrameWork;
 
-import com.experitest.client.MobileListener;
-import org.junit.runners.Suite;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by navot.dako on 2/24/2016.
- */
 public abstract class AbsTest {
     protected int success =0;
     protected int repNum = 0;
@@ -64,16 +58,11 @@ public abstract class AbsTest {
         for (int i = 0; i < repNum; i++) {
             try{
                 time = Execute(i);
+                System.out.println(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + client.generateReport(false));
             }catch(Exception e ){
                 Failure(i, e,time);
             }
 
-            try {
-                System.out.println(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + client.generateReport(false));
-            }catch(Exception e){
-                e.printStackTrace();
-                return false;
-            }
         }
         System.out.println("############################ Device - "+ device +" - "+testName +" - "+Thread.currentThread().getName() +" - Finished #############################" );
 
@@ -93,9 +82,8 @@ public abstract class AbsTest {
         }
         long time = System.currentTimeMillis() - before;
         success++;
-        double successRate = ((double)success/(double)(i+1));
-        String stringToWrite = "SUCCESS - " +device+" - "+testName +" - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+successRate + "    Time - "+time/1000 +"s";
-        System.out.println(Thread.currentThread().getName() +"  ############################ "+stringToWrite+" ##############################");
+
+        String stringToWrite = UpdateResults(i, time,true);
         try {
             Write(stringToWrite);
         } catch (IOException e1) {
@@ -105,30 +93,60 @@ public abstract class AbsTest {
     }
 
     public void Failure(int i, Exception e, long time) {
-        double successRate = ((double)success/(double)(i+1));
-        String stringToWrite = "FAILURE - " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  successRate + "    Time - "+time/1000 +"s";
-        System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
-        StringWriter errors = new StringWriter();
-        e.printStackTrace(new PrintWriter(errors));
-        System.err.println(Thread.currentThread().getName()+ " "+device+ " - StackTrace: " + errors.toString());
+        String stringToWrite = UpdateResults(i, time,false);
+        StringWriter errors = GetErrors(e);
+        String generatedReport = TryGenerateReport();
+        WriteFailure(stringToWrite, errors, generatedReport);
+        TryCollectSupportData();
+    }
 
-        try {
-            Write("\n*** "+stringToWrite+" ***");
-            Write("  "+device + " - "+errors.toString());
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+    private void TryCollectSupportData() {
         if (device!=null){
             String dataPath =reportFolder+"\\SupportData_"+device+"_"+System.currentTimeMillis();
             System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"SupportData - "+dataPath);
             try{
                 client.collectSupportData(dataPath,"",device,"","","",true,true);
-                client.report(dataPath,true);
             }catch(Exception e1){
                 System.err.println(device + " - Can't get SupportData");
                 e1.printStackTrace();
             }
         }
+    }
+
+    private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
+        try {
+            Write("\n*** "+stringToWrite+" ***");
+            Write("  "+device + " - "+errors.toString());
+            Write(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + generatedReport );
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private String TryGenerateReport() {
+        String generatedReport = null;
+        try {
+            generatedReport = client.generateReport(false);
+        } catch (Exception e1) {
+            System.out.println(Thread.currentThread().getName()+ " " +device+" Unable to generate report");
+            e1.printStackTrace();
+        }
+        return generatedReport;
+    }
+
+    private StringWriter GetErrors(Exception e) {
+        StringWriter errors = new StringWriter();
+        e.printStackTrace(new PrintWriter(errors));
+        System.err.println(Thread.currentThread().getName()+ " "+device+ " - StackTrace: " + errors.toString());
+        return errors;
+    }
+
+    private String UpdateResults(int i, long time, boolean succeeded) {
+        double successRate = ((double)success/(double)(i+1));
+        String status = (succeeded)?"SUCCESS":"FAILURE";
+        String stringToWrite = status +"- " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  successRate + "    Time - "+time/1000 +"s";
+        System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
+        return stringToWrite;
     }
 
     protected abstract void AndroidRunTest();
