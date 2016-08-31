@@ -5,13 +5,14 @@ import java.io.*;
 public class Runner {
 	static int iOSDevicesNum = 2;
 	static int androidDevicesNum =2;
-	static int repNum = 5;
+	static int repNum = 3;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		//deviceQuery= " and contains(@version,'10.')";
+
 		System.out.println("Getting the studio.exe resources");
 		String resources = getResources();
 

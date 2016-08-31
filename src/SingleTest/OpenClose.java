@@ -1,4 +1,4 @@
-package Tests;
+package SingleTest;
 
 import com.experitest.client.*;
 
@@ -31,7 +31,7 @@ public class OpenClose {
             System.out.println("Iter - "+i);
             client = new Client(host, port, true);
             client.setProjectBaseDirectory(projectBaseDirectory);
-            client.setReporter("xml", "reports", "Tests.OpenClose");
+            client.setReporter("xml", "reports", "SingleTest.OpenClose");
             client.waitForDevice("@os='ios'",10000);
             client.openDevice();
             client.sleep(2000);

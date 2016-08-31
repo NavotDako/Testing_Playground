@@ -20,20 +20,20 @@ public class SingleJunit {
 
     @Test
     public void AndroidTest(){
-        testUntitled("adb:LGE LG-H815");
+        testUntitled();
     }
 
 
-    public void testUntitled(String device){
-        client.waitForDevice("@name = 'User’s iPhone'", 10000);
-        client.swipeWhileNotFound("DOWN", 200, 1000, "WEB","xpath=//*[@id='wpCreateaccount' and @onScreen='true']" ,0 , 0, 2, true);
-    }
+    public void testUntitled(){
+        String device = client.waitForDevice("@os='ios'", 10000);
+        String path = client.generateReport(false);
+        client.collectSupportData(path+"\\SupportData","",device,"","","",true,true);    }
 
     @After
     public void tearDown(){
         // Generates a report of the test case.
         // For more information - https://docs.experitest.com/display/public/SA/Report+Of+Executed+Test
-        client.generateReport(false);
+
         // Releases the client so that other clients can approach the agent in the near future.
         client.releaseClient();
     }
