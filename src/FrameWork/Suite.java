@@ -37,9 +37,10 @@ public class Suite implements Runnable{
         launchBrowser.runTest();
         TenFreeApps ten = new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps");
         ten.runTest();
-
-       /* Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
-        rebootTest.runTest();*/
+        SimulateCapture capture = new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture");
+        capture.runTest();
+        Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
+        rebootTest.runTest();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 

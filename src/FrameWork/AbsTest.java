@@ -62,9 +62,12 @@ public abstract class AbsTest {
             }catch(Exception e ){
                 Failure(i, e,time);
             }
-
         }
-        System.out.println("############################ Device - "+ device +" - "+testName +" - "+Thread.currentThread().getName() +" - Finished #############################" );
+
+        double successRate = ((double)success/(double)(repNum));
+        String finish = "FINISHED- " + device+" - "+testName+ " - " +Thread.currentThread().getName() +" - Success Rate: "+success+"/"+(repNum)+" = "+  successRate;
+        System.out.println(finish);
+        Write(finish);
 
         client.releaseClient();
         return true;
@@ -83,17 +86,13 @@ public abstract class AbsTest {
         long time = System.currentTimeMillis() - before;
         success++;
 
-        String stringToWrite = UpdateResults(i, time,true);
-        try {
-            Write(stringToWrite);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+        String stringToWrite = WriteAndGetResults(i, time,true);
+        Write(stringToWrite);
         return time;
     }
 
     public void Failure(int i, Exception e, long time) {
-        String stringToWrite = UpdateResults(i, time,false);
+        String stringToWrite = WriteAndGetResults(i, time,false);
         StringWriter errors = GetErrors(e);
         String generatedReport = TryGenerateReport();
         WriteFailure(stringToWrite, errors, generatedReport);
@@ -114,13 +113,9 @@ public abstract class AbsTest {
     }
 
     private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
-        try {
-            Write("\n*** "+stringToWrite+" ***");
-            Write("  "+device + " - "+errors.toString());
-            Write(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + generatedReport+"\n" );
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+        Write("\n*** " + stringToWrite + " ***");
+        Write("  " + device + " - " + errors.toString());
+        Write(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + generatedReport + "\n");
     }
 
     private String TryGenerateReport() {
@@ -141,11 +136,11 @@ public abstract class AbsTest {
         return errors;
     }
 
-    private String UpdateResults(int i, long time, boolean succeeded) {
+    private String WriteAndGetResults(int i, long time, boolean succeeded) {
         double successRate = ((double)success/(double)(i+1));
         String status = (succeeded)?"SUCCESS":"FAILURE";
         String stringToWrite = status +"- " +device+" - "+testName+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1) + " - Success Rate: "+success+"/"+(i+1)+" = "+  successRate + "    Time - "+time/1000 +"s";
-        System.err.println("****************** ############################ " + stringToWrite + " ############################# ******************");
+        System.out.println("****************** ############################ " + stringToWrite + " ############################# ******************");
         return stringToWrite;
     }
 
@@ -153,11 +148,16 @@ public abstract class AbsTest {
 
     protected abstract void IOSRunTest();
 
-    public void Write(String stringToWrite) throws IOException {
-        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/report.txt", true)));
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        writer.append(sdf.format(new Date(System.currentTimeMillis())) +": " + stringToWrite+"\n");
-        writer.close();
+    public void Write(String stringToWrite)  {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/report.txt", true)));
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            writer.append(sdf.format(new Date(System.currentTimeMillis())) +": " + stringToWrite+"\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

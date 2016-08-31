@@ -52,19 +52,21 @@ public class SimulateCapture extends AbsTest {
         String path = startPath + "\\seetest\\app.properties";
         System.out.println("path is: " + path);
         File file = new File(path);
+        boolean found=false;
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            boolean found = false;
+            found = false;
             String line;
             while ((line = br.readLine()) != null){
                 if(line.replace(" ", "").equalsIgnoreCase("android.instrumentation.camera=true")) {
                     found = true;
                 }
             }
-            if(!found)
-                throw  new Exception("App properties doesn't contain the 'android.instrumentation.camera = true' sentence");
         }catch(Exception e){
             e.printStackTrace();
         }
+        if(!found)
+            throw  new RuntimeException("App properties doesn't contain the 'android.instrumentation.camera = true' sentence");
+
     }
 }
