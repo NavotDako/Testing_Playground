@@ -97,15 +97,15 @@ public abstract class AbsTest {
         StringWriter errors = GetErrors(e);
         String generatedReport = TryGenerateReport();
         WriteFailure(stringToWrite, errors, generatedReport);
-        TryCollectSupportData();
+        TryCollectSupportData(generatedReport);
     }
 
-    private void TryCollectSupportData() {
+    private void TryCollectSupportData(String generatedReport) {
         if (device!=null){
-            String dataPath =reportFolder+"\\SupportData_"+device+"_"+System.currentTimeMillis();
-            System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"SupportData - "+dataPath);
+            String dataPath =generatedReport;
+            System.out.println(Thread.currentThread().getName()+ " "+ device+" - "+"SupportData - "+dataPath);
             try{
-                client.collectSupportData(dataPath,"",device,"","","",true,true);
+                client.collectSupportData(dataPath+"\\SupportData","",device,"","","",true,true);
             }catch(Exception e1){
                 System.err.println(device + " - Can't get SupportData");
                 e1.printStackTrace();
