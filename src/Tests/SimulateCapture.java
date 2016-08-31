@@ -40,7 +40,7 @@ public class SimulateCapture extends AbsTest {
         client.sleep(2000);
         File file = new File("lib/SimulateCapture/Text.jpg");
         client.simulateCapture(file.getAbsolutePath());
-        client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']" , 0 , 1);
+        client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']]" , 0 , 1);
         client.sync(1500 , 0 , 6000);
         client.verifyElementFound("Text","Text",0);
     }
