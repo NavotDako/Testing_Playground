@@ -48,7 +48,7 @@ public abstract class AbsTest {
 
     }
 
-    public boolean runTest(){
+    public boolean StartTesting(){
         long time =0;
         if (device==null){
             getDevice();
@@ -57,7 +57,7 @@ public abstract class AbsTest {
 
         for (int i = 0; i < repNum; i++) {
             try{
-                time = Execute(i);
+                time = ExecuteTest(i);
                 System.out.println(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + client.generateReport(false));
             }catch(Exception e ){
                 Failure(i, e,time);
@@ -73,7 +73,7 @@ public abstract class AbsTest {
         return true;
     }
 
-    private long Execute(int i) {
+    private long ExecuteTest(int i) {
         System.out.println(Thread.currentThread().getName() +"  STARTING - " +device+ " - " +Thread.currentThread().getName()+": Iteration - " + (i+1));
         System.out.println(Thread.currentThread().getName() +"  Set Reporter - " + client.setReporter("xml", reportFolder, device.substring(8) + " "+ deviceOS +" - "+ testName+ " - "+ (i+1) ));
         long before =   System.currentTimeMillis();

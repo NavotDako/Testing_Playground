@@ -28,19 +28,19 @@ public class Suite implements Runnable{
     @Override
     public void run() {
         EriBank eriBank = new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank");
-        eriBank.runTest();
+        eriBank.StartTesting();
         NonInstrumented clockTest = new NonInstrumented(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Non-Instrumented");
-        clockTest.runTest();
+        clockTest.StartTesting();
         Web browserTest = new Web(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Web");
-        browserTest.runTest();
+        browserTest.StartTesting();
         LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
-        launchBrowser.runTest();
+        launchBrowser.StartTesting();
         TenFreeApps ten = new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps");
-        ten.runTest();
+        ten.StartTesting();
         SimulateCapture capture = new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture");
-        capture.runTest();
+        capture.StartTesting();
         Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
-        rebootTest.runTest();
+        rebootTest.StartTesting();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 
