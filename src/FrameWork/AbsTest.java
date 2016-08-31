@@ -117,7 +117,7 @@ public abstract class AbsTest {
         try {
             Write("\n*** "+stringToWrite+" ***");
             Write("  "+device + " - "+errors.toString());
-            Write(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + generatedReport );
+            Write(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + generatedReport+"\n" );
         } catch (IOException e1) {
             e1.printStackTrace();
         }
