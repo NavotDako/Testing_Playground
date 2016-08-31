@@ -113,7 +113,7 @@ public abstract class AbsTest {
     }
 
     private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
-        Write("\n*** " + stringToWrite + " ***");
+        Write("*** " + stringToWrite + " ***");
         Write("  " + device + " - " + errors.toString());
         Write(Thread.currentThread().getName() + "  " + device + " - " + "REPORT - " + generatedReport + "\n");
     }

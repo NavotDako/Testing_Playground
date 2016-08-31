@@ -93,6 +93,8 @@ public class Web extends AbsTest {
 			client.sendText("{LANDSCAPE}");
 			client.swipeWhileNotFound("DOWN", 150, 1000, "WEB","xpath=//*[@id='wpCreateaccount' and @onScreen='true']" ,0 , 0, 2, true);
 			client.syncElements(1000, 20000);
+			if(client.isElementFound("native","xpath=//*[@text='Save Password']",0))
+				client.click("Native","xpath=//*[@text='Not Now']",0,1);
 			client.verifyElementFound("WEB", "xpath=//*[@class='error']", 0);
 			client.click("WEB", "xpath=//*[@id='mw-mf-main-menu-button']", 0, 1);
 			client.sendText("{PORTRAIT}");
