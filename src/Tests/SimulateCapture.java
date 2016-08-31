@@ -17,7 +17,6 @@ public class SimulateCapture extends AbsTest {
 
     public SimulateCapture(MyClient client , String device , int repNum , String reportFolder , String deviceToTest , String testName) {
         super(client, device, repNum, reportFolder, deviceToTest, testName);
-
     }
 
     @Override
@@ -28,21 +27,8 @@ public class SimulateCapture extends AbsTest {
         client.launch("com.CameraFlash/.MainActivity" , true , true);
         File file = new File("lib/SimulateCapture/hello-android.png");
         client.simulateCapture(file.getAbsolutePath());
-        String textFromPicture = client.getText("TEXT");
-        client.sleep(2000);
-        for(int i=0;i<textFromPicture.length() ; i++){
-            if(textFromPicture.charAt(i) == 'A'){
-                if(textFromPicture.substring(i , i+7).equals("Android"))
-                    found = true;
-            }
-        }
-        if(!found){
-            try {
-                throw new Exception("Failed to find android in the injected picture!", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        client.textFilter("0xA8C02E",80);
+        client.verifyElementFound("Text","Hello",0);
     }
 
     @Override
@@ -54,22 +40,9 @@ public class SimulateCapture extends AbsTest {
         client.sleep(2000);
         File file = new File("lib/SimulateCapture/Text.jpg");
         client.simulateCapture(file.getAbsolutePath());
-        client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']]" , 0 , 1);
+        client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']" , 0 , 1);
         client.sync(1500 , 0 , 6000);
-        String textFromPicture = client.getText("TEXT");
-        for(int i=0;i<textFromPicture.length() ; i++){
-            if(textFromPicture.charAt(i) == 'T'){
-                if(textFromPicture.substring(i , i+4).equals("Text"))
-                    found = true;
-            }
-        }
-        if(!found){
-            try {
-                throw new Exception("Failed to find Text in the injected picture!", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        client.verifyElementFound("Text","Text",0);
     }
 
 
