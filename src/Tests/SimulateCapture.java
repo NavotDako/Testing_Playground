@@ -17,12 +17,12 @@ public class SimulateCapture extends AbsTest {
 
     public SimulateCapture(MyClient client , String device , int repNum , String reportFolder , String deviceToTest , String testName) {
         super(client, device, repNum, reportFolder, deviceToTest, testName);
-        checkAppData();
+
     }
 
     @Override
     protected void AndroidRunTest() {
-
+        checkAppData();
         boolean found = false;
         client.install("http://192.168.2.72:8181/AndroidApps/cameraFlash-%20simulateCapture/com.CameraFlash-.MainActivity_ver_11.0.apk" , true , false);
         client.launch("com.CameraFlash/.MainActivity" , true , true);
