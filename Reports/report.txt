@@ -1,26 +1,142 @@
-18:04:43: 
-*** FAILURE - adb:HUAWEI HUAWEI MT7-L09 - GetTenFreeApps - Thread-1: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
-18:04:43:   adb:HUAWEI HUAWEI MT7-L09 - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
+14:02:45: 
+*** FAILURE- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
+14:02:45:   ios_app:Ipad mini 2 white - com.experitest.client.InternalException: Exception caught while executing startLoggingDevice: No device defined. Can not get device log, Not a device.
+	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
+	at com.experitest.client.Client.execute(Client.java:237)
+	at com.experitest.client.Client.startLoggingDevice(Client.java:1921)
+	at FrameWork.MyClient.setReporter(MyClient.java:73)
+	at FrameWork.AbsTest.Execute(AbsTest.java:77)
+	at FrameWork.AbsTest.runTest(AbsTest.java:60)
+	at FrameWork.Suite.run(Suite.java:31)
+	at java.lang.Thread.run(Thread.java:745)
+
+14:02:45: Thread-0  ios_app:Ipad mini 2 white - REPORT - null
+
+14:02:47: 
+*** FAILURE- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 2 - Success Rate: 0/2 = 0.0    Time - 0s ***
+14:02:47:   ios_app:Ipad mini 2 white - com.experitest.client.InternalException: Exception caught while executing startLoggingDevice: No device defined. Can not get device log, Not a device.
+	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
+	at com.experitest.client.Client.execute(Client.java:237)
+	at com.experitest.client.Client.startLoggingDevice(Client.java:1921)
+	at FrameWork.MyClient.setReporter(MyClient.java:73)
+	at FrameWork.AbsTest.Execute(AbsTest.java:77)
+	at FrameWork.AbsTest.runTest(AbsTest.java:60)
+	at FrameWork.Suite.run(Suite.java:31)
+	at java.lang.Thread.run(Thread.java:745)
+
+14:02:47: Thread-0  ios_app:Ipad mini 2 white - REPORT - null
+
+14:02:49: 
+*** FAILURE- ios_app:Ipad mini 2 white - EriBank - Thread-0: Iteration - 3 - Success Rate: 0/3 = 0.0    Time - 0s ***
+14:02:49:   ios_app:Ipad mini 2 white - com.experitest.client.InternalException: Exception caught while executing startLoggingDevice: No device defined. Can not get device log, Not a device.
+	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
+	at com.experitest.client.Client.execute(Client.java:237)
+	at com.experitest.client.Client.startLoggingDevice(Client.java:1921)
+	at FrameWork.MyClient.setReporter(MyClient.java:73)
+	at FrameWork.AbsTest.Execute(AbsTest.java:77)
+	at FrameWork.AbsTest.runTest(AbsTest.java:60)
+	at FrameWork.Suite.run(Suite.java:31)
+	at java.lang.Thread.run(Thread.java:745)
+
+14:02:49: Thread-0  ios_app:Ipad mini 2 white - REPORT - null
+
+14:02:50: ############################ Device - ios_app:Ipad mini 2 white - EriBank - Thread-0 - Finished #############################
+14:02:51: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 72s
+14:03:00: SUCCESS- adb:htc Nexus 9 - EriBank - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 71s
+14:03:08: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 76s
+14:03:52: 
+*** FAILURE- ios_app:Dell iPhone - Non-Instrumented - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
+14:03:52:   ios_app:Dell iPhone - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')]' at zone NATIVE
 	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
 	at com.experitest.client.Client.execute(Client.java:237)
 	at com.experitest.client.Client.click(Client.java:436)
 	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:21)
-	at FrameWork.AbsTest.Execute(AbsTest.java:84)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:41)
+	at Tests.NonInstrumented.IOSRunTest(NonInstrumented.java:58)
+	at FrameWork.AbsTest.Execute(AbsTest.java:80)
+	at FrameWork.AbsTest.runTest(AbsTest.java:60)
+	at FrameWork.Suite.run(Suite.java:33)
 	at java.lang.Thread.run(Thread.java:745)
 
-18:05:10: 
-*** FAILURE - adb:HUAWEI HUAWEI MT7-L09 - GetTenFreeApps - Thread-1: Iteration - 2 - Success Rate: 0/2 = 0.0    Time - 0s ***
-18:05:10:   adb:HUAWEI HUAWEI MT7-L09 - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
+14:03:52: Thread-0  ios_app:Dell iPhone - REPORT - c:\temp\Reports\test9
+
+14:04:02: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 68s
+14:04:17: SUCCESS- adb:htc Nexus 9 - EriBank - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 74s
+14:04:32: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 80s
+14:05:09: SUCCESS- adb:LGE Nexus 5X - EriBank - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 64s
+14:05:12: ############################ Device - adb:LGE Nexus 5X - EriBank - Thread-3 - Finished #############################
+14:05:34: SUCCESS- adb:htc Nexus 9 - EriBank - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 74s
+14:05:38: ############################ Device - adb:htc Nexus 9 - EriBank - Thread-2 - Finished #############################
+14:05:53: SUCCESS- ios_app:Iphone SE 93 - EriBank - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 78s
+14:05:58: ############################ Device - ios_app:Iphone SE 93 - EriBank - Thread-1 - Finished #############################
+14:05:59: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 40s
+14:06:16: SUCCESS- adb:htc Nexus 9 - Non-Instrumented - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 31s
+14:06:24: SUCCESS- ios_app:Dell iPhone - Non-Instrumented - Thread-0: Iteration - 2 - Success Rate: 1/2 = 0.5    Time - 57s
+14:06:31: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 29s
+14:06:49: SUCCESS- adb:htc Nexus 9 - Non-Instrumented - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 30s
+14:06:52: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 37s
+14:07:04: SUCCESS- adb:LGE Nexus 5X - Non-Instrumented - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 29s
+14:07:08: ############################ Device - adb:LGE Nexus 5X - Non-Instrumented - Thread-3 - Finished #############################
+14:07:23: SUCCESS- adb:htc Nexus 9 - Non-Instrumented - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 31s
+14:07:25: SUCCESS- ios_app:Dell iPhone - Non-Instrumented - Thread-0: Iteration - 3 - Success Rate: 2/3 = 0.6666666666666666    Time - 57s
+14:07:25: ############################ Device - adb:htc Nexus 9 - Non-Instrumented - Thread-2 - Finished #############################
+14:07:27: ############################ Device - ios_app:Dell iPhone - Non-Instrumented - Thread-0 - Finished #############################
+14:07:34: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 39s
+14:07:52: SUCCESS- adb:LGE Nexus 5X - Web - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 34s
+14:08:12: SUCCESS- ios_app:Iphone SE 93 - Non-Instrumented - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 34s
+14:08:15: ############################ Device - ios_app:Iphone SE 93 - Non-Instrumented - Thread-1 - Finished #############################
+14:08:39: SUCCESS- adb:htc Nexus 9 - Web - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 68s
+14:08:57: SUCCESS- adb:LGE Nexus 5X - Web - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 63s
+14:09:51: SUCCESS- adb:htc Nexus 9 - Web - Thread-2: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 68s
+14:10:05: SUCCESS- adb:LGE Nexus 5X - Web - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 65s
+14:10:08: ############################ Device - adb:LGE Nexus 5X - Web - Thread-3 - Finished #############################
+14:10:32: SUCCESS- ios_app:Iphone SE 93 - Web - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 125s
+14:10:47: SUCCESS- ios_app:Dell iPhone - Web - Thread-0: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 176s
+14:11:05: SUCCESS- adb:htc Nexus 9 - Web - Thread-2: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 67s
+14:11:07: ############################ Device - adb:htc Nexus 9 - Web - Thread-2 - Finished #############################
+14:12:33: SUCCESS- ios_app:Iphone SE 93 - Web - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 116s
+14:13:11: SUCCESS- adb:LGE Nexus 5X - LaunchBrowserLoop - Thread-3: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 175s
+14:13:23: SUCCESS- ios_app:Dell iPhone - Web - Thread-0: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 152s
+14:14:48: SUCCESS- ios_app:Iphone SE 93 - Web - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 128s
+14:14:52: ############################ Device - ios_app:Iphone SE 93 - Web - Thread-1 - Finished #############################
+14:16:06: SUCCESS- ios_app:Dell iPhone - Web - Thread-0: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 158s
+14:16:09: ############################ Device - ios_app:Dell iPhone - Web - Thread-0 - Finished #############################
+14:17:22: 
+*** FAILURE- ios_app:Dell iPhone - LaunchBrowserLoop - Thread-0: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
+14:17:22:   ios_app:Dell iPhone - com.experitest.client.InternalException: Exception caught while executing launch: Failed to launch URL: safari:www.google.com: null
+	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
+	at com.experitest.client.Client.execute(Client.java:237)
+	at com.experitest.client.Client.launch(Client.java:1352)
+	at FrameWork.MyClient.launch(MyClient.java:55)
+	at Tests.LaunchBrowserLoop.IOSRunTest(LaunchBrowserLoop.java:37)
+	at FrameWork.AbsTest.Execute(AbsTest.java:80)
+	at FrameWork.AbsTest.runTest(AbsTest.java:60)
+	at FrameWork.Suite.run(Suite.java:37)
+	at java.lang.Thread.run(Thread.java:745)
+
+14:17:22: Thread-0  ios_app:Dell iPhone - REPORT - c:\temp\Reports\test40
+
+14:17:26: SUCCESS- ios_app:Iphone SE 93 - LaunchBrowserLoop - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 142s
+14:17:57: SUCCESS- adb:htc Nexus 9 - LaunchBrowserLoop - Thread-2: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 400s
+14:17:59: SUCCESS- adb:LGE Nexus 5X - LaunchBrowserLoop - Thread-3: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 285s
+14:19:51: SUCCESS- ios_app:Iphone SE 93 - LaunchBrowserLoop - Thread-1: Iteration - 2 - Success Rate: 2/2 = 1.0    Time - 141s
+14:22:15: SUCCESS- ios_app:Iphone SE 93 - LaunchBrowserLoop - Thread-1: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 141s
+14:22:19: ############################ Device - ios_app:Iphone SE 93 - LaunchBrowserLoop - Thread-1 - Finished #############################
+14:22:23: SUCCESS- ios_app:Dell iPhone - LaunchBrowserLoop - Thread-0: Iteration - 2 - Success Rate: 1/2 = 0.5    Time - 201s
+14:22:42: SUCCESS- adb:LGE Nexus 5X - LaunchBrowserLoop - Thread-3: Iteration - 3 - Success Rate: 3/3 = 1.0    Time - 281s
+14:22:45: ############################ Device - adb:LGE Nexus 5X - LaunchBrowserLoop - Thread-3 - Finished #############################
+14:23:27: 
+*** FAILURE- adb:LGE Nexus 5X - TenFreeApps - Thread-3: Iteration - 1 - Success Rate: 0/1 = 0.0    Time - 0s ***
+14:23:27:   adb:LGE Nexus 5X - com.experitest.client.InternalException: Exception caught while executing click: Element was not identified: 'xpath=//*[@text='TOP FREE']' at zone NATIVE
 	at com.experitest.client.JavaClientInternals.executeInternally(JavaClientInternals.java:234)
 	at com.experitest.client.Client.execute(Client.java:237)
 	at com.experitest.client.Client.click(Client.java:436)
 	at FrameWork.MyClient.click(MyClient.java:65)
-	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:21)
-	at FrameWork.AbsTest.Execute(AbsTest.java:84)
-	at FrameWork.AbsTest.runTest(AbsTest.java:58)
-	at FrameWork.Suite.run(Suite.java:41)
+	at Tests.TenFreeApps.AndroidRunTest(TenFreeApps.java:27)
+	at FrameWork.AbsTest.Execute(AbsTest.java:83)
+	at FrameWork.AbsTest.runTest(AbsTest.java:60)
+	at FrameWork.Suite.run(Suite.java:39)
 	at java.lang.Thread.run(Thread.java:745)
 
+14:23:27: Thread-3  adb:LGE Nexus 5X - REPORT - c:\temp\Reports\test48
+
+14:23:35: SUCCESS- ios_app:Iphone SE 93 - TenFreeApps - Thread-1: Iteration - 1 - Success Rate: 1/1 = 1.0    Time - 58s

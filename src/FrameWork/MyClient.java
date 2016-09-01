@@ -73,6 +73,7 @@ public class MyClient extends Client {
         super.startLoggingDevice(reportPath);
         return reportFolder;
     }
+
     @Override
     public boolean install(String app, boolean instrument, boolean stopIfRunning) {
         long before = System.currentTimeMillis();
@@ -135,5 +136,19 @@ public class MyClient extends Client {
         Finish("waitForDevice","waitForDevice - "+deviceOS, before);
 
         return deviceName;
+    }
+    @Override
+    public void collectSupportData(String zipDestination, String applicationPath, String device, String scenario, String expectedResult, String actualResult) {
+        long before = System.currentTimeMillis();
+        System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"SupportData - "+zipDestination);
+        try{
+            super.collectSupportData(zipDestination,"",device,"","","",true,true);
+
+        }catch(Exception e1){
+            System.err.println(device + " - Can't get SupportData");
+            e1.printStackTrace();
+        }
+        Finish("collectSupportData","collectSupportData - "+deviceOS, before);
+
     }
 }
