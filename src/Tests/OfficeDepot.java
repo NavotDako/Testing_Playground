@@ -34,7 +34,15 @@ public class OfficeDepot extends AbsTest{
         if(client.swipeWhileNotFound("Down", 0, 2000, "NATIVE", "xpath=//*[@text=concat('Lumisource Spyra Color-Changing Bar Table, 42', '\"', 'H x 1', '\"', 'W x 23', '\"', 'D, Clear/Chrome')]", 0, 1000, 10, true)){
             // If statement
         }
-        client.click("NATIVE", "xpath=//*[@id='scan']", 0, 1);
+
+        if(client.isFoundIn("NATIVE", "xpath=//*[@id='action_bar_container']", 0, "Inside", "NATIVE", "xpath=//*[@contentDescription='More options']", 0, 0)){
+            client.click("NATIVE", "xpath=//*[@contentDescription='More options']", 0, 1);
+            client.click("NATIVE", "xpath=//*[@text='Scan']", 0, 1);
+        }
+        else{
+            client.click("NATIVE", "xpath=//*[@id='scan']", 0, 1);
+        }
+
         client.click("NATIVE", "xpath=//*[@id='up']", 0, 1);
         client.click("NATIVE", "xpath=//*[@class='android.widget.ImageView' and ./parent::*[@id='home_page_ink_finder']]", 0, 1);
         client.click("NATIVE", "xpath=//*[@id='inktoner_enter_cartridge']", 0, 1);
@@ -54,6 +62,9 @@ public class OfficeDepot extends AbsTest{
         client.click("NATIVE", "xpath=//*[@text='OK']", 0, 1);
         client.click("NATIVE", "xpath=//*[@id='cart_v2_row_menu_button']", 0, 1);
         client.click("NATIVE", "xpath=//*[@text='Buy Later']", 0, 1);
+
+        client.closeKeyboard();
+
         client.click("NATIVE", "xpath=//*[@id='home']", 0, 1);
         if(client.swipeWhileNotFound("Down", 0, 2000, "NATIVE", "xpath=//*[@text='FIND STORE']", 0, 1000, 5, true)){
             // If statement
