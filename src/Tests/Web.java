@@ -46,9 +46,15 @@ public class Web extends AbsTest {
 	@Override
 	protected void IOSRunTest() {
 		String search = "xpath=//*[@text='About Wikipedia' and @top='true' or @id='searchInput']";
-		client.launch("safari:m.ebay.com", true, true);
-		client.hybridWaitForPageLoad(30000);
+		try {
+			client.launch("safari:m.ebay.com", true, true);
+		}catch(Exception e){
+			if(client.isElementFound("Native","xpath=//*[@text='Submit']",0))
+				client.click("Native","xpath=//*[@text='Submit']",0,1);
+			client.launch("safari:m.ebay.com", true, true);
+		}
 
+			client.hybridWaitForPageLoad(30000);
 			client.launch("safari:http://wikipedia.com", true, false);
 		if(client.waitForElement("WEB", "xpath=//*[@id='searchInput']", 0, 15000)){
 			client.elementSendText("WEB", "xpath=//*[@id='searchInput']", 0, "Long Run");

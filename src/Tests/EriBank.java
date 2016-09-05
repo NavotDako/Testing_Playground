@@ -14,7 +14,13 @@ public class EriBank extends AbsTest {
 	protected void AndroidRunTest() {
 		client.uninstall("com.experitest.ExperiBank/.LoginActivity");
 		client.sleep(500);
-		client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk",true,false);
+
+		try {
+			client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk",true,false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk",true,false);
+		}
 		client.launch("com.experitest.ExperiBank/.LoginActivity", true, true);
 		client.syncElements(3000,15000);
 		client.verifyElementFound("NATIVE", "hint=Username", 0);
@@ -51,7 +57,12 @@ public class EriBank extends AbsTest {
 	protected void IOSRunTest() {
 		client.uninstall("com.experitest.ExperiBankO");
 		client.sleep(500);
-		client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa",true,false);
+		try {
+			client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa",true,false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa",true,false);
+		}
 		client.launch("com.experitest.ExperiBankO", true, true);
 		client.syncElements(3000,15000);
 		client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0);

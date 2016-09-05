@@ -28,7 +28,9 @@ public class SimulateCapture extends AbsTest {
         File file = new File("lib/SimulateCapture/hello-android.png");
         client.simulateCapture(file.getAbsolutePath());
         client.textFilter("0xA8C02E",80);
+        client.getText("TEXT");
         client.verifyElementFound("Text","Hello",0);
+        client.uninstall("com.CameraFlash/.MainActivity");
     }
 
     @Override
@@ -42,7 +44,9 @@ public class SimulateCapture extends AbsTest {
         client.simulateCapture(file.getAbsolutePath());
         client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']]" , 0 , 1);
         client.sync(1500 , 0 , 6000);
+        client.getText("TEXT");
         client.verifyElementFound("Text","Text",0);
+        client.uninstall("com.example.apple-samplecode.PhotoPicker");
     }
 
 
