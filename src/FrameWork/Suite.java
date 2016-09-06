@@ -27,10 +27,12 @@ public class Suite implements Runnable{
 
     @Override
     public void run() {
-
+        (new Authentication(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
 
         (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
-       /* (new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank")).StartTesting();
+
+        (new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank")).StartTesting();
+
         (new NonInstrumented(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Non-Instrumented")).StartTesting();
 
         (new Web(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Web")).StartTesting();
@@ -39,9 +41,9 @@ public class Suite implements Runnable{
 
         (new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps")).StartTesting();
 
-        (new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture")).StartTesting();*/
+        (new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture")).StartTesting();
 
-       /* (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting();*/
+       /* (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting(); */
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 

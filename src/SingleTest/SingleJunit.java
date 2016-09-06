@@ -25,9 +25,12 @@ public class SingleJunit {
 
 
     public void testUntitled(){
-        String device = client.waitForDevice("@os='ios'", 10000);
-        String path = client.generateReport(false);
-        client.collectSupportData(path+"\\SupportData","",device,"","","",true,true);    }
+        String device = client.waitForDevice("@os='ios' and contains(@version,'8')", 10000);
+        for (int i = 0; i < 10; i++) {
+            client.launch("http://tst.usa.philips.com/c-m/consumer-products", true, true);
+            client.getVisualDump("web");
+        }
+    }
 
     @After
     public void tearDown(){

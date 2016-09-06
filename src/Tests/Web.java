@@ -49,9 +49,10 @@ public class Web extends AbsTest {
 		try {
 			client.launch("safari:m.ebay.com", true, true);
 		}catch(Exception e){
-			if(client.isElementFound("Native","xpath=//*[@text='Submit']",0))
-				client.click("Native","xpath=//*[@text='Submit']",0,1);
-			client.launch("safari:m.ebay.com", true, true);
+			if(client.isElementFound("Native","xpath=//*[@text='Submit']",0)){
+				client.click("Native","xpath=//*[@text='Cancel']",0,1);
+				client.launch("safari:m.ebay.com", true, true);
+			}
 		}
 
 			client.hybridWaitForPageLoad(30000);

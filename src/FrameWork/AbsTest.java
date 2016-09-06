@@ -29,7 +29,7 @@ public abstract class AbsTest {
 
     private void getDevice() {
         try {
-            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQurey, 10000);
+            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQurey, 30000);
             System.out.println(Thread.currentThread().getName() + " - " + device.substring(device.indexOf(":")));
             client.openDevice();
             client.sendText("{UNLOCK}");
