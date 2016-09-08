@@ -27,7 +27,8 @@ public class Suite implements Runnable{
 
     @Override
     public void run() {
-        (new Authentication(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
+
+        if (deviceOS.contains("ios")) (new Authentication(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
 
         (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
 
@@ -42,6 +43,8 @@ public class Suite implements Runnable{
         (new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps")).StartTesting();
 
         (new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture")).StartTesting();
+
+        if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
 
        /* (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting(); */
 

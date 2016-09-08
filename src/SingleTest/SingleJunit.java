@@ -2,6 +2,9 @@ package SingleTest;
 
 import com.experitest.client.*;
 import org.junit.*;
+
+import java.io.File;
+
 /**
  *
  */
@@ -25,19 +28,32 @@ public class SingleJunit {
 
 
     public void testUntitled(){
-        String device = client.waitForDevice("@os='ios' and contains(@version,'8')", 10000);
-        for (int i = 0; i < 10; i++) {
-            client.launch("http://tst.usa.philips.com/c-m/consumer-products", true, true);
-            client.getVisualDump("web");
-        }
+        System.out.println(client.waitForDevice("@os='ios'", 10000));/*
+        client.install("http://192.168.2.72:8181/AndroidApps/cameraFlash-%20simulateCapture/com.CameraFlash-.MainActivity_ver_11.0.apk" , true , false);
+        client.launch("com.CameraFlash/.MainActivity" , true , true);
+        File file = new File("lib/SimulateCapture/hello-android.png");
+        client.simulateCapture(file.getAbsolutePath());
+        client.textFilter("0xA8C02E",80);
+        client.getText("TEXT");
+        client.verifyElementFound("Text","Hello",0);
+        client.uninstall("com.CameraFlash/.MainActivity");
+*/
+       /* for (int i = 0; i < 10; i++) {
+            client.install("http://192.168.2.72:8181/iOSApps/UICatalog.ipa",true,false);
+            client.sleep(500);
+            client.launch("com.experitest.UICatalog", true, true);
+            client.getVisualDump("native");
+            client.sleep(500);
+            client.applicationClose("com.experitest.UICatalog");
+            client.sleep(500);
+            client.uninstall("com.experitest.UICatalog");
+            System.out.println("=============================================================================");
+        }*/
     }
 
     @After
     public void tearDown(){
-        // Generates a report of the test case.
-        // For more information - https://docs.experitest.com/display/public/SA/Report+Of+Executed+Test
-
-        // Releases the client so that other clients can approach the agent in the near future.
+      client.generateReport(false);
         client.releaseClient();
     }
 }

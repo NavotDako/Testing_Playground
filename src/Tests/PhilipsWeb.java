@@ -31,8 +31,8 @@ public class PhilipsWeb extends AbsTest {
         ExecuteByXpath(Philips,"NORMAL");
         ExecuteByXpath(Philips,"LONG");
         ExecuteByXpath(Philips,"NOT");
+
         String appNAme = client.getCurrentApplicationName();
-        client.applicationClearData(appNAme);
         client.applicationClose(appNAme);
 
     }
