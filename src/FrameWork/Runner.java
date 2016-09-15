@@ -3,15 +3,15 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-	static int iOSDevicesNum =1;
+	static int iOSDevicesNum =2;
 	static int androidDevicesNum =0;
-	static int repNum = 3;
+	static int repNum = 2;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		//deviceQuery= " and contains(@version,'10.')";
+		//deviceQuery= " and contains(@version,'9.')";
 
 		String resources = getResources();
 

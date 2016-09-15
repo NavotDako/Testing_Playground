@@ -97,31 +97,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java" />
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.0/clients/java" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 9.9/clients/java" recursive="false" />
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.0/clients/java" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/imageClient.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/junit-4.4.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/mobile-webdriver.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/selenium-api-2.42.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/selenium-support-2.44.0.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/ws-commons-util-1.0.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/xmlrpc-client-3.1.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/xmlrpc-common-3.1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest9.8/clients/java/imageClient_doc.zip!/" />
-        </JAVADOC>
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="javaClientjars" level="project" />
   </component>
 </module>

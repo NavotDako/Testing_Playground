@@ -40,12 +40,12 @@ public class SimulateCapture extends AbsTest {
         client.install("http://192.168.2.72:8181/iOSApps/PhotoPicker.ipa" , true , false);
         client.launch("com.example.apple-samplecode.PhotoPicker" , true , true);
         client.sleep(2000);
-        File file = new File("lib/SimulateCapture/Text.jpg");
+        File file = new File("lib\\SimulateCapture\\slider_etstalk1.jpg");
         client.simulateCapture(file.getAbsolutePath());
         client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']]" , 0 , 1);
         client.sync(1500 , 0 , 6000);
         client.getText("TEXT");
-        client.verifyElementFound("Text","Text",0);
+        client.verifyElementFound("Text","Let",0);
         client.uninstall("com.example.apple-samplecode.PhotoPicker");
     }
 

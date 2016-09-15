@@ -46,7 +46,7 @@ public class Suite implements Runnable{
 
         if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
 
-       /* (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting(); */
+        (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 

@@ -39,13 +39,15 @@ public class PhilipsWeb extends AbsTest {
 
     private void ExecuteByXpath(Map<String, String> philips,String type) {
         client.launch(philips.get("APP"), true, true);
+        client.hybridWaitForPageLoad(25000);
         if(client.isElementFound(philips.get("ZONE"), philips.get("click"),0))
             client.click(philips.get("ZONE"), philips.get("click"),0,1);
 
         client.click(philips.get("ZONE"), philips.get("clickSearch"),0,1);
-
-        for (int i = 0; i < 5; i++) {
+        client.hybridWaitForPageLoad(10000);
+        for (int i = 0; i < 3; i++) {
             client.click(philips.get("ZONE"), philips.get(type),0,1);
+            client.hybridWaitForPageLoad(20000);
             client.elementSendText(philips.get("ZONE"), philips.get(type),0,"abc: "+i);
         }
     }

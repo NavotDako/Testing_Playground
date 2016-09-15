@@ -22,8 +22,6 @@ public class OfficeDepot extends AbsTest{
             client.install("http://192.168.2.72:8181/AndroidApps/Office%20Depot.apk", true, false);
         }
         client.launch("com.officedepot.mobile.ui/.home.SplashScreenActivity", false, true);
-        client.applicationClose("com.officedepot.mobile.ui");
-        client.launch("com.officedepot.mobile.ui/.home.SplashScreenActivity", false, true);
         client.click("NATIVE", "xpath=//*[@text='BROWSE PRODUCT']", 0, 1);
         client.click("NATIVE", "xpath=//*[@text='Furniture']", 0, 1);
         client.swipeWhileNotFound("Down", 200, 2000, "NATIVE", "xpath=//*[@text='Tables']", 0, 1000, 5, true);

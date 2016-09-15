@@ -11,7 +11,6 @@ import java.io.File;
 public class SingleJunit {
     private String host = "localhost";
     private int port = 8889;
-    // private String projectBaseDirectory = "C:\\Users\\Admin.user13\\workspace\\project7";
     protected Client client = null;
 
     @Before
@@ -22,33 +21,23 @@ public class SingleJunit {
     }
 
     @Test
-    public void AndroidTest(){
-        testUntitled();
-    }
+    public void TheTest(){
+        String device = client.waitForDevice("@os", 10000);
+        client.openDevice();
+        System.out.println(device);
+        String link = (device.contains("ios")) ? "http://192.168.2.72:8181/iOSApps/fmr_ios.ipa" : "http://192.168.2.72:8181/AndroidApps/fmr_quotesIssue.apk";
+        String appName = (device.contains("ios")) ? "com.fidelity.watchlist-AdHoc" : "com.fidelity.android/.activity.AppConfigLoaderActivity";
+        for (int i = 0; i < 3; i++) {
+            System.out.println("========================== Iteration: "+i+" ================================");
+            client.install(link,true,false);
+            client.sleep(1000);
+            client.launch(appName,true,true);
+            client.sleep(1000);
+            System.out.println(client.getVisualDump("native"));
+            client.uninstall(appName);
+            client.sleep(1000);
 
-
-    public void testUntitled(){
-        System.out.println(client.waitForDevice("@os='ios'", 10000));/*
-        client.install("http://192.168.2.72:8181/AndroidApps/cameraFlash-%20simulateCapture/com.CameraFlash-.MainActivity_ver_11.0.apk" , true , false);
-        client.launch("com.CameraFlash/.MainActivity" , true , true);
-        File file = new File("lib/SimulateCapture/hello-android.png");
-        client.simulateCapture(file.getAbsolutePath());
-        client.textFilter("0xA8C02E",80);
-        client.getText("TEXT");
-        client.verifyElementFound("Text","Hello",0);
-        client.uninstall("com.CameraFlash/.MainActivity");
-*/
-       /* for (int i = 0; i < 10; i++) {
-            client.install("http://192.168.2.72:8181/iOSApps/UICatalog.ipa",true,false);
-            client.sleep(500);
-            client.launch("com.experitest.UICatalog", true, true);
-            client.getVisualDump("native");
-            client.sleep(500);
-            client.applicationClose("com.experitest.UICatalog");
-            client.sleep(500);
-            client.uninstall("com.experitest.UICatalog");
-            System.out.println("=============================================================================");
-        }*/
+        }
     }
 
     @After

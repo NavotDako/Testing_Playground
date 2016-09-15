@@ -26,12 +26,15 @@ public class NonInstrumented extends AbsTest {
         client.syncElements(3000,10000);
         int i=0;
         //HUAWEI - @text='More' and not(@class='android.widget.TextView'
-
         if (client.isElementFound("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0))
             client.click("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0,1);
 
+
         if (client.isElementFound("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0))
             client.click("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0, 1);
+
+        if (client.isElementFound("NATIVE","xpath=//*[@id='headers']",0))
+            client.elementSwipeWhileNotFound("NATIVE", "xpath=//*[@id='headers']","Down", 0, 1000, "Native",  "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, false);
 
         client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, true);
 

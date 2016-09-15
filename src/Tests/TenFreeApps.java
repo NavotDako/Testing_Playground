@@ -49,7 +49,6 @@ public class TenFreeApps extends AbsTest {
         System.out.println("-----------------------------------------------------------");
 
         String appNAme = client.getCurrentApplicationName();
-        client.applicationClearData(appNAme);
         client.applicationClose(appNAme);
     }
 
@@ -95,7 +94,6 @@ public class TenFreeApps extends AbsTest {
         System.out.println("-----------------------------------------------------------");
 
         String appNAme = client.getCurrentApplicationName();
-        client.applicationClearData(appNAme);
         client.applicationClose(appNAme);
 
     }

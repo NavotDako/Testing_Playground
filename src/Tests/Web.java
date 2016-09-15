@@ -50,7 +50,7 @@ public class Web extends AbsTest {
 			client.launch("safari:m.ebay.com", true, true);
 		}catch(Exception e){
 			if(client.isElementFound("Native","xpath=//*[@text='Submit']",0)){
-				client.click("Native","xpath=//*[@text='Cancel']",0,1);
+				client.click("Native","xpath=//*[@text='Cancel' and ./parent::*[./following-sibling::*[@class='UIAView' and ./*[@class='UIAView']]]]",0,1);
 				client.launch("safari:m.ebay.com", true, true);
 			}
 		}
@@ -122,6 +122,7 @@ public class Web extends AbsTest {
 				client.waitForElementToVanish("WEB", "xpath=//*[@text='Watch List' and @nodeName='A']", 0, 1);
 			}
 		}
+		client.launch("http://www.google.com",true,false);
 	}
 
 
