@@ -23,21 +23,45 @@ public class SingleJunit {
     @Test
     public void TheTest(){
         String device = client.waitForDevice("@os", 10000);
-        client.openDevice();
-        System.out.println(device);
-        String link = (device.contains("ios")) ? "http://192.168.2.72:8181/iOSApps/fmr_ios.ipa" : "http://192.168.2.72:8181/AndroidApps/fmr_quotesIssue.apk";
-        String appName = (device.contains("ios")) ? "com.fidelity.watchlist-AdHoc" : "com.fidelity.android/.activity.AppConfigLoaderActivity";
-        for (int i = 0; i < 3; i++) {
-            System.out.println("========================== Iteration: "+i+" ================================");
-            client.install(link,true,false);
-            client.sleep(1000);
-            client.launch(appName,true,true);
-            client.sleep(1000);
-            System.out.println(client.getVisualDump("native"));
-            client.uninstall(appName);
-            client.sleep(1000);
+        client.launch("com.experitest.ExperiBankO", true, true);
+        client.syncElements(3000,15000);
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0);
+        client.elementSendText("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0, "company");
+        client.closeKeyboard();
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Password']", 0);
+        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Password']", 0, "company");
+        client.closeKeyboard();
+        client.verifyElementFound("NATIVE", "xpath=//*[@text='Login']", 0);
+        client.click("NATIVE", "xpath=//*[@text='Login']", 0, 1);
+        client.sendText("{LANDSCAPE}");
+        client.sleep(1000);
 
-        }
+        client.verifyElementFound("NATIVE", "xpath=//*[@text='Make Payment']", 0);
+        client.click("NATIVE", "xpath=//*[@text='Make Payment']", 0, 1);
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Phone']", 0);
+        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Phone']", 0, "050-7937021");
+        client.closeKeyboard();
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Name']", 0);
+        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Name']", 0, "Long Run");
+        client.closeKeyboard();
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Amount']", 0);
+        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Amount']", 0, "100");
+        client.closeKeyboard();
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Country']", 0);
+        client.verifyElementFound("NATIVE", "xpath=//*[@text='Select']", 0);
+        client.sleep(1000);
+        client.click("NATIVE", "xpath=//*[@text='Select']", 0, 1);
+        client.elementListSelect("", "text=Argentina", 0, false);
+        client.click("NATIVE", "xpath=//*[@accessibilityLabel='Argentina']", 0, 1);
+        client.sendText("{PORTRAIT}");
+        client.sleep(1000);
+        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Argentina']", 0);
+        client.verifyElementFound("NATIVE", "xpath=//*[@text='Send Payment']", 0);
+        client.click("NATIVE", "xpath=//*[@text='Send Payment']", 0, 1);
+        client.sleep(500);
+        client.click("NATIVE", "xpath=//*[@text='Yes']", 0, 1);
+        client.click("NATIVE", "xpath=//*[@text='Logout']", 0, 1);
+        client.sendText("{HOME}");
     }
 
     @After
