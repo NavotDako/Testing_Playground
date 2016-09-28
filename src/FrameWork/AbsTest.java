@@ -12,24 +12,24 @@ public abstract class AbsTest {
     protected String reportFolder;
     protected String deviceOS;
     protected String testName;
-    String deviceQurey = "";
+    String deviceQuery = "";
 
 
-    public AbsTest(MyClient client, String deviceQurey, int repNum, String reportFolder, String deviceOS, String testName){
+    public AbsTest(MyClient client, String deviceQuery, int repNum, String reportFolder, String deviceOS, String testName){
 
         this.client = client;
         this.repNum  = repNum;
         this.reportFolder = reportFolder;
         this.deviceOS = deviceOS;
         this.testName = testName;
-        this.deviceQurey = deviceQurey;
+        this.deviceQuery = deviceQuery;
         getDevice();
 
     }
 
     private void getDevice() {
         try {
-            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQurey, 30000);
+            device = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQuery, 30000);
             System.out.println(Thread.currentThread().getName() + " - " + device.substring(device.indexOf(":")));
             client.openDevice();
             client.sendText("{UNLOCK}");

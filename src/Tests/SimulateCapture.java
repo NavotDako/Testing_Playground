@@ -25,11 +25,11 @@ public class SimulateCapture extends AbsTest {
         boolean found = false;
         client.install("http://192.168.2.72:8181/AndroidApps/cameraFlash-%20simulateCapture/com.CameraFlash-.MainActivity_ver_11.0.apk" , true , false);
         client.launch("com.CameraFlash/.MainActivity" , true , true);
-        File file = new File("lib/SimulateCapture/slider_etstalk1.jpg");
+        File file = new File("lib/SimulateCapture/pwr.png");
         client.simulateCapture(file.getAbsolutePath());
         client.textFilter("0xA8C02E",80);
         client.getText("TEXT");
-        client.verifyElementFound("Text","Let",0);
+        client.verifyElementFound("Text","by",0);
         client.uninstall("com.CameraFlash/.MainActivity");
     }
 
@@ -40,12 +40,12 @@ public class SimulateCapture extends AbsTest {
         client.install("http://192.168.2.72:8181/iOSApps/PhotoPicker.ipa" , true , false);
         client.launch("com.example.apple-samplecode.PhotoPicker" , true , true);
         client.sleep(2000);
-        File file = new File("lib\\SimulateCapture\\slider_etstalk1.jpg");
+        File file = new File("lib\\SimulateCapture\\pwr.png");
         client.simulateCapture(file.getAbsolutePath());
         client.click("NATIVE" , "xpath=//*[@class='_UIToolbarNavigationButton' and ./*[@class='UIImageView']]" , 0 , 1);
         client.sync(1500 , 0 , 6000);
         client.getText("TEXT");
-        client.verifyElementFound("Text","Let",0);
+        client.verifyElementFound("Text","by",0);
         client.uninstall("com.example.apple-samplecode.PhotoPicker");
     }
 
