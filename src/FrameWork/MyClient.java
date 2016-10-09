@@ -134,7 +134,7 @@ public class MyClient extends Client {
         deviceName = super.waitForDevice(query,timeOut);
         deviceOS = super.getProperty("device.os");
         Finish("waitForDevice","waitForDevice - "+deviceOS, before);
-
+        System.out.println("##### "+ Thread.currentThread().getId() +" - Found Device - "+deviceName);
         return deviceName;
     }
     @Override

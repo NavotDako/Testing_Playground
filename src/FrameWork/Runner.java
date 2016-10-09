@@ -3,19 +3,47 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-	static int iOSDevicesNum = 2;
-	static int androidDevicesNum =2;
-	static int repNum = 3;
+	static int iOSDevicesNum =3;
+	static int androidDevicesNum =1;
+	static int repNum = 2;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		//deviceQuery= " and contains(@version,'10.')";
+		//deviceQuery= " and contains(@version,'8.')";
 
-		System.out.println("Getting the studio.exe resources");
 		String resources = getResources();
 
+        PrepareReportsFolders();
+
+        RunThreads();
+
+        System.out.println("Start Resources:\n"+resources);
+        System.out.println("End Resources:\n"+getResources());
+
+
+	}
+
+    private static void RunThreads() throws InterruptedException {
+        Thread[] iOSTheadPool = new Thread[iOSDevicesNum];
+        pool(iOSTheadPool,"ios");
+        Thread[] androidTheadPool = new Thread[androidDevicesNum];
+        pool(androidTheadPool,"android");
+
+        for (int i = 0; i < iOSTheadPool.length; i++) {
+            while (iOSTheadPool[i].isAlive()){
+                Thread.sleep(1000);
+            }
+        }
+        for (int i = 0; i < androidTheadPool.length; i++) {
+            while (androidTheadPool[i].isAlive()){
+                Thread.sleep(1000);
+            }
+        }
+    }
+
+    private static void PrepareReportsFolders() {
         System.out.println("Preparing the reports folder");
         try {
 			File Report = new File("Reports");
@@ -27,29 +55,9 @@ public class Runner {
 			e.printStackTrace();
             throw e;
 		}
+    }
 
-		Thread[] iOSTheadPool = new Thread[iOSDevicesNum];
-		pool(iOSTheadPool,"ios");
-		Thread[] androidTheadPool = new Thread[androidDevicesNum];
-		pool(androidTheadPool,"android");
-
-		for (int i = 0; i < iOSTheadPool.length; i++) {
-			while (iOSTheadPool[i].isAlive()){
-				Thread.sleep(1000);
-			}
-		}
-		for (int i = 0; i < androidTheadPool.length; i++) {
-			while (androidTheadPool[i].isAlive()){
-				Thread.sleep(1000);
-			}
-		}
-        System.out.println("Start Resources:\n"+resources);
-        System.out.println("End Resources:\n"+getResources());
-
-
-	}
-
-	public static void pool(Thread[] myTheadPool,String deviceToTest) throws InterruptedException {
+    public static void pool(Thread[] myTheadPool,String deviceToTest) throws InterruptedException {
 
 		for (int i = 0; i < myTheadPool.length; i++) {
 			myTheadPool[i]= new Thread(new Suite(repNum, reportFolderString,deviceToTest, deviceQuery));
@@ -68,6 +76,7 @@ public class Runner {
 	}
 
 	private static String getResources() throws IOException {
+        System.out.println("Getting the studio.exe resources");
 		String line;
 		String savedLine = "";
 		Process process = Runtime.getRuntime().exec("tasklist.exe");

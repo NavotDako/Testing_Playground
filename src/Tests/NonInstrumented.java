@@ -14,6 +14,7 @@ public class NonInstrumented extends AbsTest {
     @Override
     protected void AndroidRunTest() {
         String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' ) and not(contains(@contentDescription,'settings.'))]";
+        String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         client.swipe("Up", 0, 500);
 
 
@@ -26,12 +27,15 @@ public class NonInstrumented extends AbsTest {
         client.syncElements(3000,10000);
         int i=0;
         //HUAWEI - @text='More' and not(@class='android.widget.TextView'
-
         if (client.isElementFound("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0))
             client.click("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0,1);
 
+
         if (client.isElementFound("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0))
             client.click("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0, 1);
+
+        if (client.isElementFound("NATIVE","xpath=//*[@id='headers']",0))
+            client.elementSwipeWhileNotFound("NATIVE", "xpath=//*[@id='headers']","Down", 0, 1000, "Native",  "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, false);
 
         client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, true);
 
@@ -45,7 +49,7 @@ public class NonInstrumented extends AbsTest {
             client.click("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0, 1);
 
         client.sendText("{HOME}");
-        client.verifyElementFound("NATIVE", "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home']", 0);
+        client.verifyElementFound("NATIVE",springboardIdentifier, 0);
 
     }
 
@@ -81,8 +85,8 @@ public class NonInstrumented extends AbsTest {
         client.click("NATIVE", "xpath=//*[@text='Edit']", 0, 1);
         client.verifyElementFound("NATIVE", deleteElement, 0);
         client.click("NATIVE", deleteElement, 0, 1);
-        client.waitForElement("NATIVE", "xpath=//*[@text='Delete']", 0, 10000);
-        client.click("NATIVE", "xpath=//*[@text='Delete']", 0, 1);
+        if (client.waitForElement("NATIVE", "xpath=//*[@text='Delete']", 0, 10000))
+            client.click("NATIVE", "xpath=//*[@text='Delete']", 0, 1);
         client.click("NATIVE", "xpath=//*[@accessibilityLabel='World Clock']", 0, 1);
     }
 }

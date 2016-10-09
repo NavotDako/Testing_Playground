@@ -24,7 +24,7 @@ public class TenFreeApps extends AbsTest {
         client.sync(1500 , 0 , 10000);
         if(client.isElementFound("NATIVE" ,"xpath=//*[@text='TOP CHARTS']" , 0))
             client.click("NATIVE" ,"xpath=//*[@text='TOP CHARTS']" , 0 , 1);
-        client.click("NATIVE" , "xpath=//*[@text='TOP FREE']" , 0 , 1);
+        client.click("NATIVE" , "xpath=//*[contains(@text,'TOP FREE')]" , 0 , 1);
 
         int countOfOnScreenApps;
         int counterOfEnteredApp = 0;
@@ -49,7 +49,6 @@ public class TenFreeApps extends AbsTest {
         System.out.println("-----------------------------------------------------------");
 
         String appNAme = client.getCurrentApplicationName();
-        client.applicationClearData(appNAme);
         client.applicationClose(appNAme);
     }
 
@@ -95,7 +94,6 @@ public class TenFreeApps extends AbsTest {
         System.out.println("-----------------------------------------------------------");
 
         String appNAme = client.getCurrentApplicationName();
-        client.applicationClearData(appNAme);
         client.applicationClose(appNAme);
 
     }

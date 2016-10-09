@@ -14,9 +14,7 @@ public class UiCatalog extends AbsTest {
 
     @Override
     protected void AndroidRunTest() {
-//        client.uninstall("com.experitest.ExperiBank/.LoginActivity");
-//        client.sleep(500);
-//        client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk",true,false);
+
     }
 
     @Override
@@ -24,7 +22,7 @@ public class UiCatalog extends AbsTest {
         client.uninstall("com.experitest.UICatalog");
         client.sleep(500);
         client.install("http://192.168.2.72:8181/iOSApps/UICatalog.ipa",true,false);
-        client.launch("com.experitest.UICatalog", false, true);
+        client.launch("com.experitest.UICatalog", true, true);
         client.swipeWhileNotFound("Down", 150, 2000, "NATIVE", "xpath=//*[@accessibilityLabel='Web']", 0, 1000, 5, true);
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='http://www.apple.com']", 0);
         client.swipeWhileNotFound("Down", 150, 2000, "WEB", "xpath=//*[@text='Apple Store' and @nodeName='H3']", 0, 1000, 2, true);
@@ -38,5 +36,5 @@ public class UiCatalog extends AbsTest {
         client.applicationClose("com.experitest.UICatalog");
     }
 
-//    file://192.168.2.72/Users/user/Desktop/files/iOSApps/UICatalog.ipa
+
 }

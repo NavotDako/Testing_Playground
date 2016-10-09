@@ -1,6 +1,7 @@
 package FrameWork;
 
 import Tests.*;
+import com.experitest.client.MobileListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,20 +28,26 @@ public class Suite implements Runnable{
 
     @Override
     public void run() {
-        EriBank eriBank = new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank");
-        eriBank.StartTesting();
-        NonInstrumented clockTest = new NonInstrumented(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Non-Instrumented");
-        clockTest.StartTesting();
-        Web browserTest = new Web(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Web");
-        browserTest.StartTesting();
-        LaunchBrowserLoop launchBrowser = new LaunchBrowserLoop(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "LaunchBrowserLoop");
-        launchBrowser.StartTesting();
-        TenFreeApps ten = new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps");
-        ten.StartTesting();
-        SimulateCapture capture = new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture");
-        capture.StartTesting();
-        Rebooting rebootTest = new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot");
-        rebootTest.StartTesting();
+
+        if (deviceOS.contains("ios")) (new Authentication(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
+
+       // if (deviceOS.contains("ios")) (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
+
+        (new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank")).StartTesting();
+
+        (new NonInstrumented(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Non-Instrumented")).StartTesting();
+
+        (new Web(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Web")).StartTesting();
+
+        (new LaunchBrowserLoop(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "LaunchBrowserLoop")).StartTesting();
+
+        (new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps")).StartTesting();
+
+        (new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture")).StartTesting();
+
+        //if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
+
+        // (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 
@@ -62,11 +69,22 @@ public class Suite implements Runnable{
     public MyClient SetUp(){
         try{
             client = new MyClient(host, port, true,commandMap);
+            client.addMobileListener("Native","xpath=//*[@text='Don’t Allow' and @class='UIAView']",new MobileListener() {
+                @Override
+                public boolean recover(String type, String xpath) {
+                    client.click("NATIVE", "xpath=//*[@text='Don’t Allow' and @class='UIAView']", 0, 1);
+                    return true;
+                }
+            });
             return client;
         }catch(Exception e){
             System.out.println("---------------" + device + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return client;
+
         }
+
+
+
     }
 }
 		
