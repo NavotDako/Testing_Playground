@@ -31,7 +31,7 @@ public class Suite implements Runnable{
 
         if (deviceOS.contains("ios")) (new Authentication(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
 
-       // if (deviceOS.contains("ios")) (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
+//        if (deviceOS.contains("ios")) (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
 
         (new EriBank(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "EriBank")).StartTesting();
 
@@ -44,10 +44,10 @@ public class Suite implements Runnable{
         (new TenFreeApps(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "TenFreeApps")).StartTesting();
 
         (new SimulateCapture(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "SimulateCapture")).StartTesting();
+//
+//        if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
 
-        //if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
-
-        // (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting();
+         (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting();
 
         System.out.println("----------------------------------------- DONE WITH "+device+"-----------------------------------------");
 

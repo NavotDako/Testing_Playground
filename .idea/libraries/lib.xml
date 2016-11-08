@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-io-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang3-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ws-commons-util-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcabi-log-0.17.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/imageClient.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/selenium-api-2.42.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcabi-ssh-1.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mobile-webdriver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsch-0.1.53.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xmlrpc-common-3.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xmlrpc-client-3.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/selenium-support-2.44.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mavenbuilder-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

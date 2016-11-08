@@ -3,9 +3,8 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-	static int iOSDevicesNum =3;
+	static int iOSDevicesNum =1;
 	static int androidDevicesNum =1;
-	static int repNum = 2;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
@@ -57,11 +56,11 @@ public class Runner {
 		}
     }
 
-    public static void pool(Thread[] myTheadPool,String deviceToTest) throws InterruptedException {
+    public static void pool(Thread[] myThreadPool,String deviceToTest) throws InterruptedException {
 
-		for (int i = 0; i < myTheadPool.length; i++) {
-			myTheadPool[i]= new Thread(new Suite(repNum, reportFolderString,deviceToTest, deviceQuery));
-			myTheadPool[i].start();
+		for (int i = 0; i < myThreadPool.length; i++) {
+			myThreadPool[i]= new Thread(new Suite(repNum, reportFolderString,deviceToTest, deviceQuery));
+			myThreadPool[i].start();
 		}
 	}
 

@@ -1,0 +1,6 @@
+1: adb:SM-G930F --- waitForDevice - ANDROID --- 1525 --- AVG - 1525.0
+2: adb:SM-G930F --- waitForDevice - ANDROID --- 773 --- AVG - 1149.0
+1: adb:SM-G930F --- verifyElementFound - ANDROID - NATIVE --- 402 --- AVG - 402.0
+1: adb:SM-G930F --- Reboot - ANDROID --- 50742 --- AVG - 50742.0
+2: adb:SM-G930F --- verifyElementFound - ANDROID - NATIVE --- 1874 --- AVG - 1138.0
+2: adb:SM-G930F --- Reboot - ANDROID --- 50705 --- AVG - 50723.0
