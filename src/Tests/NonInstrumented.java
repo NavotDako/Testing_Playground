@@ -13,7 +13,7 @@ public class NonInstrumented extends AbsTest {
 
     @Override
     protected void AndroidRunTest() {
-        String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' ) and not(contains(@contentDescription,'settings.'))]";
+        String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' or @id='setting_button' ) and not(contains(@contentDescription,'settings.'))]";
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         client.swipe("Up", 0, 500);
 
