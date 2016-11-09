@@ -1,7 +1,0 @@
-1: adb:SM-G920F --- waitForDevice - ANDROID --- 979 --- AVG - 979.0
-2: adb:SM-G920F --- waitForDevice - ANDROID --- 716 --- AVG - 847.0
-1: adb:SM-G920F --- verifyElementFound - ANDROID - NATIVE --- 574 --- AVG - 574.0
-1: adb:SM-G920F --- Reboot - ANDROID --- 70292 --- AVG - 70292.0
-2: adb:SM-G920F --- verifyElementFound - ANDROID - NATIVE --- 1280 --- AVG - 927.0
-2: adb:SM-G920F --- Reboot - ANDROID --- 68083 --- AVG - 69187.0
-3: adb:SM-G920F --- verifyElementFound - ANDROID - NATIVE --- 2307 --- AVG - 1387.0

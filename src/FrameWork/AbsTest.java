@@ -1,7 +1,10 @@
 package FrameWork;
 
+import com.experitest.client.MobileListener;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class AbsTest {
@@ -24,8 +27,9 @@ public abstract class AbsTest {
         this.testName = testName;
         this.deviceQuery = deviceQuery;
         getDevice();
-
+        addListeners();
     }
+
 
     private void getDevice() {
         try {
@@ -160,4 +164,58 @@ public abstract class AbsTest {
         }
 
     }
+
+    private void addListeners(){
+        /*IOS LISTENER*/
+        if (client.deviceOS.contains("IOS_APP")) {
+            /*search xpathes*/
+            ArrayList<String> search_xpathes = new ArrayList<>();
+            search_xpathes.add("(@text='Don’t Allow' and @class='UIAView')");
+            search_xpathes.add("(@text='Software Update' and ./following-sibling::*[@text='iOS 10 is ready to install.'])");
+            search_xpathes.add("(@text='Software Update' and ./following-sibling::*[@text='iOS 10 can update automatically between 2:00 AM and 4:00 AM while connected to power.'])");
+
+            client.addMobileListener("NATIVE", convertListToXPATH(search_xpathes), new MobileListener() {
+                @Override
+                public boolean recover(String type, String xpath) {
+                    /*click xpathes*/
+                    ArrayList<String> click_xpathes = new ArrayList<>();
+                    click_xpathes.add("(@text='Don’t Allow' and @class='UIAView')");
+                    click_xpathes.add("(@text='Later')");
+                    click_xpathes.add("(@text='Remind Me Later')");
+
+                    client.click("NATIVE", convertListToXPATH(click_xpathes), 0, 1);
+                    return true;
+                }
+            });
+        }
+        /*ANDROID LISTENER*/
+        else{
+            /*search xpathes*/
+            ArrayList<String> search_xpathes = new ArrayList<>();
+            search_xpathes.add("(@text='עדכון תוכנה')");
+
+            client.addMobileListener("NATIVE", convertListToXPATH(search_xpathes), new MobileListener() {
+                @Override
+                public boolean recover(String type, String xpath) {
+                    /*click xpathes*/
+                    ArrayList<String> click_xpathes = new ArrayList<>();
+                    click_xpathes.add("(@text='מאוחר יותר')");
+
+                    client.click("NATIVE", convertListToXPATH(click_xpathes), 0, 1);
+                    return true;
+                }
+            });
+        }
+    }
+
+    private String convertListToXPATH(ArrayList<String> list){
+        String result ="xpath=//*["+list.get(0);
+        list.remove(0);
+        for(String str : list){
+            result += " or " +str;
+        }
+        result += "]";
+        return result;
+    }
+
 }
