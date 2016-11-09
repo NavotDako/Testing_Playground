@@ -4,8 +4,8 @@ import java.io.*;
 
 public class Runner {
 	static int iOSDevicesNum =1;
-	static int androidDevicesNum =0;
-	static int repNum = 1;
+	static int androidDevicesNum =1;
+	static int repNum = 10;
 
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";

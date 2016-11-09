@@ -19,6 +19,13 @@ public class TenFreeApps extends AbsTest {
 
         client.launch("com.android.vending/.AssetBrowserActivity", false, true);
         client.sync(1500 , 0 , 10000);
+        if(client.isElementFound("NATIVE" , "xpath=//*[@text=concat('Couldn', \"'\", 't sign in')]" , 0)) {
+            client.click("NATIVE", "xpath=//*[@text='Try again']", 0, 1);
+            client.elementSendText("NATIVE", "", 0, "Experitest2013");
+            client.click("NATIVE", "xpath=//*[@text='Sign in']", 0, 1);
+            client.sleep(2000);
+            client.click("NATIVE", "xpath=//*[@text='OK']", 0 , 1);
+        }
         if(client.isElementFound("NATIVE" , "xpath=//*[@text='ACCEPT']" , 0))
             client.click("NATIVE" , "xpath=//*[@text='ACCEPT']" , 0 , 1);
         client.sync(1500 , 0 , 10000);

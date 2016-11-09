@@ -173,6 +173,7 @@ public abstract class AbsTest {
             search_xpathes.add("(@text='Don’t Allow' and @class='UIAView')");
             search_xpathes.add("(@text='Software Update' and ./following-sibling::*[@text='iOS 10 is ready to install.'])");
             search_xpathes.add("(@text='Software Update' and ./following-sibling::*[@text='iOS 10 can update automatically between 2:00 AM and 4:00 AM while connected to power.'])");
+            search_xpathes.add("(@text='No SIM Card Installed' and ./parent::*[./preceding-sibling::*[@class='UIAImage']])");
 
             client.addMobileListener("NATIVE", convertListToXPATH(search_xpathes), new MobileListener() {
                 @Override
@@ -182,6 +183,7 @@ public abstract class AbsTest {
                     click_xpathes.add("(@text='Don’t Allow' and @class='UIAView')");
                     click_xpathes.add("(@text='Later')");
                     click_xpathes.add("(@text='Remind Me Later')");
+                    click_xpathes.add("(@text='OK')");
 
                     client.click("NATIVE", convertListToXPATH(click_xpathes), 0, 1);
                     return true;
