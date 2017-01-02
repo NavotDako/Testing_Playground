@@ -9,6 +9,7 @@ public class MyRunnable implements Runnable {
     Client client = null;
     String device= null;
     SimpleDateFormat sdf;
+
     public MyRunnable(String host, int port, String query) {
         sdf = new SimpleDateFormat("HH:mm:ss");
         client = new Client(host, port, true);

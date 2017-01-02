@@ -7,8 +7,8 @@ import FrameWork.MyClient;
  */
 public class OfficeDepot extends AbsTest{
 
-    public OfficeDepot(MyClient client, String deviceQurey, int repNum, String reportFolder, String deviceOS, String testName) {
-        super(client, deviceQurey, repNum, reportFolder, deviceOS, testName);
+    public OfficeDepot(MyClient client, int repNum, String reportFolder, String deviceOS, String testName) {
+        super(client, repNum, reportFolder, deviceOS, testName);
     }
 
     @Override

@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class TenFreeApps extends AbsTest {
 
-    public  TenFreeApps(MyClient client , String device , int repNum , String reportFolder , String deviceToTest , String testName){
-        super(client , device , repNum , reportFolder , deviceToTest , testName);
+    public  TenFreeApps(MyClient client , int repNum , String reportFolder , String deviceToTest , String testName){
+        super(client ,  repNum , reportFolder , deviceToTest , testName);
     }
 
     @Override
@@ -27,19 +27,17 @@ public class TenFreeApps extends AbsTest {
         client.click("NATIVE" , "xpath=//*[contains(@text,'TOP FREE')]" , 0 , 1);
 
         int countOfOnScreenApps;
-        int counterOfEnteredApp = 0;
+
         ArrayList<String> freeApps = new ArrayList<>();
 
         while(freeApps.size()<10) {
-            countOfOnScreenApps = client.getElementCount("NATIVE", "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true']");
+            countOfOnScreenApps = client.getElementCount("NATIVE", "//*[@id='li_title' and @onScreen='true']");
             for (int i = 0; i < countOfOnScreenApps; i++) {
-                String temp = client.elementGetText("NATIVE", "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true']", i);
-                if(Character.getNumericValue(temp.charAt(0) - 1) == counterOfEnteredApp || (Character.getNumericValue(temp.charAt(0) - 1) == 0 && counterOfEnteredApp == 9)){
-                    freeApps.add(temp);
-                    counterOfEnteredApp++;
-                }
-            }
-            client.swipeWhileNotFound("Down" , 200 , 3500 , "NATIVE" , "xpath=//*[@id='play_card']/*[@id='li_title' and @onScreen='true' and contains(@text , '" + countOfOnScreenApps+ 1 + "')]" , 0 , 1000 , 1 , false);
+                String temp = client.elementGetText("NATIVE", "//*[@id='li_title' and @onScreen='true']", i);
+                freeApps.add(temp);
+                            }
+
+            client.swipe("Down" , 200 , 500);
         }
 
         System.out.println("------------------- 10's free apps today ------------------");

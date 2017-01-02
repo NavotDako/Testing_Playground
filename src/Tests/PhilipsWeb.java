@@ -12,8 +12,8 @@ import java.util.Map;
 public class PhilipsWeb extends AbsTest {
 
 
-    public PhilipsWeb(MyClient client, String device, int repNum, String reportFolder, String deviceToTest, String testName){
-        super( client,  device,  repNum,  reportFolder,  deviceToTest,testName );
+    public PhilipsWeb(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
+        super( client, repNum,  reportFolder,  deviceToTest,testName );
 
     }
 

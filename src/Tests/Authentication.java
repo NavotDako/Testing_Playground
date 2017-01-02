@@ -16,8 +16,8 @@ import org.junit.*;
  */
 public class Authentication extends AbsTest{
 
-    public Authentication(MyClient client, String deviceQurey, int repNum, String reportFolder, String deviceOS, String testName) {
-        super(client, deviceQurey, repNum, reportFolder, deviceOS, testName);
+    public Authentication(MyClient client, int repNum, String reportFolder, String deviceOS, String testName) {
+        super(client, repNum, reportFolder, deviceOS, testName);
     }
 
     private String[] replies={

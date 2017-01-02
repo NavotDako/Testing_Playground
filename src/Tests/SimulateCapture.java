@@ -15,13 +15,14 @@ import java.net.URL;
  */
 public class SimulateCapture extends AbsTest {
 
-    public SimulateCapture(MyClient client , String device , int repNum , String reportFolder , String deviceToTest , String testName) {
-        super(client, device, repNum, reportFolder, deviceToTest, testName);
+    public SimulateCapture(MyClient client, int repNum , String reportFolder , String deviceToTest , String testName) {
+        super(client, repNum, reportFolder, deviceToTest, testName);
     }
 
     @Override
     protected void AndroidRunTest() {
-        checkAppData();
+        //checkAppData();
+        client.setProperty("android.instrumentation.camera","true");
         boolean found = false;
         client.install("http://192.168.2.72:8181/AndroidApps/cameraFlash-%20simulateCapture/com.CameraFlash-.MainActivity_ver_11.0.apk" , true , false);
         client.launch("com.CameraFlash/.MainActivity" , true , true);
@@ -31,10 +32,13 @@ public class SimulateCapture extends AbsTest {
         client.getText("TEXT");
         client.verifyElementFound("Text","by",0);
         client.uninstall("com.CameraFlash/.MainActivity");
+        client.setProperty("android.instrumentation.camera","false");
+
     }
 
     @Override
     protected void IOSRunTest() {
+        client.setProperty("android.instrumentation.camera","true");
 
         boolean found = false;
         client.install("http://192.168.2.72:8181/iOSApps/PhotoPicker.ipa" , true , false);
@@ -47,6 +51,8 @@ public class SimulateCapture extends AbsTest {
         client.getText("TEXT");
         client.verifyElementFound("Text","by",0);
         client.uninstall("com.example.apple-samplecode.PhotoPicker");
+        client.setProperty("android.instrumentation.camera","false");
+
     }
 
 

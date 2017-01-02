@@ -9,8 +9,8 @@ import FrameWork.MyClient;
 public class Rebooting extends AbsTest {
 
 
-    public Rebooting (MyClient client, String deviceQuery, int repNum, String reportFolder, String deviceToTest, String testName){
-        super( client,  deviceQuery,  repNum,  reportFolder,  deviceToTest, testName);
+    public Rebooting (MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
+        super( client,  repNum,  reportFolder,  deviceToTest, testName);
     }
 
     @Override

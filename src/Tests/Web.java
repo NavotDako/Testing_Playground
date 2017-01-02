@@ -8,8 +8,8 @@ import FrameWork.MyClient;
 
 public class Web extends AbsTest {
 	
-	public Web(MyClient client, String device, int repNum, String reportFolder, String deviceToTest, String testName){
-		super( client,  device,  repNum,  reportFolder,  deviceToTest,testName);
+	public Web(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
+		super( client, repNum,  reportFolder,  deviceToTest,testName);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class Web extends AbsTest {
 		}
 
 			client.hybridWaitForPageLoad(30000);
-			client.launch("safari:http://wikipedia.com", true, false);
+			client.launch("safari:http://wikipedia.org", true, false);
 		if(client.waitForElement("WEB", "xpath=//*[@id='searchInput']", 0, 15000)){
 			client.elementSendText("WEB", "xpath=//*[@id='searchInput']", 0, "Long Run");
 		}
@@ -85,7 +85,7 @@ public class Web extends AbsTest {
 
 		if(str0[0].equals("false")){
 			client.click("WEB", "id=ca-edit", 0, 1);
-			client.swipeWhileNotFound("DOWN", 250, 1000, "TEXT","Sign Up"
+			client.swipeWhileNotFound("DOWN", 250, 1000, "web","xpath=//*[@text='Sign up']"
 					,0 ,0,2 , true);
 			client.syncElements(1000, 20000);
 			client.sendText("{LANDSCAPE}");
@@ -93,6 +93,7 @@ public class Web extends AbsTest {
 			client.elementSendText("WEB", "xpath=/*//*[contains(@id,'wpName')]", 0, "LONG");
 			client.elementSendText("WEB", "id=wpPassword2", 0, "RUN");
 			client.elementSendText("WEB", "id=wpRetype", 0, "123456");
+			client.closeKeyboard();
 			client.swipeWhileNotFound("DOWN", 250, 1000, "WEB","id=wpEmail" ,0 , 0, 2, true);
 			client.elementSendText("WEB", "id=wpEmail", 0, "LONG@RUN.COM");
 			client.sendText("{PORTRAIT}");

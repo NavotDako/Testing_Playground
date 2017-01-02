@@ -8,8 +8,8 @@ import FrameWork.MyClient;
  */
 public class UiCatalog extends AbsTest {
 
-    public UiCatalog(MyClient client, String deviceQurey, int repNum, String reportFolder, String deviceOS, String testName) {
-        super(client, deviceQurey, repNum, reportFolder, deviceOS, testName);
+    public UiCatalog(MyClient client, int repNum, String reportFolder, String deviceOS, String testName) {
+        super(client, repNum, reportFolder, deviceOS, testName);
     }
 
     @Override

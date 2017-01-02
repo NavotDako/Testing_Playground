@@ -5,8 +5,8 @@ import FrameWork.MyClient;
 public class EriBank extends AbsTest {
 
 
-	public EriBank(MyClient client, String device, int repNum, String reportFolder, String deviceToTest, String testName){
-		super( client,  device,  repNum,  reportFolder,  deviceToTest,testName );
+	public EriBank(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
+		super( client, repNum,  reportFolder,  deviceToTest,testName );
 
 	}
 
@@ -60,6 +60,7 @@ public class EriBank extends AbsTest {
 		try {
 			client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa",true,false);
 		} catch (Exception e) {
+			System.out.println("Failed on first install of Eribank for - "+device+"\nTrying again");
 			e.printStackTrace();
 			client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa",true,false);
 		}

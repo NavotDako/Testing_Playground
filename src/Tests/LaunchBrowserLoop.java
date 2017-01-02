@@ -7,21 +7,23 @@ import FrameWork.MyClient;
 
 
 public class LaunchBrowserLoop extends AbsTest {
-    String google = "www.google.com";
-    String ebay = "m.ebay.com";
-    String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
 
-    public LaunchBrowserLoop(MyClient client, String deviceQuery, int repNum, String reportFolder, String deviceToTest, String testName) {
-        super(client, deviceQuery, repNum, reportFolder, deviceToTest, testName);
+    public LaunchBrowserLoop(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName) {
+        super(client, repNum, reportFolder, deviceToTest, testName);
+
+
     }
 
     @Override
     protected void AndroidRunTest() {
+        String google = "www.google.com";
+        String ebay = "m.ebay.com";
+        String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         String xpathToVerify="";
         for (int i = 0; i < 10; i++) {
             String site  = (i%2==0) ? ebay : google;
             client.launch("chrome:"+site, true, true);
-            client.hybridWaitForPageLoad(30000);
+            //client.hybridWaitForPageLoad(30000);
             xpathToVerify  = (i%2==0) ? "//*[@alt='eBay Home page']" : "//*[@id='hplogo']";
             client.verifyElementFound("WEB", "xpath="+xpathToVerify, 0);
             client.sendText("{HOME}");
@@ -33,6 +35,9 @@ public class LaunchBrowserLoop extends AbsTest {
 
     @Override
     protected void IOSRunTest() {
+        String google = "www.google.com";
+        String ebay = "m.ebay.com";
+        String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         String xpathToVerify="";
         for (int i = 0; i < 10; i++) {
             String site  = (i%2==0) ? ebay : google;

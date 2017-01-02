@@ -5,68 +5,47 @@ import org.junit.*;
 
 import java.io.File;
 
-/**
- *
- */
 public class SingleJunit {
+    private static final boolean GRID = false;
     private String host = "localhost";
     private int port = 8889;
     protected Client client = null;
+    String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project18";
+
+    String deviceQuery = "@os='ios' and not(contains(@version,'8'))";
+
+    String iOSAppString = "cloud:com.experitest.ExperiBank";
+    String androidAppString = "com.experitest.ExperiBank/.LoginActivity";
+    String workingAppString = (deviceQuery.contains("ios")) ? iOSAppString : androidAppString;
 
     @Before
     public void setUp(){
-        client = new Client(host, port, true);
-        // client.setProjectBaseDirectory(projectBaseDirectory);
-        client.setReporter("xml", "reports", "Untitled");
+
+      /*  if (GRID) {
+            GridClient grid = new GridClient("admin", "Experitest2012", "", "192.168.2.13", 8090, false);
+            client =  grid.lockDeviceForExecution("NavotTest", deviceQuery, 2,60000 );
+        } else {
+            client = new Client(host,port,true);
+            client.waitForDevice(deviceQuery,30000);
+        }*/
+       //client.setProjectBaseDirectory(projectBaseDirectory);
+      //  client.setReporter("xml", "Reports", "Untitled");
+        //client.setShowPassImageInReport(false);
     }
 
     @Test
     public void TheTest(){
-        String device = client.waitForDevice("@os", 10000);
-        client.launch("com.experitest.ExperiBankO", true, true);
-        client.syncElements(3000,15000);
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0);
-        client.elementSendText("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0, "company");
-        client.closeKeyboard();
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Password']", 0);
-        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Password']", 0, "company");
-        client.closeKeyboard();
-        client.verifyElementFound("NATIVE", "xpath=//*[@text='Login']", 0);
-        client.click("NATIVE", "xpath=//*[@text='Login']", 0, 1);
-        client.sendText("{LANDSCAPE}");
-        client.sleep(1000);
 
-        client.verifyElementFound("NATIVE", "xpath=//*[@text='Make Payment']", 0);
-        client.click("NATIVE", "xpath=//*[@text='Make Payment']", 0, 1);
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Phone']", 0);
-        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Phone']", 0, "050-7937021");
-        client.closeKeyboard();
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Name']", 0);
-        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Name']", 0, "Long Run");
-        client.closeKeyboard();
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Amount']", 0);
-        client.elementSendText("NATIVE", "xpath=//*[@accessibilityLabel='Amount']", 0, "100");
-        client.closeKeyboard();
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Country']", 0);
-        client.verifyElementFound("NATIVE", "xpath=//*[@text='Select']", 0);
-        client.sleep(1000);
-        client.click("NATIVE", "xpath=//*[@text='Select']", 0, 1);
-        client.elementListSelect("", "text=Argentina", 0, false);
-        client.click("NATIVE", "xpath=//*[@accessibilityLabel='Argentina']", 0, 1);
-        client.sendText("{PORTRAIT}");
-        client.sleep(1000);
-        client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Argentina']", 0);
-        client.verifyElementFound("NATIVE", "xpath=//*[@text='Send Payment']", 0);
-        client.click("NATIVE", "xpath=//*[@text='Send Payment']", 0, 1);
-        client.sleep(500);
-        client.click("NATIVE", "xpath=//*[@text='Yes']", 0, 1);
-        client.click("NATIVE", "xpath=//*[@text='Logout']", 0, 1);
-        client.sendText("{HOME}");
+        client = new Client(host,port,true);
+        String device = client.waitForDevice("@os='ios' and not(contains(@version,'8')) and (contains(@version,'10.2.9')) ",30000); /*String device = client.waitForDevice("@os='android'",30000);*/
+        client.deviceAction("Unlock");
+
+
     }
 
     @After
     public void tearDown(){
-      client.generateReport(false);
-        client.releaseClient();
+       // System.out.println(client.generateReport(false));
+       // client.releaseClient();
     }
 }

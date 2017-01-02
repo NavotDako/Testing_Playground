@@ -7,8 +7,8 @@ import FrameWork.MyClient;
 public class NonInstrumented extends AbsTest {
 
 
-    public NonInstrumented(MyClient client, String device, int repNum, String reportFolder, String deviceToTest, String testName){
-        super( client,  device,  repNum,  reportFolder,  deviceToTest, testName);
+    public NonInstrumented(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
+        super( client, repNum,  reportFolder,  deviceToTest, testName);
     }
 
     @Override

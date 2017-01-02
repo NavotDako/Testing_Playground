@@ -5,13 +5,13 @@ import java.io.*;
 public class Runner {
 	static int iOSDevicesNum =3;
 	static int androidDevicesNum =1;
-	static int repNum = 2;
-
+	static int repNum = 5;
+	static boolean GRID = false;
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		//deviceQuery= " and contains(@version,'8.')";
+		deviceQuery= " and not(contains(@version,'8'))";
 
 		String resources = getResources();
 
