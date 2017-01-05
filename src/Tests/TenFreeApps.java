@@ -60,7 +60,7 @@ public class TenFreeApps extends AbsTest {
         if(client.isElementFound("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UIButton']" , 0))
             client.click("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UIButton']" , 0 , 1);
         else
-            client.click("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UISegment']" , 0 , 1);
+            if (!client.isElementFound("web","xpath=//*[@text='Free' and @class='UIACollectionView']",0))client.click("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UISegment']" , 0 , 1);
 
         int countOfOnScreenApps;
         ArrayList<String> freeApps = new ArrayList<>();

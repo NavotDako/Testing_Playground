@@ -44,7 +44,9 @@ public class Suite implements Runnable{
         if (!deviceOS.contains("ios")) {
             new SimulateCapture(SetUp("SimulateCapture"), repNum, reportFolder, deviceOS, "SimulateCapture");
         }
-
+        if (deviceOS.contains("ios")) {
+            new WebTabs(SetUp("WebTabs"), repNum, reportFolder, deviceOS, "WebTabs");
+        }
         //if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
 
         // if (deviceOS.contains("ios")) (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
@@ -69,49 +71,65 @@ public class Suite implements Runnable{
     }
 
     public MyClient SetUp(String testName){
-
         try{
             if (Runner.GRID) {
-                GridClient grid = new GridClient("admin", "Experitest2012", "", serverHost, serverPort, false);
-                if (deviceName ==null) {
-                    System.out.println("@os='"+deviceOS+"'"+deviceQuery);
-                    client = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='"+deviceOS+"'"+deviceQuery, repNum * 5, 30000));
-                    deviceName = client.getDeviceProperty("device.name");
-                } else {
-                    System.out.println("@name='"+ deviceName.substring(deviceName.indexOf(":")+1)+"'"+deviceQuery);
-                    client = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@name='"+ deviceName +"'"+deviceQuery, repNum * 5, 30000));
-                }
+                client = getGridClient(testName);
             }else{
-                client = new MyClient(commandMap,null);
-                if (deviceName ==null) {
-                    deviceName = client.waitForDevice("@os = '" + deviceOS + "'" + deviceQuery, 30000);
-                } else {
-                    client.waitForDevice("@name = '" + deviceName.substring(deviceName.indexOf(":")+1) + "'" + deviceQuery, 30000);
-                }
-
-
+                client = getClient();
             }
-
             System.out.println(Thread.currentThread().getName() + " - " + deviceName.substring(deviceName.indexOf(":")));
 
+            FinishSetUP();
 
-            if (client!=null) {
-                client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
-                if(!Runner.GRID) client.openDevice();
-                client.deviceAction("Unlock");
-            } else {
-                System.out.println("WAIT FOR DEVICE FAILED for - "+"@os = '" + deviceOS + "'" + deviceQuery);
-            }
             return client;
 
         }catch(Exception e){
             System.out.println("---------------" + deviceName + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return client;
+        }
+    }
 
+    public void FinishSetUP() {
+        if (client!=null) {
+            client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
+            if(!Runner.GRID) client.openDevice();
+            client.deviceAction("Unlock");
+        } else {
+            System.out.println("WAIT FOR DEVICE FAILED for - "+"@os = '" + deviceOS + "'" + deviceQuery);
         }
 
+    }
 
+    private void InstallChromeIfNeeded() {
+        String apps = client.getInstalledApplications();
+        if (!apps.contains("com.android.chrome")){
 
+        }
+    }
+
+    public MyClient getGridClient(String testName) {
+        MyClient myclient=null;
+        GridClient grid = new GridClient("admin", "Experitest2012", "", serverHost, serverPort, false);
+        if (deviceName ==null) {
+            System.out.println("@os='"+deviceOS+"'"+deviceQuery);
+            myclient= new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='"+deviceOS+"'"+deviceQuery, repNum * 5, 30000));
+            deviceName = myclient.getDeviceProperty("device.name");
+            if (client.getDeviceProperty("device.os").contains("android")) InstallChromeIfNeeded();
+        } else {
+            System.out.println("@name='"+ deviceName.substring(deviceName.indexOf(":")+1)+"'"+deviceQuery);
+            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@name='"+ deviceName.substring(deviceName.indexOf(":")+1) +"'", repNum * 5, 30000));
+        }
+        return myclient;
+    }
+
+    public MyClient getClient() {
+        MyClient myclient = new MyClient(commandMap,null);
+        if (deviceName ==null) {
+            deviceName = myclient.waitForDevice("@os = '" + deviceOS + "'" + deviceQuery, 30000);
+        } else {
+            myclient.waitForDevice("@name = '" + deviceName.substring(deviceName.indexOf(":")+1) + "'", 30000);
+        }
+        return myclient;
     }
 }
 		

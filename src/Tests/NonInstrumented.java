@@ -79,6 +79,7 @@ public class NonInstrumented extends AbsTest {
     }
 
     private void deleteCountry(String countryStr) {
+        client.getVisualDump("native");
         String deleteElement = "xpath=//*[contains(@text,'Delete " + countryStr + "')]  | //*[contains(@text,'London')]/*/*[@text='Remove clock']";
 
         client.waitForElement("NATIVE", "xpath=//*[@text='Edit']", 0, 10000);

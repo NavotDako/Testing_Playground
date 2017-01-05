@@ -3,12 +3,14 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-	static int iOSDevicesNum =3;
+	static int iOSDevicesNum =0;
 	static int androidDevicesNum =1;
-	static int repNum = 5;
+	static int repNum =1;
 	static boolean GRID = false;
+
 	static String reportFolderString = "c:\\temp\\Reports";
 	static String deviceQuery= "";
+	static int commandIndex = 1;
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		deviceQuery= " and not(contains(@version,'8'))";
@@ -21,8 +23,6 @@ public class Runner {
 
         System.out.println("Start Resources:\n"+resources);
         System.out.println("End Resources:\n"+getResources());
-
-
 	}
 
     private static void RunThreads() throws InterruptedException {

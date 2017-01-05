@@ -9,36 +9,43 @@ import java.io.*;
 import java.util.Map;
 
 
-public class MyClient{
+public class MyClient {
 
     private Client client;
     Map<String, Command> commandMap = null;
 
-    String deviceOS="??";
+    String deviceOS = "??";
     private String deviceName;
 
     public MyClient(Map<String, Command> commandMap, Client client) {
         //client(serverHost, serverPort, t);
-        this.commandMap= commandMap;
-        if (client!=null){
-            this.client=client;
-        }else{
-            this.client = new Client("localhost",8889,true);
+        this.commandMap = commandMap;
+        if (Runner.GRID) {
+            this.client = client;
+            deviceName = client.getDeviceProperty("device.name");
+            deviceOS = client.getDeviceProperty("device.os");
+        } else {
+            this.client = new Client("localhost", 8889, true);
             System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
+
         }
     }
 
-    public void Finish(String command , String detail, long before) {
+    public void Finish(String command, String detail, long before) {
         long time = System.currentTimeMillis() - before;
-        String stringToWrite= "??";
-        if (!commandMap.containsKey(command)){
-            commandMap.put(command,new Command(command));
+        String stringToWrite = "??";
+        if (!commandMap.containsKey(command)) {
+            commandMap.put(command, new Command(command));
         }
-        if (commandMap.containsKey(command)){
+        if (commandMap.containsKey(command)) {
             commandMap.get(command).timeList.add(time);
-            commandMap.get(command).totalTime +=time;
-            commandMap.get(command).avgTime = commandMap.get(command).totalTime/ commandMap.get(command).timeList.size();
-            stringToWrite = commandMap.get(command).timeList.size() + ": " + deviceName + " --- " + detail + " --- " + time + " --- AVG - " + commandMap.get(command).avgTime + "\n";
+            commandMap.get(command).totalTime += time;
+            commandMap.get(command).avgTime = commandMap.get(command).totalTime / commandMap.get(command).timeList.size();
+
+            stringToWrite = deviceOS + " --- " + deviceName.substring(deviceName.indexOf(":") + 1);
+            stringToWrite += " --- " + command + " --- " + commandMap.get(command).timeList.size();
+            stringToWrite += " --- " + detail + " --- " + time;
+            stringToWrite += " --- AVG --- " + commandMap.get(command).avgTime + "\n";
         }
 
         try {
@@ -50,8 +57,9 @@ public class MyClient{
 
     public void Write(String stringToWrite) throws IOException {
 
-        String reportName =deviceName.substring(deviceName.indexOf(":")+1);
-        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/"+reportName +".txt", true)));
+        String reportName = deviceName.substring(deviceName.indexOf(":") + 1);
+        ;
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/" + reportName + ".txt", true)));
         System.out.println(stringToWrite);
         writer.append(stringToWrite);
         writer.close();
@@ -65,7 +73,7 @@ public class MyClient{
         } else {
             client.launch(activityURL, instrument, stopIfRunning);
         }
-        Finish("Launch","Launch - "+activityURL, before);
+        Finish("Launch", activityURL, before);
 
     }
 
@@ -153,7 +161,7 @@ public class MyClient{
 
         long before = System.currentTimeMillis();
         client.click(zone, element, index, count);
-        Finish("Click","Click - "+zone + " - " + element, before);
+        Finish("Click", zone + " : " + element, before);
 
     }
 
@@ -186,8 +194,8 @@ public class MyClient{
     }
 
     public String setReporter(String type, String reportFolder, String reportName) {
-        String reportPath = client.setReporter(type,reportFolder,reportName);
-       // client.startLoggingDevice(reportPath);
+        String reportPath = client.setReporter(type, reportFolder, reportName);
+        // client.startLoggingDevice(reportPath);
         return reportFolder;
     }
 
@@ -324,13 +332,16 @@ public class MyClient{
     }
 
     public boolean uninstall(String application) {
-        return client.uninstall(application);
+        boolean result = client.uninstall(application);
+        client.sleep(1000);
+        return result;
     }
 
     public boolean install(String app, boolean instrument, boolean stopIfRunning) {
         long before = System.currentTimeMillis();
         boolean result = client.install(app, instrument, stopIfRunning);
-        Finish("Install","Install - "+deviceOS+" - "+app, before);
+        Finish("Install", app, before);
+        client.sleep(500);
         return result;
     }
 
@@ -351,7 +362,7 @@ public class MyClient{
     }
 
     public String generateReport(boolean b) {
-   //     client.stopLoggingDevice();
+        //     client.stopLoggingDevice();
         String result = client.generateReport(b);
 
         //reportTheCommands();
@@ -363,7 +374,10 @@ public class MyClient{
     }
 
     public String[] getAllValues(String zone, String element, String property) {
-        return client.getAllValues(zone, element, property);
+        long before = System.currentTimeMillis();
+        String[] values = client.getAllValues(zone, element, property);
+        Finish("getAllValues", zone + " : " + element, before);
+        return values;
     }
 
     public String getAllZonesWithElement(String element) {
@@ -411,7 +425,10 @@ public class MyClient{
     }
 
     public int getElementCount(String zone, String element) {
-        return client.getElementCount(zone, element);
+        long before = System.currentTimeMillis();
+        int value = client.getElementCount(zone, element);
+        Finish("getElementCount", zone + " : " + element, before);
+        return value;
     }
 
     public int getElementCountIn(String zoneName, String elementSearch, int index, String direction, String elementCountZone, String elementCount, int width, int height) {
@@ -447,7 +464,10 @@ public class MyClient{
     }
 
     public String getText(String zone) {
-        return client.getText(zone);
+        long before = System.currentTimeMillis();
+        String value = client.getText(zone);
+        Finish("getText", zone, before);
+        return value;
     }
 
     public String getTextIn(String zone, String element, int index, String direction, int width, int height) {
@@ -463,7 +483,10 @@ public class MyClient{
     }
 
     public String getVisualDump(String type) {
-        return client.getVisualDump(type);
+        long before = System.currentTimeMillis();
+        String value = client.getVisualDump(type);
+        Finish("getVisualDump", type, before);
+        return value;
     }
 
     public void hybridClearCache(boolean clearCookies, boolean clearCache) throws InternalException {
@@ -492,23 +515,23 @@ public class MyClient{
 
     public void reportTheCommands() {
 
-        for (Map.Entry<String, Command> entry: commandMap.entrySet()){
+        for (Map.Entry<String, Command> entry : commandMap.entrySet()) {
             int sum;
-            if(entry.getValue().timeList.size()>0) {
-                sum=0;
+            if (entry.getValue().timeList.size() > 0) {
+                sum = 0;
                 for (Long t : entry.getValue().timeList)
-                    sum+=t;
-                System.out.println("---------------" + deviceName + " - "+entry.getValue().commandName+" AVG - "+sum/entry.getValue().timeList.size()+ " "+ entry.getValue().commandName +" count - "+entry.getValue().timeList.size()+"-----------------");
+                    sum += t;
+                System.out.println("---------------" + deviceName + " - " + entry.getValue().commandName + " AVG - " + sum / entry.getValue().timeList.size() + " " + entry.getValue().commandName + " count - " + entry.getValue().timeList.size() + "-----------------");
             }
         }
 
     }
 
     public boolean reboot(int timeOut) {
-        System.out.println(Thread.currentThread().getName() + " " +deviceName+" Rebooting...");
+        System.out.println(Thread.currentThread().getName() + " " + deviceName + " Rebooting...");
         long before = System.currentTimeMillis();
         boolean result = client.reboot(timeOut);
-        Finish("Reboot","Reboot - "+deviceOS, before);
+        Finish("Reboot", "NoZone", before);
         return result;
     }
 
@@ -546,7 +569,10 @@ public class MyClient{
 
 
     public void sendText(String text) {
+        long before = System.currentTimeMillis();
         client.sendText(text);
+        Finish("sendText", text, before);
+
     }
 
 
@@ -659,10 +685,10 @@ public class MyClient{
     }
 
 
-    public void elementSendText(String zone, String element, int index, String text){
+    public void elementSendText(String zone, String element, int index, String text) {
         long before = System.currentTimeMillis();
         client.elementSendText(zone, element, index, text);
-        Finish("elementSendText","elementSendText - "+ deviceOS+" - "+zone, before);
+        Finish("elementSendText", zone + " : " + element, before);
     }
 
 
@@ -672,7 +698,10 @@ public class MyClient{
 
 
     public void elementSwipe(String zone, String element, int index, String direction, int offset, int time) {
+        long before = System.currentTimeMillis();
         client.elementSwipe(zone, element, index, direction, offset, time);
+        Finish("elementSwipe", zone + ":" + element, before);
+
     }
 
 
@@ -721,10 +750,10 @@ public class MyClient{
     }
 
 
-    public void  verifyElementFound(String zone, String element, int index){
+    public void verifyElementFound(String zone, String element, int index) {
         long before = System.currentTimeMillis();
         client.verifyElementFound(zone, element, index);
-        Finish("verifyElementFound","verifyElementFound - "+ deviceOS+" - "+zone, before);
+        Finish("verifyElementFound", zone + " : " + element, before);
     }
 
 
@@ -756,7 +785,6 @@ public class MyClient{
     public boolean waitForWindow(String name, int timeout) {
         return client.waitForWindow(name, timeout);
     }
-
 
 
     public void setDisableConsole(boolean disableConsole) {
@@ -793,11 +821,11 @@ public class MyClient{
         client.setThrowExceptionOnFail(throwExceptionOnFail);
     }
 
-    public String waitForDevice(String query, int timeOut){
-        if (!Runner.GRID){
-            client.waitForDevice(query,timeOut);
-        }else{
-            System.out.println("all good - "+Thread.currentThread().getName());
+    public String waitForDevice(String query, int timeOut) {
+        if (!Runner.GRID) {
+            client.waitForDevice(query, timeOut);
+        } else {
+            System.out.println("all good - " + Thread.currentThread().getName());
         }
         deviceName = client.getDeviceProperty("device.name");
         deviceOS = client.getDeviceProperty("device.os");
@@ -825,7 +853,10 @@ public class MyClient{
 
 
     public String capture() {
-        return client.capture();
+        long before = System.currentTimeMillis();
+        String value = client.capture();
+        Finish("capture", "NoZone", before);
+        return value;
     }
 
 
@@ -855,23 +886,24 @@ public class MyClient{
 
     public void collectSupportData(String zipDestination, String applicationPath, String device, String scenario, String expectedResult, String actualResult) {
         long before = System.currentTimeMillis();
-        System.out.println(Thread.currentThread().getName()+ " "+device+" - "+"SupportData - "+zipDestination);
-        try{
-            client.collectSupportData(zipDestination,"",device,"","","",true,true);
+        System.out.println(Thread.currentThread().getName() + " " + device + " - " + "SupportData - " + zipDestination);
+        try {
+            client.collectSupportData(zipDestination, "", device, "", "", "", true, true);
 
-        }catch(Exception e1){
+        } catch (Exception e1) {
             System.err.println(device + " - Can't get SupportData");
             e1.printStackTrace();
         }
-        Finish("collectSupportData","collectSupportData - "+deviceOS, before);
-
+        Finish("collectSupportData", "NoZone", before);
     }
-
 
     public void collectSupportData(String zipDestination, String applicationPath, String device, String scenario, String expectedResult, String actualResult, boolean withCloudData, boolean onlyLatestLogs) {
-        client.collectSupportData(zipDestination, applicationPath, device, scenario, expectedResult, actualResult, withCloudData, onlyLatestLogs);
-    }
 
+        long before = System.currentTimeMillis();
+        System.out.println(Thread.currentThread().getName() + " " + device + " - " + "SupportData - " + zipDestination);
+        client.collectSupportData(zipDestination, applicationPath, device, scenario, expectedResult, actualResult, withCloudData, onlyLatestLogs);
+        Finish("collectSupportData", "NoZone", before);
+    }
 
     public void deviceAction(String action) {
         client.deviceAction(action);

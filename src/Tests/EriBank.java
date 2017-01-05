@@ -13,8 +13,6 @@ public class EriBank extends AbsTest {
 	@Override
 	protected void AndroidRunTest() {
 		client.uninstall("com.experitest.ExperiBank/.LoginActivity");
-		client.sleep(500);
-
 		try {
 			client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk",true,false);
 		} catch (Exception e) {
@@ -56,7 +54,7 @@ public class EriBank extends AbsTest {
 	@Override
 	protected void IOSRunTest() {
 		client.uninstall("com.experitest.ExperiBankO");
-		client.sleep(500);
+		client.deviceAction("home");
 		try {
 			client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa",true,false);
 		} catch (Exception e) {
