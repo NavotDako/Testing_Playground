@@ -1,6 +1,7 @@
 package Tests;
 
 import FrameWork.AbsTest;
+import FrameWork.Command;
 import FrameWork.MyClient;
 
 import java.util.HashMap;
@@ -12,9 +13,8 @@ import java.util.Map;
 public class PhilipsWeb extends AbsTest {
 
 
-    public PhilipsWeb(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
-        super( client, repNum,  reportFolder,  deviceToTest,testName );
-
+    public PhilipsWeb(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery ,testName, commandMap);
     }
 
     @Override

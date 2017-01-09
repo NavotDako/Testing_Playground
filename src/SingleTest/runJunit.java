@@ -65,7 +65,7 @@ public class runJunit {
         String[] devicesArray = devices.split("\n");
         System.out.println();
         for (int i = 0; i < devicesArray.length; i++) {
-            System.out.println("device - "+i+" = "+devicesArray[i]);
+            System.out.println("deviceName - "+i+" = "+devicesArray[i]);
         }
         return devicesArray;
     }

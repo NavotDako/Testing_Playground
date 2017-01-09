@@ -1,7 +1,10 @@
 package Tests;
 
 import FrameWork.AbsTest;
+import FrameWork.Command;
 import FrameWork.MyClient;
+
+import java.util.Map;
 
 /**
  * Created by navot.dako on 6/19/2016.
@@ -9,8 +12,8 @@ import FrameWork.MyClient;
 public class Rebooting extends AbsTest {
 
 
-    public Rebooting (MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
-        super( client,  repNum,  reportFolder,  deviceToTest, testName);
+    public Rebooting (String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery ,testName, commandMap);
     }
 
     @Override

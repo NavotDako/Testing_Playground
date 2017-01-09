@@ -1,17 +1,18 @@
 package Tests;
 
 import FrameWork.AbsTest;
-import FrameWork.MyClient;
+import FrameWork.Command;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by udi.valer on 8/29/2016.
  */
 public class TenFreeApps extends AbsTest {
 
-    public  TenFreeApps(MyClient client , int repNum , String reportFolder , String deviceToTest , String testName){
-        super(client ,  repNum , reportFolder , deviceToTest , testName);
+    public  TenFreeApps(String deviceToTest,String deviceQuery,  String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery,  testName, commandMap);
     }
 
     @Override

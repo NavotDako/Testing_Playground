@@ -3,13 +3,15 @@ package Tests;
 import static org.junit.Assert.fail;
 
 import FrameWork.AbsTest;
-import FrameWork.MyClient;
+import FrameWork.Command;
+
+import java.util.Map;
 
 
 public class WebTabs extends AbsTest {
 
-    public WebTabs(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName) {
-        super(client, repNum, reportFolder, deviceToTest, testName);
+    public WebTabs(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery, testName, commandMap);
     }
 
     @Override
@@ -25,7 +27,7 @@ public class WebTabs extends AbsTest {
 
         // add new tab and open espn
         client.click("NATIVE", "xpath=//*[@text='Pages']", 0, 1);
-        if (client.getProperty("device.model").contains("Pad"))
+        if (client.getProperty("deviceName.model").contains("Pad"))
             client.click("NATIVE", "xpath=//*[@text='New tab']", 0, 1);
         else
             client.click("NATIVE", "xpath=//*[@text='New page']", 0, 1);
@@ -54,7 +56,7 @@ public class WebTabs extends AbsTest {
 
 
     void ebayTest(String stuffTosearch) {
-        if (client.getProperty("device.model").contains("Pad")) {
+        if (client.getProperty("deviceName.model").contains("Pad")) {
             client.elementSendText("WEB", "xpath=//*[@id='gh-ac']", 0, stuffTosearch);
             client.click("WEB", "xpath=//*[@id='gh-btn']", 0, 1);
             client.waitForElement("WEB", "xpath=//*[@text='Auction']", 0, 30000);

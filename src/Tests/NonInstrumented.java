@@ -2,13 +2,15 @@ package Tests;//package <set your Memory package>;
 import static org.junit.Assert.fail;
 
 import FrameWork.AbsTest;
-import FrameWork.MyClient;
+import FrameWork.Command;
+
+import java.util.Map;
 
 public class NonInstrumented extends AbsTest {
 
 
-    public NonInstrumented(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
-        super( client, repNum,  reportFolder,  deviceToTest, testName);
+    public NonInstrumented(String deviceToTest, String deviceQuery,String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery, testName, commandMap);
     }
 
     @Override

@@ -83,7 +83,7 @@ public class CheckInstrumentation {
 		client.setProjectBaseDirectory(projectBaseDirectory);
 		client.waitForDevice("@os=\"ios\"", 300000);
 
-		String str3 = client.getDeviceProperty("device.model");
+		String str3 = client.getDeviceProperty("deviceName.model");
 		System.out.println("str3 is: " + str3);
 		if(str3.contains("iPad")){
 			model = "iPad";
@@ -93,7 +93,7 @@ public class CheckInstrumentation {
 		}
 		System.out.println("model is: " + model);
 
-		device_name = client.getDeviceProperty("device.name");
+		device_name = client.getDeviceProperty("deviceName.name");
 		device_path = createDeviceFolder(device_name, run_millis_path);
 		System.out.println("device_path is: " + device_path);
 		String current_test_name = test_name.getMethodName();
@@ -128,7 +128,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedfmr_ios() {
 		try{
-			Assert.assertTrue("The device model for this Memory - testCheckInstrumentedfmr_ios -  must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
+			Assert.assertTrue("The deviceName model for this Memory - testCheckInstrumentedfmr_ios -  must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
 			client.install(apps_directory + "\\fmr_ios.ipa", true, true);
 			client.launch("com.fidelity.watchlist-AdHoc", true, true);
 			client.click("NATIVE", "nixpath=//*[@text='Don’t Allow' and @knownSuperClass='_UIAlertControllerActionView' and @enabled='true']", 0, 1);
@@ -167,7 +167,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedsap(){
 		try{
-			Assert.assertTrue("The device model for this Memory -  testCheckInstrumentedsap - must be 'iPad'. but instead it's: " + model, model.equals("iPad"));
+			Assert.assertTrue("The deviceName model for this Memory -  testCheckInstrumentedsap - must be 'iPad'. but instead it's: " + model, model.equals("iPad"));
 
 			client.install(apps_directory + "\\sap.ipa", true, true);
 			client.launch("com.sap.byd.cod.ipad.internal", true, true);
@@ -187,7 +187,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedShaadi(){
 		try{
-			Assert.assertTrue("The device model for this Memory - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
+			Assert.assertTrue("The deviceName model for this Memory - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
 
 			client.install(apps_directory + "\\Shaadi.ipa", true, true);
 			client.launch("com.shaadi.iphone", true, true);
@@ -228,7 +228,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedSamplecode(){
 		try{
-			Assert.assertTrue("The device model for this Memory - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
+			Assert.assertTrue("The deviceName model for this Memory - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
 
 			client.install(apps_directory + "\\samplecode.ipa", true, true);
 			client.launch("com.apple.samplecode.ViewControllerPreview", true, true);

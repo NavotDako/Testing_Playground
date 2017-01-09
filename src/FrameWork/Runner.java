@@ -3,8 +3,8 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-	static int iOSDevicesNum =0;
-	static int androidDevicesNum =1;
+	static int iOSDevicesNum =1;
+	static int androidDevicesNum =0;
 	static int repNum =1;
 	static boolean GRID = false;
 

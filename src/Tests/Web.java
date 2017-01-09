@@ -3,13 +3,15 @@ package Tests;
 import static org.junit.Assert.fail;
 
 import FrameWork.AbsTest;
-import FrameWork.MyClient;
+import FrameWork.Command;
+
+import java.util.Map;
 
 
 public class Web extends AbsTest {
 	
-	public Web(MyClient client, int repNum, String reportFolder, String deviceToTest, String testName){
-		super( client, repNum,  reportFolder,  deviceToTest,testName);
+	public Web(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
+		super(deviceToTest, deviceQuery, testName, commandMap);
 	}
 
 	@Override

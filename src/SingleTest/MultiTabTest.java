@@ -12,7 +12,7 @@ public class MultiTabTest {
     protected Client client = null;
     protected String iosVersion = "";
     protected String iosModel = "";
-    protected boolean iphone = true; // Argument to understand if current test Runner oon device or on iphone
+    protected boolean iphone = true; // Argument to understand if current test Runner oon deviceName or on iphone
 
     @Before
     public void setUp(){
@@ -20,7 +20,7 @@ public class MultiTabTest {
         client = new Client("localhost", 8889, true);
         client.setProjectBaseDirectory(System.getProperty("user.dir"));
         client.setReporter("xml", "reports", "Untitled");
-        //If you want to use set device you are welcome
+        //If you want to use set deviceName you are welcome
 
 
     }

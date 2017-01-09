@@ -1,14 +1,17 @@
 package Tests;
 import FrameWork.AbsTest;
+import FrameWork.Command;
 import FrameWork.MyClient;
+
+import java.util.Map;
 
 /**
  * Created by richi.lebovich on 9/4/2016.
  */
 public class OfficeDepot extends AbsTest{
 
-    public OfficeDepot(MyClient client, int repNum, String reportFolder, String deviceOS, String testName) {
-        super(client, repNum, reportFolder, deviceOS, testName);
+    public OfficeDepot(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery ,testName, commandMap);
     }
 
     @Override

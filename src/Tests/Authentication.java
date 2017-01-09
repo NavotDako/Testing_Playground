@@ -3,21 +3,20 @@ package Tests;
 
 
 import FrameWork.AbsTest;
+import FrameWork.Command;
 import FrameWork.MyClient;
-import com.experitest.client.*;
+
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-
-import org.junit.*;
 /**
  *
  */
 public class Authentication extends AbsTest{
 
-    public Authentication(MyClient client, int repNum, String reportFolder, String deviceOS, String testName) {
-        super(client, repNum, reportFolder, deviceOS, testName);
+    public Authentication(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery ,testName, commandMap);
     }
 
     private String[] replies={
@@ -42,7 +41,7 @@ public class Authentication extends AbsTest{
             "Error Code: -3. Fallback authentication mechanism selected.",
             "Error Code: -4. UI canceled by system.",
             "Error Code: -5. Passcode not set.",
-            "Error Code: -6. Biometry is not available on this device.",
+            "Error Code: -6. Biometry is not available on this deviceName.",
             "Error Code: -7. No fingers are enrolled with Touch ID.",
             "Error Code: -8. Biometry is locked out.",
             "Error Code: -9. kLAErrorAppCancel",

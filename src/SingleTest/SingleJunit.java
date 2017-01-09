@@ -10,7 +10,7 @@ public class SingleJunit {
     private String host = "localhost";
     private int port = 8889;
     protected Client client = null;
-
+    GridClient grid;
     String deviceQuery = "@os='android' and not(contains(@version,'8'))";
 
     String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project18";
@@ -22,37 +22,33 @@ public class SingleJunit {
 
     @Before
     public void setUp() {
-      /*  if (GRID) {
-            GridClient grid = new GridClient("admin", "Experitest2012", "", "192.168.2.13", 8090, false);
-            client = grid.lockDeviceForExecution("NavotTest", deviceQuery, 2, 60000);
+        if (GRID) {
+           // grid = new GridClient("navot", "Experitest2012", "", "192.168.2.5", 8080, false);
+            grid = new GridClient("admin", "Experitest2012", "", "192.168.2.13", 8090, false);
+            client = grid.lockDeviceForExecution("NavotTest", deviceQuery, 4, 60000);
+            device = client.getDeviceProperty("deviceName.name");
         } else {
             client = new Client(host, port, true);
             device = client.waitForDevice(deviceQuery, 30000);
         }
 
         client.setProjectBaseDirectory(projectBaseDirectory);
-        client.setReporter("xml", "Reports", "Single Test");*/
-        //client.setShowPassImageInReport(false);
+        client.setReporter("xml", "Reports", "Single Test");
+
     }
 
     @Test
     public void TheTest() throws InterruptedException {
-        String host = "localhost";
-        int port = 8889;
-        Client client = null;
 
-        String deviceQuery = "@os='android' and not(contains(@version,'8'))";
-        client = new Client(host, port, true);
-        device = client.waitForDevice(deviceQuery, 30000);
-        client.getDeviceProperty("device.os");
-        client.releaseDevice(device, false, false, false);
-        client.releaseClient();
+        client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk", true, false);
     }
 
     @After
     public void tearDown() {
-       /* System.out.println(client.generateReport(false));
-        client.releaseDevice(device, true, true, true);
-        client.releaseClient();*/
+//        client.collectSupportData("C:\\Temp\\Reports\\data","","","","","",true,true);
+        System.out.println(client.generateReport(false));
+//        client.releaseDevice(deviceName, true, true, true);
+        client.releaseClient();
+       // grid.releaseDeviceFromExecution(client);
     }
 }
