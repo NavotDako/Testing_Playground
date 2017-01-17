@@ -12,7 +12,7 @@ public class Suite implements Runnable {
     String deviceName;
     String reportFolder;
     String deviceOS;
-    String deviceQuery = "";
+    public String deviceQuery = "";
     Map<String, Command> commandMap = new HashMap<>();
 
     public Suite(int repNum, String reportFolder, String deviceToTest, String deviceQuery) {
@@ -25,29 +25,32 @@ public class Suite implements Runnable {
     @Override
     public void run() {
 
-        //if (deviceOS.contains("ios")) (new Authentication(SetUp("Authentication"),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
+        EriBank test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
 
-        new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+        deviceName = test.deviceName;
+        deviceQuery = " and @serialnumber='" + test.deviceSN + "'";
+
+        new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
 
         new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
 
         new Web(deviceOS, deviceQuery, "Web", commandMap);
-
-        new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
 
         new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
 
         if (!deviceOS.contains("ios")) {
             new SimulateCapture(deviceOS, deviceQuery, "SimulateCapture", commandMap);
         }
-        if (deviceOS.contains("ios")) {
-            new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
-        }
-        //if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
+
+        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
+
+        // new Rebooting(deviceOS, deviceQuery, "Rebooting", commandMap);
+
+        // if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
 
         // if (deviceOS.contains("ios")) (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
 
-        // (new Rebooting(SetUp(),deviceQuery,repNum,reportFolder,deviceOS,"Reboot")).StartTesting();
+        // if (deviceOS.contains("ios")) (new Authentication(SetUp("Authentication"),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
 
         System.out.println("----------------------------------------- DONE WITH " + deviceName + "-----------------------------------------");
 

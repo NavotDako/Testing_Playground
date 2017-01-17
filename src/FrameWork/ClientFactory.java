@@ -4,9 +4,7 @@ import com.experitest.client.GridClient;
 
 import java.util.Map;
 
-/**
- * Created by navot.dako on 1/8/2017.
- */
+
 public class ClientFactory {
     static String serverHost = "192.168.2.13";
     static String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project11";
@@ -38,9 +36,9 @@ public class ClientFactory {
     }
 
     public static void FinishSetUP(MyClient client) {
-        client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
+       // client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
         if (!Runner.GRID) client.openDevice();
-        client.deviceAction("Unlock");
+
     }
 
     /*private void InstallChromeIfNeeded() {

@@ -19,6 +19,7 @@ public class NonInstrumented extends AbsTest {
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         client.swipe("Up", 0, 500);
 
+        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
 
         if(!client.isElementFound("NATIVE", settingsXpath, 0)){
             if (client.isElementFound("NATIVE","xpath=//*[@text='Shortcuts' and @id='toolbox_bt']",0))
@@ -51,6 +52,7 @@ public class NonInstrumented extends AbsTest {
             client.click("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0, 1);
 
         client.sendText("{HOME}");
+        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
         client.verifyElementFound("NATIVE",springboardIdentifier, 0);
 
     }

@@ -21,16 +21,19 @@ public class LaunchBrowserLoop extends AbsTest {
         String ebay = "m.ebay.com";
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         String xpathToVerify="";
+        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
         for (int i = 0; i < 10; i++) {
             String site  = (i%2==0) ? ebay : google;
             client.launch("chrome:"+site, true, true);
-            //client.hybridWaitForPageLoad(30000);
+            client.hybridWaitForPageLoad(30000);
             xpathToVerify  = (i%2==0) ? "//*[@alt='eBay Home page']" : "//*[@id='hplogo']";
             client.verifyElementFound("WEB", "xpath="+xpathToVerify, 0);
             client.sendText("{HOME}");
             //HUAWEI - @id='dock_divider'
             client.verifyElementFound("NATIVE",springboardIdentifier , 0);
         }
+        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
+
 
     }
 

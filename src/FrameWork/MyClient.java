@@ -3,7 +3,9 @@ package FrameWork;
 import com.experitest.client.Client;
 import com.experitest.client.InternalException;
 import com.experitest.client.MobileListener;
+import com.experitest.client.Utils;
 import com.experitest.client.log.ILogger;
+import com.experitest.client.log.Level;
 
 import java.io.*;
 import java.util.Map;
@@ -29,6 +31,8 @@ public class MyClient {
             System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
 
         }
+        // add extra logging
+        //this.client.setLogger(Utils.initDefaultLogger(Level.ALL));
     }
 
     public void Finish(String command, String detail, long before) {

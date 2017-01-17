@@ -7,14 +7,15 @@ import java.util.Map;
 
 public abstract class AbsTest {
     protected int success = 0;
-
-    protected String deviceName = null;
+    public String deviceSN = null;
+    public String deviceName = null;
     protected String reportFolder;
     protected String deviceOS;
     protected String testName;
     protected String deviceQuery = "";
     protected MyClient client;
     protected Map<String, Command> commandMap = null;
+    public String deviceShortName = null;
 
     public AbsTest(String deviceOS, String deviceQuery, String testName, Map<String, Command> commandMap) {
         this.commandMap = commandMap;
@@ -26,12 +27,11 @@ public abstract class AbsTest {
         StartTesting();
 
         double successRate = ((double) success / (double) (Runner.repNum));
-        String finish = "FINISHED - " + deviceName + " - " + testName + " - " + Thread.currentThread().getName() + " - Success Rate: " + success + "/" + (Runner.repNum) + " = " + successRate;
+        String finish = "\n\nFINISHED - " + deviceName + " - " + testName + " - " + Thread.currentThread().getName() + " - Success Rate: " + success + "/" + (Runner.repNum) + " = " + successRate + "\n\n";
         System.out.println(finish);
     }
 
-
-    public boolean StartTesting() {
+    public void StartTesting() {
         long time = 0;
 
         for (int i = 0; i < Runner.repNum; i++) {
@@ -50,24 +50,32 @@ public abstract class AbsTest {
                 continue;
             }
             try {
-                Finish(i);
+                Finish(i, time);
             } catch (Exception e2) {
                 System.out.println("Failed On Finish - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
                 e2.printStackTrace();
                 Failure(i, e2, time);
             }
         }
-        //Write(finish);
-        return true;
+
     }
 
-    public void SetUpTest(int i) {
-        client = ClientFactory.SetUp("EriBank", this.deviceOS, this.deviceQuery, commandMap, deviceName);
-        if (deviceName == null) this.deviceName = client.getDeviceProperty("device.name");
-        System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  STARTING - " + deviceName + " - " + testName + ": Iteration - " + (i + 1));
-        client.sendText("{UNLOCK}");
-        client.sendText("{HOME}");
-        System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  Set Reporter - " + client.setReporter("xml", reportFolder, deviceName.substring(deviceName.indexOf(":") + 1) + " " + deviceOS + " - " + testName + " - " + (i + 1)));
+    public void SetUpTest(int i) throws Exception {
+        client = ClientFactory.SetUp(testName, this.deviceOS, this.deviceQuery, commandMap, deviceName);
+        if (client != null) {
+            if (deviceName == null) {
+                this.deviceName = client.getDeviceProperty("device.name");
+                deviceShortName = deviceName.substring(deviceName.indexOf(":") + 1);
+            }
+            if (deviceSN==null) this.deviceSN = client.getDeviceProperty("device.sn");
+
+            System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  STARTING - " + deviceName + " - " + testName + ": Iteration - " + (i + 1));
+            System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  Set Reporter - " + client.setReporter("xml", reportFolder, deviceShortName + " " + deviceOS + " - " + testName + " - " + (i + 1)));
+            client.deviceAction("unlock");
+            client.sendText("{HOME}");
+        } else {
+            throw new Exception("CLIENT FROM GRID IS NULL!!!");
+        }
 
     }
 
@@ -81,9 +89,6 @@ public abstract class AbsTest {
         }
         long time = System.currentTimeMillis() - before;
         success++;
-
-        String stringToWrite = WriteAndGetResults(i, time, true);
-        Write(stringToWrite);
         return time;
     }
 
@@ -94,6 +99,10 @@ public abstract class AbsTest {
 
         try {
             generatedReport = client.generateReport(false);
+            if (generatedReport == null) {
+                generatedReport = "c:\\Temp\\Reports";
+                System.out.println("Failed to Generate Report - unknown reason");
+            }
         } catch (Exception e1) {
             System.out.println("Failed to Generate Report- " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
             e1.printStackTrace();
@@ -102,14 +111,13 @@ public abstract class AbsTest {
         WriteFailure(stringToWrite, errors, generatedReport);
 
         try {
-            client.collectSupportData(generatedReport + "\\SupportData", "", deviceName, "", "", "", true, false);
+     //       client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceShortName, "", "", "", true, false);
         } catch (Exception e2) {
-            System.out.println("Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
+            System.out.println("Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
             e2.printStackTrace();
         }
 
         try {
-            client.releaseDevice(deviceName, true, IsCloudDevice(), true);
             client.releaseClient();
         } catch (Exception e3) {
             System.out.println("Failed to Release Device - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
@@ -118,10 +126,14 @@ public abstract class AbsTest {
 
     }
 
-    public void Finish(int i) {
-        System.out.println("Finished Iteration - "+i+" - In - "+Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + client.generateReport(false));
-        client.releaseDevice(deviceName, true, IsCloudDevice(), true);
+    public void Finish(int i, long time) {
+
+        System.out.println("Finished Iteration - " + i + " - In - " + Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + client.generateReport(false));
+        if(!Runner.GRID) client.releaseDevice(deviceName, true, true, true);
         client.releaseClient();
+
+        String stringToWrite = WriteAndGetResults(i, time, true);
+        Write(stringToWrite);
     }
 
     private boolean IsCloudDevice() {
@@ -137,7 +149,7 @@ public abstract class AbsTest {
 
     private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
         Write("*** " + stringToWrite + " ***");
-        Write("  " + deviceName + " - " + errors.toString());
+        Write("\t" + deviceName + " - " + errors.toString());
         Write(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReport + "\n");
     }
 
