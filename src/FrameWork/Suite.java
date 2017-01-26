@@ -1,9 +1,15 @@
 package FrameWork;
 
 import Tests.*;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 
 public class Suite implements Runnable {
@@ -24,17 +30,18 @@ public class Suite implements Runnable {
 
     @Override
     public void run() {
-
-        EriBank test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+        AbsTest test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
 
         deviceName = test.deviceName;
         deviceQuery = " and @serialnumber='" + test.deviceSN + "'";
 
-        new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
-
-        new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
+        new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
 
         new Web(deviceOS, deviceQuery, "Web", commandMap);
+
+        new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+
+        new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
 
         new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
 
@@ -44,16 +51,12 @@ public class Suite implements Runnable {
 
         new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
 
-        // new Rebooting(deviceOS, deviceQuery, "Rebooting", commandMap);
 
-        // if (deviceOS.contains("android")) (new OfficeDepot(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "OfficeDepot")).StartTesting();
-
-        // if (deviceOS.contains("ios")) (new PhilipsWeb(SetUp(),deviceQuery,repNum,reportFolder,deviceOS, "PhilipsWeb")).StartTesting();
-
-        // if (deviceOS.contains("ios")) (new Authentication(SetUp("Authentication"),deviceQuery,repNum,reportFolder,deviceOS, "Authentication")).StartTesting();
 
         System.out.println("----------------------------------------- DONE WITH " + deviceName + "-----------------------------------------");
-
+       /* setDeviceQuery();
+        JUnitCore junit = new JUnitCore();
+        Result result = junit.run(SingleTest.InstrumentationTest.class);*/
         WriteTimesForCommands();
     }
 
@@ -67,6 +70,9 @@ public class Suite implements Runnable {
                 System.out.println("---------------" + deviceName + " - " + entry.getValue().commandName + " AVG - " + sum / entry.getValue().timeList.size() + " " + entry.getValue().commandName + " count - " + entry.getValue().timeList.size() + "-----------------");
             }
         }
+    }
+    public String setDeviceQuery(){
+        return System.setProperty(Thread.currentThread().getName(),deviceQuery);
     }
 
 }

@@ -1,4 +1,4 @@
-package Tests;//package <set your Memory package>;
+package Tests;
 
 import FrameWork.AbsTest;
 import FrameWork.Command;
@@ -8,19 +8,14 @@ import java.util.Map;
 public class EriBank extends AbsTest {
 
 
-    public EriBank(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest,deviceQuery, testName, commandMap);
+    public EriBank(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
+        super(deviceToTest, deviceQuery, testName, commandMap);
     }
 
     @Override
     protected void AndroidRunTest() {
-      /*  client.uninstall("com.experitest.ExperiBank/.LoginActivity");
-        try {
-            client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk", true, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk", true, false);
-        }*/
+
+        client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk", true, false);
         client.launch("com.experitest.ExperiBank/.LoginActivity", true, true);
         client.syncElements(3000, 15000);
         client.verifyElementFound("NATIVE", "hint=Username", 0);
@@ -43,7 +38,7 @@ public class EriBank extends AbsTest {
         client.verifyElementFound("NATIVE", "text=Select", 0);
         client.click("NATIVE", "text=Select", 0, 1);
         client.sleep(1500);
-        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
+        if (client.capture() == null) client.report("Can't Get Capture!!!", false);
 
         client.elementListSelect("", "text=Argentina", 0, false);
         client.click("NATIVE", "text=Argentina", 0, 1);
@@ -57,10 +52,8 @@ public class EriBank extends AbsTest {
 
     @Override
     protected void IOSRunTest() {
-       /* client.uninstall("com.experitest.ExperiBankO");
-        client.deviceAction("home");
-        client.sleep(500);
-        client.install("C:\\Users\\DELL\\EclipseWorkspace\\Testing Playground STA\\lib\\EriBankO.ipa", true, false);*/
+
+        client.install("C:\\Users\\DELL\\EclipseWorkspace\\Testing Playground STA\\lib\\EriBankO.ipa", true, false);
         client.launch("com.experitest.ExperiBankO", true, true);
         client.syncElements(3000, 15000);
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0);
@@ -99,6 +92,7 @@ public class EriBank extends AbsTest {
         client.click("NATIVE", "xpath=//*[@text='Yes']", 0, 1);
         client.click("NATIVE", "xpath=//*[@text='Logout']", 0, 1);
         client.sendText("{HOME}");
+        client.uninstall("com.experitest.ExperiBankO");
     }
 
 }

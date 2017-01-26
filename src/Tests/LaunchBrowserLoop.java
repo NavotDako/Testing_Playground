@@ -17,6 +17,7 @@ public class LaunchBrowserLoop extends AbsTest {
 
     @Override
     protected void AndroidRunTest() {
+        client.setProperty("chrome.load.timeout","60000");
         String google = "www.google.com";
         String ebay = "m.ebay.com";
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
@@ -40,7 +41,7 @@ public class LaunchBrowserLoop extends AbsTest {
     @Override
     protected void IOSRunTest() {
         String google = "www.google.com";
-        String ebay = "m.ebay.com";
+        String ebay = "http://m.ebay.com";
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         String xpathToVerify="";
         for (int i = 0; i < 10; i++) {

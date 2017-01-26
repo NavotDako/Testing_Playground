@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 
 import FrameWork.AbsTest;
 import FrameWork.Command;
+import com.experitest.client.Client;
 
 import java.util.Map;
 
@@ -50,7 +51,7 @@ public class WebTabs extends AbsTest {
 
         // add new tab and open espn
         client.click("NATIVE", "xpath=//*[@text='Pages']", 0, 1);
-        if (client.getProperty("deviceName.model").contains("Pad"))
+        if (client.getProperty("device.model").contains("Pad"))
             client.click("NATIVE", "xpath=//*[@text='New tab']", 0, 1);
         else
             client.click("NATIVE", "xpath=//*[@text='New page']", 0, 1);

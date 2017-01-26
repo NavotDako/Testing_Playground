@@ -91,8 +91,8 @@ public class Web extends AbsTest {
 					,0 ,0,2 , true);
 			client.syncElements(1000, 20000);
 			client.sendText("{LANDSCAPE}");
-			client.getTextIn("WEB", "xpath=/*//*[@id='section_0']", 0, "WEB", "Inside", 0, 0);
-			client.elementSendText("WEB", "xpath=/*//*[contains(@id,'wpName')]", 0, "LONG");
+			client.getTextIn("WEB", "xpath=//*[@id='section_0']", 0, "WEB", "Inside", 0, 0);
+			client.elementSendText("WEB", "xpath=//*[contains(@id,'wpName')]", 0, "LONG");
 			client.elementSendText("WEB", "id=wpPassword2", 0, "RUN");
 			client.elementSendText("WEB", "id=wpRetype", 0, "123456");
 			client.closeKeyboard();

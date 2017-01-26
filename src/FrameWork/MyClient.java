@@ -27,7 +27,7 @@ public class MyClient {
             deviceName = client.getDeviceProperty("device.name");
             deviceOS = client.getDeviceProperty("device.os");
         } else {
-            this.client = new Client("localhost", 8889, true);
+            this.client = new Client(Runner.pr.getHost("local"), Runner.pr.getPort("local"), true);
             System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
 
         }
@@ -78,6 +78,9 @@ public class MyClient {
             client.launch(activityURL, instrument, stopIfRunning);
         }
         Finish("Launch", activityURL, before);
+
+        client.report(client.capture(),"Launch Capture",true);
+
 
     }
 
@@ -162,7 +165,7 @@ public class MyClient {
     }
 
     public void click(String zone, String element, int index, int count) {
-
+        client.syncElements(500,2000);
         long before = System.currentTimeMillis();
         client.click(zone, element, index, count);
         Finish("Click", zone + " : " + element, before);

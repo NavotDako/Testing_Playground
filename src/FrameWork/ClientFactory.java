@@ -6,10 +6,6 @@ import java.util.Map;
 
 
 public class ClientFactory {
-    static String serverHost = "192.168.2.13";
-    static String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project11";
-    static int serverPort = 8090;
-
 
     public static MyClient SetUp(String testName, String deviceOS, String deviceQuery, Map<String, Command> commandMap, String deviceName) {
 
@@ -39,6 +35,7 @@ public class ClientFactory {
        // client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
         if (!Runner.GRID) client.openDevice();
 
+
     }
 
     /*private void InstallChromeIfNeeded() {
@@ -51,15 +48,15 @@ public class ClientFactory {
     public static MyClient getGridClient(String testName, Map<String, Command> commandMap, String deviceOS, String deviceQuery, String deviceName) {
 
         MyClient myclient = null;
-        GridClient grid = new GridClient("admin", "Experitest2012", "", serverHost, serverPort, false);
+        GridClient grid = new GridClient(Runner.pr.getHost("user"), Runner.pr.getHost("password"), "", Runner.pr.getHost("server"), Runner.pr.getPort("server"), false);
         if (deviceName == null) {
             System.out.println("@os='" + deviceOS + "'" + deviceQuery);
-            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='" + deviceOS + "'" + deviceQuery, Runner.repNum * 5, 30000));
+            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='" + deviceOS + "'" + deviceQuery, Runner.repNum * 5, 120000));
 
             //if (client.getDeviceProperty("deviceName.os").contains("android")) InstallChromeIfNeeded();
         } else {
             System.out.println("@name='" + deviceName.substring(deviceName.indexOf(":") + 1) + "'" + deviceQuery);
-            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@name='" + deviceName.substring(deviceName.indexOf(":") + 1) + "'", Runner.repNum * 5, 30000));
+            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@name='" + deviceName.substring(deviceName.indexOf(":") + 1) + "'", Runner.repNum * 5, 120000));
         }
         return myclient;
     }

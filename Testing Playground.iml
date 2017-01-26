@@ -106,26 +106,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/boon-0.33.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/commons-codec-1.9.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/commons-io-2.4.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/commons-logging-1.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/httpclient-4.5.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/httpcore-4.4.4.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/httpmime-4.5.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/imageClient.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/junit-4.4.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/mobile-webdriver.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/selenium-api-2.42.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/selenium-support-2.44.0.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/ws-commons-util-1.0.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/xmlrpc-client-3.1.2.jar!/" />
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/xmlrpc-common-3.1.2.jar!/" />
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.4/clients/java" />
         </CLASSES>
-        <JAVADOC>
-          <root url="jar://C:/Program Files (x86)/Experitest/SeeTest 10.3/clients/java/imageClient_doc.zip!/" />
-        </JAVADOC>
+        <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.4/clients/java" recursive="false" />
       </library>
     </orderEntry>
   </component>

@@ -3,17 +3,19 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-    static int iOSDevicesNum = 2;
-    static int androidDevicesNum = 4;
-    static int repNum = 5;
+    static int iOSDevicesNum = 0;
+    static int androidDevicesNum = 1;
+    static int repNum = 10;
     static boolean GRID = true;
 
     static String reportFolderString = "c:\\temp\\Reports";
     static String deviceQuery = "";
     static int commandIndex = 1;
+    public static PropReader pr = null;
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        //deviceQuery= " and not(contains(@version,'8'))";
+        deviceQuery+= " and not(contains(@version,'10.1'))";
+        pr = new PropReader();
 
         String resources = getResources();
 

@@ -71,7 +71,8 @@ public abstract class AbsTest {
 
             System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  STARTING - " + deviceName + " - " + testName + ": Iteration - " + (i + 1));
             System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  Set Reporter - " + client.setReporter("xml", reportFolder, deviceShortName + " " + deviceOS + " - " + testName + " - " + (i + 1)));
-            client.deviceAction("unlock");
+            client.setShowPassImageInReport(false);
+//            client.deviceAction("unlock");
             client.sendText("{HOME}");
         } else {
             throw new Exception("CLIENT FROM GRID IS NULL!!!");
@@ -98,29 +99,34 @@ public abstract class AbsTest {
         String generatedReport = null;
 
         try {
+            client.capture();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        try {
             generatedReport = client.generateReport(false);
             if (generatedReport == null) {
                 generatedReport = "c:\\Temp\\Reports";
-                System.out.println("Failed to Generate Report - unknown reason");
+                System.out.println(Thread.currentThread().getName()+" - Failed to Generate Report - unknown reason - Will save the support data to 'Reports'");
             }
         } catch (Exception e1) {
-            System.out.println("Failed to Generate Report- " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
+            System.out.println(Thread.currentThread().getName()+" - Failed to Generate Report- " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
             e1.printStackTrace();
         }
 
         WriteFailure(stringToWrite, errors, generatedReport);
 
         try {
-     //       client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceShortName, "", "", "", true, false);
+            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceShortName, errors.toString(), "", "", true, false);
         } catch (Exception e2) {
-            System.out.println("Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
+            System.out.println(Thread.currentThread().getName()+" - Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
             e2.printStackTrace();
         }
 
         try {
             client.releaseClient();
         } catch (Exception e3) {
-            System.out.println("Failed to Release Device - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
+            System.out.println(Thread.currentThread().getName()+" - Failed to Release Device - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
             client = null;
         }
 
@@ -128,8 +134,8 @@ public abstract class AbsTest {
 
     public void Finish(int i, long time) {
 
-        System.out.println("Finished Iteration - " + i + " - In - " + Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + client.generateReport(false));
-        if(!Runner.GRID) client.releaseDevice(deviceName, true, true, true);
+        System.out.println(Thread.currentThread().getName()+" - Finished Iteration - " + i + " - In - " + Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + client.generateReport(false));
+       // if(!Runner.GRID) client.releaseDevice(deviceName, true, true, true);
         client.releaseClient();
 
         String stringToWrite = WriteAndGetResults(i, time, true);
@@ -149,7 +155,7 @@ public abstract class AbsTest {
 
     private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
         Write("*** " + stringToWrite + " ***");
-        Write("\t" + deviceName + " - " + errors.toString());
+        Write("\t" + deviceName + " -\n" + "\t"+errors.toString());
         Write(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReport + "\n");
     }
 
