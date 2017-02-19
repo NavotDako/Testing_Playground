@@ -53,7 +53,7 @@ public class EriBank extends AbsTest {
     @Override
     protected void IOSRunTest() {
 
-        client.install("C:\\Users\\DELL\\EclipseWorkspace\\Testing Playground STA\\lib\\EriBankO.ipa", true, false);
+        client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa", true, false);
         client.launch("com.experitest.ExperiBankO", true, true);
         client.syncElements(3000, 15000);
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityIdentifier='usernameTextField']", 0);

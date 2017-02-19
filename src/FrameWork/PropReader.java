@@ -20,10 +20,11 @@ public class PropReader {
             e.printStackTrace();
         }
     }
-    public String getHost(String key){
-        return String.valueOf(properties.get(key+"_host"));
+
+    public String getString(String key){
+        return String.valueOf(properties.get(key));
     }
     public int getPort(String key){
-        return Integer.parseInt((String) properties.get(key+"_port"));
+        return Integer.parseInt((String) properties.get(key));
     }
 }

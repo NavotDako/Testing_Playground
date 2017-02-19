@@ -3,10 +3,10 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-    static int iOSDevicesNum = 0;
-    static int androidDevicesNum = 1;
+    static int iOSDevicesNum = 3;
+    static int androidDevicesNum = 3;
     static int repNum = 10;
-    static boolean GRID = true;
+    static boolean GRID = false;
 
     static String reportFolderString = "c:\\temp\\Reports";
     static String deviceQuery = "";
@@ -14,7 +14,7 @@ public class Runner {
     public static PropReader pr = null;
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        deviceQuery+= " and not(contains(@version,'10.1'))";
+        // deviceQuery += " and (contains(@version,'10.2'))";
         pr = new PropReader();
 
         String resources = getResources();
@@ -64,6 +64,7 @@ public class Runner {
         for (int i = 0; i < myTheadPool.length; i++) {
             myTheadPool[i] = new Thread(new Suite(repNum, reportFolderString, deviceToTest, deviceQuery));
             myTheadPool[i].start();
+            Thread.sleep(2000);
         }
     }
 

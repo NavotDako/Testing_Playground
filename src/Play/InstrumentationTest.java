@@ -1,4 +1,4 @@
-package SingleTest;
+package Play;
 
 import FrameWork.Command;
 import FrameWork.MyClient;

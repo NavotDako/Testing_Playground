@@ -1,4 +1,4 @@
-package Tests;//package <set your Memory package>;
+package Tests;//package <set your MavenWorker package>;
 import static org.junit.Assert.fail;
 
 import FrameWork.AbsTest;
@@ -59,6 +59,7 @@ public class NonInstrumented extends AbsTest {
 
     @Override
     protected void IOSRunTest() {
+        client.setProperty("ios.non-instrumented.dump.parameters", "20,1000,50");
         String countriesString = "xpath=//*[(@knownSuperClass='UILabel' or @knownSuperClass='UICollectionViewCell' or @knownSuperClass='UIAccessibilityElement') and (not(contains(@text,'Today')) and not(contains(@text,':')) and not(contains(@text,'Add')))][1]";
         client.sendText("{HOME}");
         client.click("NATIVE", "xpath=//*[@accessibilityLabel='Clock']", 0, 1);

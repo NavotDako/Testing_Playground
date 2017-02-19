@@ -1,4 +1,4 @@
-package SingleTest;//package <set your test package>;
+package Play;//package <set your test package>;
 import com.experitest.client.*;
 import org.junit.*;
 /**

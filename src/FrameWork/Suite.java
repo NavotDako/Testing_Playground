@@ -1,15 +1,9 @@
 package FrameWork;
 
 import Tests.*;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 
 public class Suite implements Runnable {
@@ -20,9 +14,10 @@ public class Suite implements Runnable {
     String deviceOS;
     public String deviceQuery = "";
     Map<String, Command> commandMap = new HashMap<>();
+    private AbsTest test;
 
     public Suite(int repNum, String reportFolder, String deviceToTest, String deviceQuery) {
-        this.repNum = repNum;
+        Suite.repNum = repNum;
         this.reportFolder = reportFolder;
         this.deviceOS = deviceToTest;
         this.deviceQuery = deviceQuery;
@@ -30,34 +25,40 @@ public class Suite implements Runnable {
 
     @Override
     public void run() {
-        AbsTest test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
 
-        deviceName = test.deviceName;
-        deviceQuery = " and @serialnumber='" + test.deviceSN + "'";
+      /*  test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+        updateDeviceProperties(test);
+
+
+        test = new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
+        updateDeviceProperties(test);
+*/
+
+        test = new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
+        updateDeviceProperties(test);
+
+        test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
+        updateDeviceProperties(test);
 
         new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
 
         new Web(deviceOS, deviceQuery, "Web", commandMap);
 
-        new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
-
-        new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
-
-        new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
+        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
 
         if (!deviceOS.contains("ios")) {
             new SimulateCapture(deviceOS, deviceQuery, "SimulateCapture", commandMap);
         }
-
-        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
-
-
-
         System.out.println("----------------------------------------- DONE WITH " + deviceName + "-----------------------------------------");
-       /* setDeviceQuery();
-        JUnitCore junit = new JUnitCore();
-        Result result = junit.run(SingleTest.InstrumentationTest.class);*/
+
         WriteTimesForCommands();
+    }
+
+    private void updateDeviceProperties(AbsTest test) {
+        if (test.deviceSN != null && !deviceQuery.contains("serialnumber")) {
+            deviceName = test.deviceName;
+            deviceQuery = "and @serialnumber='" + test.deviceSN + "'";
+        }
     }
 
     public void WriteTimesForCommands() {
@@ -71,8 +72,9 @@ public class Suite implements Runnable {
             }
         }
     }
-    public String setDeviceQuery(){
-        return System.setProperty(Thread.currentThread().getName(),deviceQuery);
+
+    public String setDeviceQuery() {
+        return System.setProperty(Thread.currentThread().getName(), deviceQuery);
     }
 
 }

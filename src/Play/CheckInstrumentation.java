@@ -1,4 +1,4 @@
-package SingleTest;
+package Play;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -78,7 +78,7 @@ public class CheckInstrumentation {
 	@Before
 	public void setUp(){
 		current_test_number++;
-		System.out.println("Starting 'before' method on Memory number " + current_test_number + " from " + total_number_of_tests);
+		System.out.println("Starting 'before' method on MavenWorker number " + current_test_number + " from " + total_number_of_tests);
 		client = new Client(host, port, true);
 		client.setProjectBaseDirectory(projectBaseDirectory);
 		client.waitForDevice("@os=\"ios\"", 300000);
@@ -128,7 +128,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedfmr_ios() {
 		try{
-			Assert.assertTrue("The deviceName model for this Memory - testCheckInstrumentedfmr_ios -  must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
+			Assert.assertTrue("The deviceName model for this MavenWorker - testCheckInstrumentedfmr_ios -  must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
 			client.install(apps_directory + "\\fmr_ios.ipa", true, true);
 			client.launch("com.fidelity.watchlist-AdHoc", true, true);
 			client.click("NATIVE", "nixpath=//*[@text='Don’t Allow' and @knownSuperClass='_UIAlertControllerActionView' and @enabled='true']", 0, 1);
@@ -167,7 +167,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedsap(){
 		try{
-			Assert.assertTrue("The deviceName model for this Memory -  testCheckInstrumentedsap - must be 'iPad'. but instead it's: " + model, model.equals("iPad"));
+			Assert.assertTrue("The deviceName model for this MavenWorker -  testCheckInstrumentedsap - must be 'iPad'. but instead it's: " + model, model.equals("iPad"));
 
 			client.install(apps_directory + "\\sap.ipa", true, true);
 			client.launch("com.sap.byd.cod.ipad.internal", true, true);
@@ -187,7 +187,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedShaadi(){
 		try{
-			Assert.assertTrue("The deviceName model for this Memory - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
+			Assert.assertTrue("The deviceName model for this MavenWorker - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
 
 			client.install(apps_directory + "\\Shaadi.ipa", true, true);
 			client.launch("com.shaadi.iphone", true, true);
@@ -228,7 +228,7 @@ public class CheckInstrumentation {
 	@Test
 	public void testCheckInstrumentedSamplecode(){
 		try{
-			Assert.assertTrue("The deviceName model for this Memory - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
+			Assert.assertTrue("The deviceName model for this MavenWorker - "+test_name.getMethodName()+"- must be 'iphone'. but instead it's: " + model, model.equals("iPhone"));
 
 			client.install(apps_directory + "\\samplecode.ipa", true, true);
 			client.launch("com.apple.samplecode.ViewControllerPreview", true, true);
@@ -340,12 +340,12 @@ public class CheckInstrumentation {
 	@After
 	public void tearDown(){
 		System.out.println("finished " + test_name.getMethodName());
-		// Generates a report of the Memory case.
+		// Generates a report of the MavenWorker case.
 		// For more information - https://docs.experitest.com/display/public/SA/Report+Of+Executed+Test
 		client.generateReport(false);
 		// Releases the client so that other clients can approach the agent in the near future.
 		client.releaseClient();
-		System.out.println("Finished 'after' method on Memory number " + current_test_number + " from " + total_number_of_tests);
+		System.out.println("Finished 'after' method on MavenWorker number " + current_test_number + " from " + total_number_of_tests);
 	}
 
 	@AfterClass

@@ -1,4 +1,4 @@
-package SingleTest;
+package Play;
 
 /**
  * Created by navot.dako on 9/15/2016.

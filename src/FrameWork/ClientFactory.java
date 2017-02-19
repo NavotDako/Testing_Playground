@@ -19,7 +19,6 @@ public class ClientFactory {
             if (client != null) {
                 deviceName = client.getDeviceProperty("device.name");
                 System.out.println(Thread.currentThread().getName() + " - " + deviceName.substring(deviceName.indexOf(":")));
-                FinishSetUP(client);
             } else {
                 System.out.println("WAIT FOR DEVICE FAILED for - " + "@os = '" + deviceOS + "'" + deviceQuery);
             }
@@ -31,24 +30,13 @@ public class ClientFactory {
         }
     }
 
-    public static void FinishSetUP(MyClient client) {
-       // client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
-        if (!Runner.GRID) client.openDevice();
 
-
-    }
-
-    /*private void InstallChromeIfNeeded() {
-        String apps = client.getInstalledApplications();
-        if (!apps.contains("com.android.chrome")) {
-
-        }
-    }*/
 
     public static MyClient getGridClient(String testName, Map<String, Command> commandMap, String deviceOS, String deviceQuery, String deviceName) {
 
         MyClient myclient = null;
-        GridClient grid = new GridClient(Runner.pr.getHost("user"), Runner.pr.getHost("password"), "", Runner.pr.getHost("server"), Runner.pr.getPort("server"), false);
+       /* System.out.println(Runner.pr.getString("user") + "__________________"+Runner.pr.getString("password"));*/
+        GridClient grid = new GridClient(Runner.pr.getString("user"), Runner.pr.getString("password"), "", Runner.pr.getString("server_host"), Runner.pr.getPort("server_port"), false);
         if (deviceName == null) {
             System.out.println("@os='" + deviceOS + "'" + deviceQuery);
             myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='" + deviceOS + "'" + deviceQuery, Runner.repNum * 5, 120000));

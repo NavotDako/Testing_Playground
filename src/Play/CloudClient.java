@@ -1,4 +1,4 @@
-package SingleTest;
+package Play;
 
 import com.experitest.client.Client;
 

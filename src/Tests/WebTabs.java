@@ -114,12 +114,15 @@ public class WebTabs extends AbsTest {
         if (client.isElementFound("NATIVE", "xpath=//*[@id='tab_switcher_button']"))
             client.click("NATIVE", "xpath=//*[@id='tab_switcher_button']", 0, 1);
         // switch to tab 1
+        client.textFilter("0x5A5A5A", 15);
         if (i == 1) {
+
             if (client.isElementFound("TEXT", "Electronics")) client.click("TEXT", "Electronics", 0, 1);
             else client.click("TEXT", "ebay", 0, 1);
         }
         // switch to tab 2
         else {
+
             client.click("TEXT", "Google", 0, 1);
         }
     }

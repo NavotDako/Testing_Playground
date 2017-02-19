@@ -3,11 +3,10 @@ package Cloud;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class CloudSelenium {
 
-    static WebDriver driver = new ChromeDriver();
+    /*static WebDriver driver = new ChromeDriver();
 
     public static void main(String[] args) throws InterruptedException {
         String SERVER = "192.168.2.13";
@@ -44,6 +43,6 @@ public class CloudSelenium {
         driver.findElement(By.cssSelector("body > div.modal.fade.ng-isolate-scope.in > div > div > div > form > div.modal-footer > button.btn.btn-primary")).click();
 
     }
-
+*/
 
 }

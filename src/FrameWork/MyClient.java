@@ -27,7 +27,7 @@ public class MyClient {
             deviceName = client.getDeviceProperty("device.name");
             deviceOS = client.getDeviceProperty("device.os");
         } else {
-            this.client = new Client(Runner.pr.getHost("local"), Runner.pr.getPort("local"), true);
+            this.client = new Client(Runner.pr.getString("local_host"), Runner.pr.getPort("local_port"), true);
             System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
 
         }
@@ -62,7 +62,6 @@ public class MyClient {
     public void Write(String stringToWrite) throws IOException {
 
         String reportName = deviceName.substring(deviceName.indexOf(":") + 1);
-        ;
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/" + reportName + ".txt", true)));
         System.out.println(stringToWrite);
         writer.append(stringToWrite);
@@ -79,7 +78,7 @@ public class MyClient {
         }
         Finish("Launch", activityURL, before);
 
-        client.report(client.capture(),"Launch Capture",true);
+        client.report("Launch Capture",true);
 
 
     }
@@ -165,7 +164,7 @@ public class MyClient {
     }
 
     public void click(String zone, String element, int index, int count) {
-        client.syncElements(500,2000);
+       // client.syncElements(500,2000);
         long before = System.currentTimeMillis();
         client.click(zone, element, index, count);
         Finish("Click", zone + " : " + element, before);

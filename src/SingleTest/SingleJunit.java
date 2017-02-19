@@ -12,65 +12,76 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SingleJunit {
-    private static final boolean GRID = true;
 
-    private String host = "localhost";
-    private int port = 8889;
+    private static boolean GRID = false;
 
-    protected String serverHost = "192.168.1.210";
-    protected int serverPort = 80;
-    protected String user = "navot";
-    protected String password ="Experitest2012";
-    protected Client client = null;
-    protected GridClient grid = null;
+    String host = "localhost";
+    int port = 8900;
+    String serverHost = "192.168.2.13";
+    int serverPort = 8090;
+    String user = "admin";
+    String password = "Experitest2012";
+    Client client = null;
+    GridClient grid = null;
 
+    String reportFolder = "c:\\Temp\\SingleTest";
 
-    private String device;
+    String deviceName;
 
     @Before
     public void setUp() {
-
-        String deviceQuery = "@os='ios'";// and (contains(@version,'5.0'))";
-        //deviceQuery = "";
+        String deviceQuery = "@name='samsung SM-N7505'";
         client = getClient(deviceQuery, GRID);
+
+        if (!GRID) client.openDevice();
         client.setShowPassImageInReport(false);
-        client.setReporter("xml", "Reports", "Single Test");
         client.startVideoRecord();
     }
 
     public Client getClient(String deviceQuery, boolean grid) {
-        this.grid = new GridClient(user,password, "", serverHost, serverPort, false);
+        this.grid = new GridClient(user, password, "", serverHost, serverPort, false);
         Client client = null;
         if (grid) {
-            client = this.grid.lockDeviceForExecution("NavotTest", deviceQuery, 10, 60000);
-            device = client.getDeviceProperty("device.name");
+            client = this.grid.lockDeviceForExecution("My_Test_" + System.currentTimeMillis(), deviceQuery, 10, 60000);
 
-        } else {
+
+        } else // if not grid
+        {
             client = new Client(host, port, true);
-            client.getConnectedDevices();
-           // device = client.waitForDevice(deviceQuery, 30000);
+            client.setReporter("xml", reportFolder, "Single Test");
+            deviceName = client.waitForDevice(deviceQuery, 30000);
+            deviceName = (deviceName == null) ? "" : deviceName;
+
         }
         return client;
     }
 
     @Test
     public void TheTest() throws Exception {
-
-
-        client.launch("safari:http://www.google.com", true, true);
+        client.launch("com.android.settings/.Settings", false, true);
+        client.deviceAction("home");
         client.capture();
-        client.sleep(50);
-        client.applicationClose("");
-        client.launch("safari:http://www.google.com", true, true);
-
+        client.getVisualDump("native");
 
     }
 
-
     @After
     public void tearDown() {
-        String reportPath = client.generateReport(false);
-        if (!GRID) client.releaseDevice(device, true, true, true);
+        String reportPath = reportFolder;
+        try {
+            reportPath = client.generateReport(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            client.collectSupportData(reportPath, "", "", "", "", "", true, true);
+            client.closeDevice();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // if (!GRID) client.releaseDevice(device, true, true, true);
         client.releaseClient();
     }
 

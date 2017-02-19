@@ -97,7 +97,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/selenium-server-standalone-3.0.0-beta4.jar!/" />
+          <root url="file://C:/Program Files (x86)/Experitest/AppiumStudio10.4/clients/appium" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
