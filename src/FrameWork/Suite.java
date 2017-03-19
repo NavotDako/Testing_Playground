@@ -26,13 +26,11 @@ public class Suite implements Runnable {
     @Override
     public void run() {
 
-      /*  test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+       test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
         updateDeviceProperties(test);
-
 
         test = new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
         updateDeviceProperties(test);
-*/
 
         test = new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
         updateDeviceProperties(test);
@@ -40,15 +38,17 @@ public class Suite implements Runnable {
         test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
         updateDeviceProperties(test);
 
+        new eBay(deviceOS, deviceQuery, "eBay", commandMap);
+
+        /* new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);*/
+
         new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
 
-        new Web(deviceOS, deviceQuery, "Web", commandMap);
-
-        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
-
         if (!deviceOS.contains("ios")) {
-            new SimulateCapture(deviceOS, deviceQuery, "SimulateCapture", commandMap);
+            test = new SimulateCapture(deviceOS, deviceQuery, "SimulateCapture", commandMap);
+            updateDeviceProperties(test);
         }
+
         System.out.println("----------------------------------------- DONE WITH " + deviceName + "-----------------------------------------");
 
         WriteTimesForCommands();

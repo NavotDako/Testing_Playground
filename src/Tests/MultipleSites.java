@@ -19,12 +19,12 @@ public class MultipleSites extends AbsTest {
     @Override
     protected void AndroidRunTest() {
         Map<String, String> sites = getSites();
-        String prifix = "chrome:";
+        String prefix = "chrome:";
         String homeIdentifier = "//*[@class='android.widget.TextView']";
         client.setProperty("chrome.load.timeout", "1000");
 
         for (Map.Entry site : sites.entrySet()) {
-            client.launch(prifix + site.getKey(), true, true);
+            client.launch(prefix + site.getKey(), true, true);
             try {
                 client.hybridWaitForPageLoad(20000);
             } catch (Exception e) {
@@ -58,10 +58,10 @@ public class MultipleSites extends AbsTest {
         sitesMap.put("www.instagram.com", "xpath=//*[@class='_du7bh _soakw coreSpriteLoggedOutWordmark']");
         sitesMap.put("www.reddit.com", "xpath=//*[@class='TopNav-text-vcentering']");
         sitesMap.put("www.linkedin.com", "xpath=//*[@alt='LinkedIn' and @class='lazy-loaded']");
-        sitesMap.put("www.aliexpress.com", "xpath=//*[@class='downloadbar-logo']");
+        sitesMap.put("www.aliexpress.com", "xpath=//*[@class='downloadbar-logo'or @text='AliExpress']");
         sitesMap.put("www.netflix.com", "xpath=//*[@nodeName='svg']");
         sitesMap.put("www.stackoverflow.com", "xpath=//*[@class='topbar-icon js-site-switcher-button icon-site-switcher-bubble']");
-        sitesMap.put("www.imdb.com", "xpath=//*[@class='navbar-link']");
+        sitesMap.put("www.imdb.com", "xpath=//*[@class='navbar-link' or @text='IMDb']");
         sitesMap.put("www.paypal.com", "xpath=//*[@text='PayPal' and @class='paypal-img-logo']");
         sitesMap.put("www.dropbox.com", "xpath=//*[@class='dropbox-logo__type' or @alt='Dropbox']");
         sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA']");
@@ -72,17 +72,11 @@ public class MultipleSites extends AbsTest {
     @Override
     protected void IOSRunTest() {
         Map<String, String> sites = getSites();
-        String prifix = "safari:";
+        String prefix = "safari:";
         String homeIdentifier = "//*[@accessibilityLabel='Settings']";
 
         for (Map.Entry site : sites.entrySet()) {
-            client.launch(prifix + site.getKey(), true, false);
-         /*   try {
-                client.hybridWaitForPageLoad(20000);
-            } catch (Exception e) {
-                client.report("hybridWaitForPageLoad - Trying again",false);
-                client.hybridWaitForPageLoad(20000);
-            }*/
+            client.launch(prefix + site.getKey(), true, false);
             client.sync(2000,1,30000);
             client.syncElements(2000,30000);
             client.verifyElementFound("WEB", "" + site.getValue(), 0);

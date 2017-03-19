@@ -79,38 +79,14 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/mavenbuilder-1.0.jar!/" />
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.6/clients/java" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/junit-4.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files (x86)/Experitest/AppiumStudio10.4/clients/appium" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.4/clients/java" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.4/clients/java" recursive="false" />
+        <SOURCES>
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.6/clients/java" />
+        </SOURCES>
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.6/clients/java" recursive="false" />
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.6/clients/java" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

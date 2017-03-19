@@ -695,6 +695,14 @@ public class MyClient {
         long before = System.currentTimeMillis();
         client.elementSendText(zone, element, index, text);
         Finish("elementSendText", zone + " : " + element, before);
+
+        String check = client.elementGetText(zone, element, index);
+        if (!check.equals(text))
+        {
+            System.out.println("Couldn't find the text - "+text+" - in the element - "+element);
+            //client.verifyElementFound("native","text=there is no real text - I'm only failing the test!!!", 100);
+            client.report("Couldn't find the text - "+text+" - in the element - "+element,false);
+        }
     }
 
 

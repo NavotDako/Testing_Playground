@@ -46,7 +46,7 @@ class MyRunnable implements Runnable {
     }
 
     private Client getGridClient() {
-        GridClient grid = new GridClient("admin", "Experitest2012", "", "192.168.2.13", 8090, false);
+        GridClient grid = new GridClient("cloudAdminName", "Experitest2012", "", "192.168.2.13", 8090, false);
         System.out.println(grid.getDevicesInformation());
         //GridClient grid = new GridClient("dror", "good1lucK", "", "cloud.experitest.com", 443, true);
         Client client = grid.lockDeviceForExecution("test", device, 5, 240000);

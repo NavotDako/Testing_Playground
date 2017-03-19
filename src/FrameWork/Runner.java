@@ -3,9 +3,9 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-    static int iOSDevicesNum = 3;
-    static int androidDevicesNum = 3;
-    static int repNum = 10;
+    static int iOSDevicesNum = 2;
+    static int androidDevicesNum = 2;
+    static int repNum = 5;
     static boolean GRID = false;
 
     static String reportFolderString = "c:\\temp\\Reports";
@@ -64,7 +64,7 @@ public class Runner {
         for (int i = 0; i < myTheadPool.length; i++) {
             myTheadPool[i] = new Thread(new Suite(repNum, reportFolderString, deviceToTest, deviceQuery));
             myTheadPool[i].start();
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         }
     }
 

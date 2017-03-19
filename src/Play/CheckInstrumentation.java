@@ -193,7 +193,7 @@ public class CheckInstrumentation {
 			client.launch("com.shaadi.iphone", true, true);
 			checkInstrumentationVersionMatch();
 			client.click("NATIVE", "xpath=//*[@text='Register Free']", 0, 1);
-			client.verifyElementFound("WEB", "xpath=//*[@text='FortiGuard Web Filtering']", 0);
+			client.verifyElementFound("WEB", "xpath=//*[@text='FortiGuard eBay Filtering']", 0);
 			client.uninstall("com.shaadi.iphone");
 		}
 		catch (AssertionError | Exception e) {

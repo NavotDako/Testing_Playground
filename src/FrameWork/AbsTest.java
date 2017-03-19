@@ -16,6 +16,7 @@ public abstract class AbsTest {
     protected MyClient client;
     protected Map<String, Command> commandMap = null;
     public String deviceShortName = null;
+    String serial = null;
 
     public AbsTest(String deviceOS, String deviceQuery, String testName, Map<String, Command> commandMap) {
         this.commandMap = commandMap;
@@ -36,28 +37,32 @@ public abstract class AbsTest {
     }
 
     public void StartTesting() throws InterruptedException {
-        long time = 0;
+
 
         for (int i = 0; i < Runner.repNum; i++) {
+            long time = System.currentTimeMillis();
             try {
                 GetDevice(i);
             } catch (Exception e) {
                 System.out.println("Failed on SetUp - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
-                System.out.println( Thread.currentThread().getName() +" Sleeping for 30 sec");
+                String stringToWrite = createStringToWrite(i, System.currentTimeMillis() - time, false);
+                StringWriter errors = GetErrors(e);
+                WriteFailure("\n\n" + stringToWrite, errors, "No Report Was Generated");
+                System.out.println(Thread.currentThread().getName() + " Sleeping for 30 sec");
                 Thread.sleep(30000);
-                System.out.println( Thread.currentThread().getName() +" Coming Back From Sleeping - > Continuing...");
+                System.out.println(Thread.currentThread().getName() + " Coming Back From Sleeping - > Continuing...");
                 //Failure(i, e, time);
                 continue;
             }
             try {
-                time = ExecuteTest(i);
+                ExecuteTest(i);
             } catch (Exception e1) {
                 System.out.println("Failed On Execution - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
-                Failure(i, e1, time);
+                Failure(i, e1, System.currentTimeMillis() - time);
                 continue;
             }
             try {
-                Finish(i, time);
+                Finish(i, System.currentTimeMillis() - time);
             } catch (Exception e2) {
                 System.out.println("Failed On Finish - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
                 e2.printStackTrace();
@@ -68,14 +73,13 @@ public abstract class AbsTest {
     }
 
     public void GetDevice(int i) throws Exception {
-        client = ClientFactory.SetUp(testName, this.deviceOS, this.deviceQuery, commandMap, deviceName);
+        client = ClientFactory.SetUp(testName, this.deviceOS, this.deviceQuery, commandMap, serial);
         if (client != null) {
-            if (deviceName == null) {
+            if (serial == null) {
+                this.serial = client.getDeviceProperty("device.sn");
                 this.deviceName = client.getDeviceProperty("device.name");
                 deviceShortName = deviceName.substring(deviceName.indexOf(":") + 1);
             }
-            if (deviceSN == null) this.deviceSN = client.getDeviceProperty("device.sn");
-
             FinishSetUp(i);
 
         } else {
@@ -90,29 +94,23 @@ public abstract class AbsTest {
         System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  STARTING - " + deviceName + " - " + testName + ": Iteration - " + (i + 1));
         System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  Set Reporter - " + client.setReporter("xml", reportFolder, deviceShortName + " " + deviceOS + " - " + testName + " - " + (i + 1)));
         client.setShowPassImageInReport(false);
-        client.sendText("{HOME}");
-        /* client.setProjectBaseDirectory("C:\\Users\\DELL\\workspace\\project18");
-        client.deviceAction("unlock");
-
-        if (!Runner.GRID) client.openDevice();*/
-        //client.setLogger(Utils.initDefaultLogger(Level.DEBUG));
+        client.setSpeed("FAST");
+        client.deviceAction("portrait");
+        client.deviceAction("home");
     }
 
-    private long ExecuteTest(int i) {
+    private void ExecuteTest(int i) {
 
-        long before = System.currentTimeMillis();
         if (deviceOS.equals("ios")) {
             IOSRunTest();
         } else {
             AndroidRunTest();
         }
-        long time = System.currentTimeMillis() - before;
         success++;
-        return time;
     }
 
     public void Failure(int i, Exception e, long time) {
-        String stringToWrite = WriteAndGetResults(i, time, false);
+        String stringToWrite = createStringToWrite(i, time, false);
         StringWriter errors = GetErrors(e);
         String generatedReport = null;
 
@@ -148,7 +146,7 @@ public abstract class AbsTest {
             client = null;
             try {
                 System.out.println(Thread.currentThread().getName() + " going to Sleep");
-                Thread.sleep(30000);
+                Thread.sleep(3);
                 System.out.println(Thread.currentThread().getName() + "Coming back from Sleep");
             } catch (InterruptedException e4) {
                 e4.printStackTrace();
@@ -159,14 +157,14 @@ public abstract class AbsTest {
     public void Finish(int i, long time) throws InterruptedException {
 
         System.out.println(Thread.currentThread().getName() + " - Finished Iteration - " + i + " - In - " + Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + client.generateReport(false));
-        // if(!Runner.GRID) client.releaseDevice(deviceName, true, true, true);
+        //if (!Runner.GRID) client.releaseDevice(deviceName, true, true, true);
 
         client.releaseClient();
-        String stringToWrite = WriteAndGetResults(i, time, true);
+        String stringToWrite = createStringToWrite(i, time, true);
         Write(stringToWrite);
-        System.out.println(Thread.currentThread().getName() + " going to Sleep");
+        System.out.println(Thread.currentThread().getName() + " going to Sleep for 3 sec");
         Thread.sleep(3000);
-        System.out.println(Thread.currentThread().getName() + "Coming back from Sleep");
+        System.out.println(Thread.currentThread().getName() + "Coming back from 3 sec Sleep");
 
     }
 
@@ -180,9 +178,10 @@ public abstract class AbsTest {
     }
 
     private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
-        Write("*** " + stringToWrite + " ***");
-        Write("\t" + deviceName + " -\n" + "\t" + errors.toString());
-        Write(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReport + "\n");
+        Write(stringToWrite);
+        String errorString = (errors.toString().contains("<!DOCTYPE html><html>")) ? errors.toString().substring(errors.toString().indexOf("at com.experitest.")) : errors.toString();
+        Write("\t" + deviceName + " -\n" + "\t" + errorString);
+        Write(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReport + " - file:///" + generatedReport.replace('\\', '/') + "/index.html\n");
     }
 
     private StringWriter GetErrors(Exception e) {
@@ -192,11 +191,10 @@ public abstract class AbsTest {
         return errors;
     }
 
-    private String WriteAndGetResults(int i, long time, boolean succeeded) {
+    private String createStringToWrite(int i, long time, boolean succeeded) {
         double successRate = ((double) success / (double) (i + 1));
-        String status = (succeeded) ? "SUCCESS" : "FAILURE";
-        String stringToWrite = status + "- " + deviceName + " - " + testName + " - " + Thread.currentThread().getName() + ": Iteration - " + (i + 1) + " - Success Rate: " + success + "/" + (i + 1) + " = " + successRate + "    Time - " + time / 1000 + "s";
-        System.out.println("****************** ############################ " + stringToWrite + " ############################# ******************");
+        String status = (succeeded) ? "SUCSUC" : "XXX FAILURE XXX";
+        String stringToWrite = String.format("%-15s%-30s%-30s%-15s%-5s", status, deviceName, testName, success + "/" + (i + 1) + "=" + successRate, time / 1000 + "s");
         return stringToWrite;
     }
 
@@ -209,11 +207,12 @@ public abstract class AbsTest {
         try {
             writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/report.txt", true)));
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            if (stringToWrite.contains("Success Rate")) {
-                writer.append(Runner.commandIndex + " \t" + sdf.format(new Date(System.currentTimeMillis())) + ": " + stringToWrite + "\n");
+            if (stringToWrite.contains("SUCSUC") || stringToWrite.contains("FAILURE")) {
+                //writer.append(Runner.commandIndex + " \t" + sdf.format(new Date(System.currentTimeMillis())) + ": " + stringToWrite + "\n");
+                writer.append(String.format("%-5s %-10s %-60s\n", Runner.commandIndex + ".", sdf.format(new Date(System.currentTimeMillis())), stringToWrite));
                 Runner.commandIndex++;
             } else
-                writer.append(" \t" + sdf.format(new Date(System.currentTimeMillis())) + ": " + stringToWrite + "\n");
+                writer.append(stringToWrite + "\n");
 
             writer.close();
         } catch (IOException e) {

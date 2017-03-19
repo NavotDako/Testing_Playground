@@ -8,9 +8,9 @@ import FrameWork.Command;
 import java.util.Map;
 
 
-public class Web extends AbsTest {
+public class eBay extends AbsTest {
 	
-	public Web(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
+	public eBay(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
 		super(deviceToTest, deviceQuery, testName, commandMap);
 	}
 

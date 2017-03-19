@@ -43,7 +43,6 @@ public class LaunchBrowserLoop extends AbsTest {
     protected void IOSRunTest() {
         String google = "www.google.com";
         String ebay = "http://m.ebay.com";
-        String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         String xpathToVerify="";
         for (int i = 0; i < 5; i++) {
             String site  = (i%2==0) ? ebay : google;
