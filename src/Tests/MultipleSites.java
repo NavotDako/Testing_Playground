@@ -29,6 +29,7 @@ public class MultipleSites extends AbsTest {
                 client.hybridWaitForPageLoad(20000);
             } catch (Exception e) {
                 client.report("hybridWaitForPageLoad - Trying again",false);
+                client.launch(prefix + site.getKey(), true, true);
                 client.hybridWaitForPageLoad(20000);
             }
             client.sync(1000,1,30000);
@@ -64,7 +65,7 @@ public class MultipleSites extends AbsTest {
         sitesMap.put("www.imdb.com", "xpath=//*[@class='navbar-link' or @text='IMDb']");
         sitesMap.put("www.paypal.com", "xpath=//*[@text='PayPal' and @class='paypal-img-logo']");
         sitesMap.put("www.dropbox.com", "xpath=//*[@class='dropbox-logo__type' or @alt='Dropbox']");
-        sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA']");
+        sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA' or @class='sb-logo']");
         //sitesMap.put("www.espn.com", "xpath=//*[@class='container']");
         return sitesMap;
     }
@@ -76,9 +77,14 @@ public class MultipleSites extends AbsTest {
         String homeIdentifier = "//*[@accessibilityLabel='Settings']";
 
         for (Map.Entry site : sites.entrySet()) {
-            client.launch(prefix + site.getKey(), true, false);
-            client.sync(2000,1,30000);
-            client.syncElements(2000,30000);
+            client.launch(prefix + site.getKey(), true, true);
+            try {
+                client.hybridWaitForPageLoad(20000);
+            } catch (Exception e) {
+                client.report("hybridWaitForPageLoad - Trying again",false);
+                client.launch(prefix + site.getKey(), true, true);
+                client.hybridWaitForPageLoad(20000);
+            }
             client.verifyElementFound("WEB", "" + site.getValue(), 0);
             int count = client.getElementCount("web", "" + site.getValue());
 

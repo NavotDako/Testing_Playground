@@ -55,7 +55,7 @@ class MyRunnable implements Runnable {
 
     public void loop() {
         for (int i = 0; i < 30; i++) {
-            client.launch("https://www.google.co.il/search?q=" + i + "&oq=1&aqs=chrome..69i60l3j69i57j69i60j69i65.1808j0j4&sourceid=chrome&ie=UTF-8", true, true);
+           // client.launch("https://www.google.co.il/search?q=" + i + "&oq=1&aqs=chrome..69i60l3j69i57j69i60j69i65.1808j0j4&sourceid=chrome&ie=UTF-8", true, true);
             //client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa", true, false);
         }
     }

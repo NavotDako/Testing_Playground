@@ -16,7 +16,6 @@ public abstract class AbsTest {
     protected MyClient client;
     protected Map<String, Command> commandMap = null;
     public String deviceShortName = null;
-    String serial = null;
 
     public AbsTest(String deviceOS, String deviceQuery, String testName, Map<String, Command> commandMap) {
         this.commandMap = commandMap;
@@ -38,68 +37,81 @@ public abstract class AbsTest {
 
     public void StartTesting() throws InterruptedException {
 
-
         for (int i = 0; i < Runner.repNum; i++) {
             long time = System.currentTimeMillis();
             try {
-                GetDevice(i);
+                getDevice(i);
             } catch (Exception e) {
-                System.out.println("Failed on SetUp - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
-                String stringToWrite = createStringToWrite(i, System.currentTimeMillis() - time, false);
-                StringWriter errors = GetErrors(e);
-                WriteFailure("\n\n" + stringToWrite, errors, "No Report Was Generated");
-                System.out.println(Thread.currentThread().getName() + " Sleeping for 30 sec");
-                Thread.sleep(30000);
-                System.out.println(Thread.currentThread().getName() + " Coming Back From Sleeping - > Continuing...");
-                //Failure(i, e, time);
+                failure("getDevice", 1, i, e, System.currentTimeMillis() - time);
                 continue;
             }
             try {
-                ExecuteTest(i);
-            } catch (Exception e1) {
-                System.out.println("Failed On Execution - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
-                Failure(i, e1, System.currentTimeMillis() - time);
+                prepareReporter(i);
+            } catch (Exception e) {
+                failure("prepareReporter", 2, i, e, System.currentTimeMillis() - time);
                 continue;
             }
             try {
-                Finish(i, System.currentTimeMillis() - time);
-            } catch (Exception e2) {
-                System.out.println("Failed On Finish - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
-                e2.printStackTrace();
-                // Failure(i, e2, time);
+                prepareDevice(i);
+            } catch (Exception e) {
+                failure("prepareDevice", 3, i, e, System.currentTimeMillis() - time);
+                continue;
+            }
+            try {
+                executeTest(i);
+            } catch (Exception e) {
+                failure("executeTest", 3, i, e, System.currentTimeMillis() - time);
+                continue;
+            }
+            try {
+                finish(i, System.currentTimeMillis() - time);
+            } catch (Exception e) {
+                failure("finish", 3, i, e, time);
             }
         }
 
     }
 
-    public void GetDevice(int i) throws Exception {
-        client = ClientFactory.SetUp(testName, this.deviceOS, this.deviceQuery, commandMap, serial);
+    protected void prepareReporter(int i) {
+        deviceName = client.getDeviceProperty("device.name");
+        deviceShortName = deviceName.substring(deviceName.indexOf(":") + 1);
+        System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  STARTING - " + deviceName + " - " + testName + ": Iteration - " + (i + 1));
+        System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  Set Reporter - " + client.setReporter("xml", reportFolder, deviceShortName + "_" + deviceOS + " - " + testName + " - " + (i + 1)));
+
+    }
+
+    public void sleep(int millisec) {
+        System.out.println(Thread.currentThread().getName() + " Sleeping for 3 sec");
+        try {
+            Thread.sleep(millisec);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName() + " Coming Back From Sleeping - > Continuing...");
+    }
+
+    public void getDevice(int i) throws Exception {
+        client = ClientFactory.SetUp(testName, this.deviceOS, this.deviceQuery, commandMap, deviceSN);
+    }
+
+    public void prepareDevice(int i) throws Exception {
+
         if (client != null) {
-            if (serial == null) {
-                this.serial = client.getDeviceProperty("device.sn");
-                this.deviceName = client.getDeviceProperty("device.name");
-                deviceShortName = deviceName.substring(deviceName.indexOf(":") + 1);
+            if (deviceSN == null) {
+                deviceSN = client.getDeviceProperty("device.sn");
             }
-            FinishSetUp(i);
+            client.setShowPassImageInReport(false);
+            client.setSpeed("FAST");
+            client.deviceAction("portrait");
+            client.deviceAction("home");
 
         } else {
-            System.out.println("CLIENT FROM GRID IS NULL!!! -> Going to sleep for one minute");
-            throw new Exception("CLIENT FROM GRID IS NULL!!! -> Moving to the next test");
+            System.out.println("CLIENT IS NULL!!!");
+            throw new Exception("CLIENT IS NULL!!! -> Moving to the next test");
         }
-
     }
 
-    public void FinishSetUp(int i) {
-
-        System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  STARTING - " + deviceName + " - " + testName + ": Iteration - " + (i + 1));
-        System.out.println("----------------@---------------- " + Thread.currentThread().getName() + "  Set Reporter - " + client.setReporter("xml", reportFolder, deviceShortName + " " + deviceOS + " - " + testName + " - " + (i + 1)));
-        client.setShowPassImageInReport(false);
-        client.setSpeed("FAST");
-        client.deviceAction("portrait");
-        client.deviceAction("home");
-    }
-
-    private void ExecuteTest(int i) {
+    private void executeTest(int i) {
 
         if (deviceOS.equals("ios")) {
             IOSRunTest();
@@ -109,52 +121,90 @@ public abstract class AbsTest {
         success++;
     }
 
-    public void Failure(int i, Exception e, long time) {
-        String stringToWrite = createStringToWrite(i, time, false);
-        StringWriter errors = GetErrors(e);
+    public void failure(String failedStage, int stage, int i, Exception e, long time) {
+        String stringToWrite = null;
+        StringWriter errors = null;
         String generatedReport = null;
+        boolean collected = false;
+        switch (stage) {
+            case 1:
+                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+                stringToWrite = createStringToWrite(i, System.currentTimeMillis() - time, false);
+                errors = GetErrors(e);
+                WriteFailure(stringToWrite, errors, "No Report Was Generated");
+                sleep(3000);
+                break;
+            case 2:
+                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+                stringToWrite = createStringToWrite(i, System.currentTimeMillis() - time, false);
+                errors = GetErrors(e);
+                tryToReleaseClient();
+                WriteFailure(stringToWrite, errors, "No Report Was Generated");
+                sleep(3000);
+                break;
+            case 3:
+                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+                stringToWrite = createStringToWrite(i, System.currentTimeMillis() - time, false);
+                errors = GetErrors(e);
+                tryToCapture();
+                generatedReport = tryToGenerateReport();
+                collected = tryToCollectSupportData(errors, generatedReport);
+                tryToReleaseClient();
+                WriteFailure(stringToWrite, errors, generatedReport);
+                if (!collected) Write(Thread.currentThread().getName() + "  " + deviceName + " - " + " Failed to Collect Support Data - " + e.getMessage());
+                sleep(3000);
+                break;
+        }
+    }
 
+    public void tryToReleaseClient() {
+        try {
+            client.releaseClient();
+        } catch (Exception e3) {
+            System.out.println(Thread.currentThread().getName() + " - Failed to Release Device - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
+            System.out.println("Assigning 'null' to the client");
+            client = null;
+        }
+    }
+
+    public void tryToCapture() {
         try {
             client.capture();
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+    }
+
+    public boolean tryToCollectSupportData(StringWriter errors, String generatedReport) {
+
+        try {
+            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceName, errors.toString(), "", "", true, false);
+        } catch (Exception e) {
+            System.out.println(Thread.currentThread().getName() + " - Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public String tryToGenerateReport() {
+        String generatedReport = null;
         try {
             generatedReport = client.generateReport(false);
-            if (generatedReport == null) {
-                generatedReport = "c:\\Temp\\Reports";
-                System.out.println(Thread.currentThread().getName() + " - Failed to Generate Report - unknown reason - Will save the support data to 'Reports'");
-            }
+
         } catch (Exception e1) {
             System.out.println(Thread.currentThread().getName() + " - Failed to Generate Report- " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
             e1.printStackTrace();
         }
-
-        WriteFailure(stringToWrite, errors, generatedReport);
-
-        try {
-            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", client.getDeviceProperty("device.name"), errors.toString(), "", "", true, false);
-        } catch (Exception e2) {
-            System.out.println(Thread.currentThread().getName() + " - Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
-            e2.printStackTrace();
+        if (generatedReport == null) {
+            generatedReport = "c:\\Temp\\Reports";
+            System.out.println(Thread.currentThread().getName() + " - Failed to Generate Report - unknown reason - Will save the support data to 'Reports'");
         }
 
-        try {
-            client.releaseClient();
-        } catch (Exception e3) {
-            System.out.println(Thread.currentThread().getName() + " - Failed to Release Device - " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
-            client = null;
-            try {
-                System.out.println(Thread.currentThread().getName() + " going to Sleep");
-                Thread.sleep(3);
-                System.out.println(Thread.currentThread().getName() + "Coming back from Sleep");
-            } catch (InterruptedException e4) {
-                e4.printStackTrace();
-            }
-        }
+        return generatedReport;
     }
 
-    public void Finish(int i, long time) throws InterruptedException {
+    public void finish(int i, long time) throws InterruptedException {
 
         System.out.println(Thread.currentThread().getName() + " - Finished Iteration - " + i + " - In - " + Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + client.generateReport(false));
         //if (!Runner.GRID) client.releaseDevice(deviceName, true, true, true);
@@ -166,15 +216,6 @@ public abstract class AbsTest {
         Thread.sleep(3000);
         System.out.println(Thread.currentThread().getName() + "Coming back from 3 sec Sleep");
 
-    }
-
-    private boolean IsCloudDevice() {
-
-        if (!Runner.GRID) {
-            return client.getDeviceProperty("device.remote").contains("true");
-        } else {
-            return true;
-        }
     }
 
     private void WriteFailure(String stringToWrite, StringWriter errors, String generatedReport) {
@@ -194,7 +235,7 @@ public abstract class AbsTest {
     private String createStringToWrite(int i, long time, boolean succeeded) {
         double successRate = ((double) success / (double) (i + 1));
         String status = (succeeded) ? "SUCSUC" : "XXX FAILURE XXX";
-        String stringToWrite = String.format("%-15s%-30s%-30s%-15s%-5s", status, deviceName, testName, success + "/" + (i + 1) + "=" + successRate, time / 1000 + "s");
+        String stringToWrite = String.format("%-20s%-30s%-30s%-15s%-5s", status, deviceName, testName, success + "/" + (i + 1) + "=" + successRate, time / 1000 + "s");
         return stringToWrite;
     }
 

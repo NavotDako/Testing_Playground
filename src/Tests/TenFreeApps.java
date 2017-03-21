@@ -19,12 +19,15 @@ public class TenFreeApps extends AbsTest {
     protected void AndroidRunTest() {
 
         client.launch("com.android.vending/.AssetBrowserActivity", false, true);
-        client.sync(1500 , 0 , 10000);
+        sync(1500 , 1 , 10000);
         if(client.isElementFound("NATIVE" , "xpath=//*[@text='ACCEPT']" , 0))
             client.click("NATIVE" , "xpath=//*[@text='ACCEPT']" , 0 , 1);
-        client.sync(1500 , 0 , 10000);
+
+        sync(1500 , 1 , 10000);
+
         if(client.isElementFound("NATIVE" ,"xpath=//*[@text='TOP CHARTS']" , 0))
             client.click("NATIVE" ,"xpath=//*[@text='TOP CHARTS']" , 0 , 1);
+
         client.click("NATIVE" , "xpath=//*[contains(@text,'TOP FREE')]" , 0 , 1);
 
         int countOfOnScreenApps;
@@ -51,12 +54,20 @@ public class TenFreeApps extends AbsTest {
         client.applicationClose(appNAme);
     }
 
+    private void sync(int time, int sensitivity, int timeout) {
+        boolean b = client.sync( time, sensitivity, timeout);
+        if(!b) {
+            client.report("first sync failed",false);
+            client.sync( time, sensitivity, timeout);
+        }
+    }
+
     @Override
     protected void IOSRunTest() {
 
         client.launch("com.apple.AppStore", false, true);
         client.setProperty("ios.non-instrumented.dump.parameters" , "20 , 500 , 25");
-        client.sync(1000 , 0 , 10000);
+        sync(1000 , 0 , 10000);
         client.click("NATIVE" , "xpath=//*[@text='Top Charts']" , 0 , 2);
         if(client.isElementFound("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UIButton']" , 0))
             client.click("NATIVE" , "xpath=//*[@text='Free' and @knownSuperClass='UIButton']" , 0 , 1);

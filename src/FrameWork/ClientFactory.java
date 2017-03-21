@@ -38,12 +38,12 @@ public class ClientFactory {
         GridClient grid = new GridClient(Runner.pr.getString("user"), Runner.pr.getString("password"), "", Runner.pr.getString("server_host"), Runner.pr.getPort("server_port"), false);
         if (serial == null) {
             System.out.println("@os='" + deviceOS + "'" + deviceQuery);
-            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='" + deviceOS + "'" + deviceQuery, Runner.repNum * 5, 120000));
+            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='" + deviceOS + "'" + deviceQuery, Runner.repNum * 5, 200000));
 
             //if (client.getDeviceProperty("deviceName.os").contains("android")) InstallChromeIfNeeded();
         } else {
             System.out.println("@serialnumber='" + serial+"'");
-            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@serialnumber='" + serial + "'", Runner.repNum * 5, 120000));
+            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@serialnumber='" + serial + "'", Runner.repNum * 5, 200000));
         }
         return myclient;
     }

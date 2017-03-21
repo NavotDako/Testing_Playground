@@ -77,8 +77,8 @@ public class MyClient {
             client.launch(activityURL, instrument, stopIfRunning);
         }
         Finish("Launch", activityURL, before);
+        client.capture("Launch Capture");
 
-        client.report("Launch Capture",true);
 
 
     }
