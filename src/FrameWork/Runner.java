@@ -5,7 +5,8 @@ import java.io.*;
 public class Runner {
     static int iOSDevicesNum = 3;
     static int androidDevicesNum = 3;
-    static int repNum = 1;
+    static int repNum = 5;
+
     static boolean GRID = false;
 
     static String reportFolderString = "c:\\temp\\Reports";
