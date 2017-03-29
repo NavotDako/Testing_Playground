@@ -1,15 +1,14 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
-import FrameWork.MyClient;
 
 import java.util.Map;
 
 /**
  * Created by richi.lebovich on 8/31/2016.
  */
-public class UiCatalog extends AbsTest {
+public class UiCatalog extends BaseTest {
 
     public UiCatalog(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
         super(deviceToTest, deviceQuery ,testName, commandMap);

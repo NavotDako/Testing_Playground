@@ -1,12 +1,12 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
 
 import java.util.Map;
 
 
-public class AmitApp extends AbsTest {
+public class AmitApp extends BaseTest {
 
 	public AmitApp(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
 		super(deviceToTest, deviceQuery, testName, commandMap);

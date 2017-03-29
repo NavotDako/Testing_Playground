@@ -3,8 +3,8 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-    static int iOSDevicesNum = 3;
-    static int androidDevicesNum = 3;
+    static int iOSDevicesNum = 2;
+    static int androidDevicesNum = 2;
     static int repNum = 5;
 
     static boolean GRID = false;
@@ -13,9 +13,11 @@ public class Runner {
     static String deviceQuery = "";
     static int commandIndex = 1;
     public static PropReader pr = null;
+    static long buildNum;
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        // deviceQuery += " and (contains(@version,'10.2'))";
+        deviceQuery += " and not(contains(@name,'iPad'))";
+        buildNum = System.currentTimeMillis();
         pr = new PropReader();
 
         String resources = getResources();

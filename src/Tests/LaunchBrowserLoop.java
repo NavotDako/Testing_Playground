@@ -2,13 +2,13 @@ package Tests;
 
 import static org.junit.Assert.fail;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
 
 import java.util.Map;
 
 
-public class LaunchBrowserLoop extends AbsTest {
+public class LaunchBrowserLoop extends BaseTest {
 
     public LaunchBrowserLoop(String deviceToTest,String deviceQuery,  String testName, Map<String, Command> commandMap) {
         super(deviceToTest,deviceQuery, testName, commandMap);

@@ -1,6 +1,6 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
 
 import java.io.BufferedReader;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by udi.valer on 8/30/2016.
  */
-public class SimulateCapture extends AbsTest {
+public class SimulateCapture extends BaseTest {
 
     public SimulateCapture(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
         super(deviceToTest, deviceQuery, testName, commandMap);

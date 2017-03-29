@@ -34,8 +34,10 @@ public class ClientFactory {
     public static MyClient getGridClient(String testName, Map<String, Command> commandMap, String deviceOS, String deviceQuery, String serial) {
 
         MyClient myclient = null;
+
        /* System.out.println(Runner.pr.getString("user") + "__________________"+Runner.pr.getString("password"));*/
-        GridClient grid = new GridClient(Runner.pr.getString("user"), Runner.pr.getString("password"), "", Runner.pr.getString("server_host"), Runner.pr.getPort("server_port"), false);
+        GridClient grid = new GridClient(Runner.pr.getString("user"), Runner.pr.getString("password"), Runner.pr.getString("project"), Runner.pr.getString("server_host"), Runner.pr.getPort("server_port"), Runner.pr.getBool("secured"));
+      //  System.out.println(grid.getDevicesInformation());
         if (serial == null) {
             System.out.println("@os='" + deviceOS + "'" + deviceQuery);
             myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@os='" + deviceOS + "'" + deviceQuery, Runner.repNum * 5, 300000));

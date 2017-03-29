@@ -1,11 +1,11 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
 
 import java.util.Map;
 
-public class EriBank extends AbsTest {
+public class EriBank extends BaseTest {
 
 
     public EriBank(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
@@ -62,8 +62,8 @@ public class EriBank extends AbsTest {
         client.verifyElementFound("NATIVE", "xpath=//*[@placeholder='Password']", 0);
         client.elementSendText("NATIVE", "xpath=//*[@placeholder='Password']", 0, "company");
         client.closeKeyboard();
-        client.verifyElementFound("NATIVE", "xpath=//*[@text='Login']", 0);
-        client.click("NATIVE", "xpath=//*[@text='Login']", 0, 1);
+        client.verifyElementFound("NATIVE", "xpath=//*[@text='Login' or @text='loginButton']", 0);
+        client.click("NATIVE", "xpath=//*[@text='Login' or @text='loginButton']", 0, 1);
         client.sendText("{LANDSCAPE}");
         client.sleep(1000);
         client.verifyElementFound("NATIVE", "xpath=//*[@text='Make Payment']", 0);

@@ -2,14 +2,13 @@ package Tests;
 
 import static org.junit.Assert.fail;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
-import com.experitest.client.Client;
 
 import java.util.Map;
 
 
-public class WebTabs extends AbsTest {
+public class WebTabs extends BaseTest {
 
     public WebTabs(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
         super(deviceToTest, deviceQuery, testName, commandMap);

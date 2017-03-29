@@ -1,12 +1,12 @@
 package Tests;//package <set your MavenWorker package>;
 import static org.junit.Assert.fail;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
 
 import java.util.Map;
 
-public class NonInstrumented extends AbsTest {
+public class NonInstrumented extends BaseTest {
 
 
     public NonInstrumented(String deviceToTest, String deviceQuery,String testName, Map<String, Command> commandMap) {

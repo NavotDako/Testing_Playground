@@ -1,6 +1,6 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by udi.valer on 8/29/2016.
  */
-public class TenFreeApps extends AbsTest {
+public class TenFreeApps extends BaseTest {
 
     public TenFreeApps(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
         super(deviceToTest, deviceQuery, testName, commandMap);

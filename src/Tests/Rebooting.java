@@ -1,15 +1,14 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
-import FrameWork.MyClient;
 
 import java.util.Map;
 
 /**
  * Created by navot.dako on 6/19/2016.
  */
-public class Rebooting extends AbsTest {
+public class Rebooting extends BaseTest {
 
 
     public Rebooting (String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {

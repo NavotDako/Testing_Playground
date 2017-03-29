@@ -14,7 +14,7 @@ public class Suite implements Runnable {
     String deviceOS;
     public String deviceQuery = "";
     Map<String, Command> commandMap = new HashMap<>();
-    private AbsTest test;
+    private BaseTest test;
 
     public Suite(int repNum, String reportFolder, String deviceToTest, String deviceQuery) {
         Suite.repNum = repNum;
@@ -26,7 +26,9 @@ public class Suite implements Runnable {
     @Override
     public void run() {
 
-       test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+        test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
+        updateDeviceProperties(test);
+        test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
         updateDeviceProperties(test);
 
         test = new AmitApp(deviceOS, deviceQuery, "AmitApp", commandMap);
@@ -38,28 +40,24 @@ public class Suite implements Runnable {
         test = new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
         updateDeviceProperties(test);
 
-
-        test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
+        test = new eBay(deviceOS, deviceQuery, "eBay", commandMap);
         updateDeviceProperties(test);
 
-        new eBay(deviceOS, deviceQuery, "eBay", commandMap);
+        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
 
-
-        /* new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);*/
-
-       /* new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
+        new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
 
         if (!deviceOS.contains("ios")) {
             test = new SimulateCapture(deviceOS, deviceQuery, "SimulateCapture", commandMap);
             updateDeviceProperties(test);
         }
-*/
+
         System.out.println("----------------------------------------- DONE WITH " + deviceName + "-----------------------------------------");
 
         WriteTimesForCommands();
     }
 
-    private void updateDeviceProperties(AbsTest test) {
+    private void updateDeviceProperties(BaseTest test) {
         if (test.deviceSN != null && !deviceQuery.contains("serialnumber")) {
             deviceName = test.deviceName;
             deviceQuery = "and @serialnumber='" + test.deviceSN + "'";

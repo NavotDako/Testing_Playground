@@ -1,8 +1,7 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
-import FrameWork.MyClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +9,7 @@ import java.util.Map;
 /**
  * Created by user on 9/5/2016.
  */
-public class PhilipsWeb extends AbsTest {
+public class PhilipsWeb extends BaseTest {
 
 
     public PhilipsWeb(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {

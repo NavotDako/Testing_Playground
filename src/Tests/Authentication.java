@@ -2,9 +2,8 @@ package Tests;
 
 
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
-import FrameWork.MyClient;
 
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  *
  */
-public class Authentication extends AbsTest{
+public class Authentication extends BaseTest {
 
     public Authentication(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
         super(deviceToTest, deviceQuery ,testName, commandMap);

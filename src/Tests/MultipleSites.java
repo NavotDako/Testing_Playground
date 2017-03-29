@@ -1,8 +1,7 @@
 package Tests;
 
-import FrameWork.AbsTest;
+import FrameWork.BaseTest;
 import FrameWork.Command;
-import FrameWork.MyClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +9,7 @@ import java.util.Map;
 /**
  * Created by richi.lebovich on 9/4/2016.
  */
-public class MultipleSites extends AbsTest {
+public class MultipleSites extends BaseTest {
 
     public MultipleSites(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
         super(deviceToTest, deviceQuery, testName, commandMap);
@@ -65,7 +64,7 @@ public class MultipleSites extends AbsTest {
         sitesMap.put("www.imdb.com", "xpath=//*[@class='navbar-link' or @text='IMDb']");
         sitesMap.put("www.paypal.com", "xpath=//*[@text='PayPal' and @class='paypal-img-logo']");
         sitesMap.put("www.dropbox.com", "xpath=//*[@class='dropbox-logo__type' or @alt='Dropbox']");
-        sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA' or @class='sb-logo']");
+        //sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA' or @class='sb-logo']");
         //sitesMap.put("www.espn.com", "xpath=//*[@class='container']");
         return sitesMap;
     }

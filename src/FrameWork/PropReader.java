@@ -24,7 +24,14 @@ public class PropReader {
     public String getString(String key){
         return String.valueOf(properties.get(key));
     }
+
     public int getPort(String key){
         return Integer.parseInt((String) properties.get(key));
     }
+
+    public boolean getBool(String key){
+        Boolean secured = (((String)properties.get(key)).contains("true")) ? true : false ;
+        return secured;
+    }
+
 }
