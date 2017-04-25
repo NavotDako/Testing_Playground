@@ -20,7 +20,7 @@ public class MyClient {
     private String deviceName;
 
     public MyClient(Map<String, Command> commandMap, Client client) {
-        //client(serverHost, serverPort, t);
+
         this.commandMap = commandMap;
         if (Runner.GRID) {
             this.client = client;
@@ -29,10 +29,7 @@ public class MyClient {
         } else {
             this.client = new Client(Runner.pr.getString("local_host"), Runner.pr.getPort("local_port"), true);
             System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
-
         }
-        // add extra logging
-        //this.client.setLogger(Utils.initDefaultLogger(Level.ALL));
     }
 
     public void Finish(String command, String detail, long before) {
@@ -78,7 +75,6 @@ public class MyClient {
         }
         Finish("Launch", activityURL, before);
         client.capture("Launch Capture");
-
 
 
     }
@@ -164,7 +160,7 @@ public class MyClient {
     }
 
     public void click(String zone, String element, int index, int count) {
-       // client.syncElements(500,2000);
+        // client.syncElements(500,2000);
         long before = System.currentTimeMillis();
         client.click(zone, element, index, count);
         Finish("Click", zone + " : " + element, before);
@@ -697,11 +693,10 @@ public class MyClient {
         Finish("elementSendText", zone + " : " + element, before);
 
         String check = client.elementGetText(zone, element, index);
-        if (!check.equals(text))
-        {
-            System.out.println("Couldn't find the text - "+text+" - in the element - "+element);
+        if (!check.equals(text)) {
+            System.out.println("Couldn't find the text - " + text + " - in the element - " + element);
             //client.verifyElementFound("native","text=there is no real text - I'm only failing the test!!!", 100);
-            client.report("Couldn't find the text - "+text+" - in the element - "+element,false);
+            client.report("Couldn't find the text - " + text + " - in the element - " + element, false);
         }
     }
 

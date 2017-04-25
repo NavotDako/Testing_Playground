@@ -28,6 +28,7 @@ public class Suite implements Runnable {
 
         test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
         updateDeviceProperties(test);
+
         test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
         updateDeviceProperties(test);
 
@@ -60,7 +61,7 @@ public class Suite implements Runnable {
     private void updateDeviceProperties(BaseTest test) {
         if (test.deviceSN != null && !deviceQuery.contains("serialnumber")) {
             deviceName = test.deviceName;
-            deviceQuery = "and @serialnumber='" + test.deviceSN + "'";
+            deviceQuery = "@serialnumber='" + test.deviceSN + "'";
         }
     }
 

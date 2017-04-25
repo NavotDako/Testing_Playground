@@ -24,6 +24,7 @@ public class WebTabs extends BaseTest {
 
         // add new tab and open espn
         client.click("NATIVE", "xpath=//*[@id='menu_button']", 0, 1);
+        client.sleep(1000);
         client.click("NATIVE", "xpath=//*[@text='New tab']", 0, 1);
         client.click("NATIVE", "xpath=//*[@id='search_box_text']", 0, 1);
         client.elementSendText("NATIVE", "xpath=//*[@id='url_bar']", 0, "http://www.google.co.il");

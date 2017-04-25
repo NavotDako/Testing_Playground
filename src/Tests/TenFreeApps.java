@@ -26,28 +26,31 @@ public class TenFreeApps extends BaseTest {
 
         if (client.waitForElement("NATIVE", "xpath=//*[@text='TOP CHARTS']", 0, 20000)) {
             client.click("NATIVE", "xpath=//*[@text='TOP CHARTS']", 0, 1);
-            client.click("NATIVE", "xpath=//*[contains(@text,'TOP FREE')]", 0, 1);
+            if (client.waitForElement("NATIVE", "xpath=//*[contains(@text,'TOP FREE')]", 0, 20000)) {
+                client.click("NATIVE", "xpath=//*[contains(@text,'TOP FREE')]", 0, 1);
+                int countOfOnScreenApps;
+                ArrayList<String> freeApps = new ArrayList<>();
 
-            int countOfOnScreenApps;
-            ArrayList<String> freeApps = new ArrayList<>();
-
-            while (freeApps.size() < 10) {
-                countOfOnScreenApps = client.getElementCount("NATIVE", "//*[@id='li_title' and @onScreen='true']");
-                for (int i = 0; i < countOfOnScreenApps; i++) {
-                    String temp = client.elementGetText("NATIVE", "//*[@id='li_title' and @onScreen='true']", i);
-                    freeApps.add(temp);
+                while (freeApps.size() < 10) {
+                    countOfOnScreenApps = client.getElementCount("NATIVE", "//*[@id='li_title' and @onScreen='true']");
+                    for (int i = 0; i < countOfOnScreenApps; i++) {
+                        String temp = client.elementGetText("NATIVE", "//*[@id='li_title' and @onScreen='true']", i);
+                        freeApps.add(temp);
+                    }
+                    client.swipe("Down", 200, 500);
                 }
-                client.swipe("Down", 200, 500);
+
+                System.out.println("------------------- 10's free apps today ------------------");
+                for (int i = 0; i < 10; i++) {
+                    System.out.println(freeApps.get(i));
+                }
             }
 
-            System.out.println("------------------- 10's free apps today ------------------");
-            for (int i = 0; i < 10; i++) {
-                System.out.println(freeApps.get(i));
-            }
+
         } else
 
         {
-            client.report("Can't Find xpath=//*[@text='TOP CHARTS']",false);
+            client.report("Can't Find xpath=//*[@text='TOP CHARTS']", false);
             throw new RuntimeException("Can't Find xpath=//*[@text='TOP CHARTS']");
 
         }

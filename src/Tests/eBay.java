@@ -47,7 +47,7 @@ public class eBay extends BaseTest {
 
 	@Override
 	protected void IOSRunTest() {
-		String search = "xpath=//*[@text='About Wikipedia' and @top='true' or @id='searchInput']";
+		String search = "xpath=//*[@text='About Wikipedia' and @top='true' or @id='searchInput' or @value='Search']";
 		try {
 			client.launch("safari:m.ebay.com", true, true);
 		}catch(Exception e){

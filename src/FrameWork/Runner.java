@@ -3,27 +3,25 @@ package FrameWork;
 import java.io.*;
 
 public class Runner {
-    static int iOSDevicesNum = 2;
-    static int androidDevicesNum = 2;
-    static int repNum = 5;
+    static int iOSDevicesNum = 1;
+    static int androidDevicesNum = 1;
+    static int repNum = 2;
 
-    static boolean GRID = false;
+    static boolean GRID = true;
 
     static String reportFolderString = "c:\\temp\\Reports";
     static String deviceQuery = "";
     static int commandIndex = 1;
     public static PropReader pr = null;
     static long buildNum;
+    public static boolean reporter = false;
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        deviceQuery += " and not(contains(@name,'iPad'))";
+        //deviceQuery += "@serialnumber='e323acec7ba4322be383a7c431d8a7d8739b581b'";
         buildNum = System.currentTimeMillis();
         pr = new PropReader();
-
         String resources = getResources();
-
         PrepareReportsFolders();
-
         RunThreads();
 
         System.out.println("Start Resources:\n" + resources);

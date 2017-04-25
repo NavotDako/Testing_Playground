@@ -10,7 +10,7 @@ public class PropReader {
     public Properties properties;
 
     public PropReader() {
-        File file = new File("lib\\CloudCreds.properties");
+        File file = new File("CloudCreds.properties");
         properties = new Properties();
         try {
             FileInputStream fileInput = new FileInputStream(file);

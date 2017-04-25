@@ -1,79 +1,88 @@
 package SingleTest;//package <set your test package>;
-import com.experitest.client.*;
-import com.experitest.manager.client.PManager;
-import com.experitest.manager.client.ResultPublisher;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.junit.*;
 
-import java.io.IOException;
+import com.experitest.client.*;
+import org.junit.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.net.URISyntaxException;
 
 /**
  *
  */
 public class SingleJunit {
-    private String host = "localhost";
-    private int port = 8889;
+    private String host = "192.168.2.13";
+    private int port = 8090;
     private String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project1";
     protected Client client = null;
-    private String query = "@os='ios'";
+    private String query = "@serialnumber='f759ec5d8343175b2c68f856c9c47559aa1fc0fc'";
+    private boolean GRID = true;
+    private String deviceName;
 
     @Before
-    public void setUp(){
-        client = new Client(host, port, true);
-        System.setProperty("manager.url","192.168.2.72:8787");
-      // PManager.getInstance().addProperty("status", "fail");
-        PManager.getInstance().addProperty("device", query);
-        client.setProjectBaseDirectory(projectBaseDirectory);
-        client.setReporter("xml", "reports", "Untitled");
+    public void setUp() throws IOException, SAXException, ParserConfigurationException {
+       // query = "@os='android'";
+        if (GRID) {
+            client = getGridClient();
+        } else {
+            client = getClient();
+        }
+        deviceName = client.getDeviceProperty("device.name");
+    }
+
+    public Client getClient() {
+        Client tempClient = new Client("localhost", 8889, true);
+        tempClient.waitForDevice(query, 10000);
+        tempClient.setReporter("xml", "c:\\temp\\reports", "Untitled");
+        return tempClient;
+    }
+
+    public Client getGridClient() throws IOException, SAXException, ParserConfigurationException {
+        GridClient grid = new GridClient("admin", "Experitest2012", "", host, port, false);
+        System.out.println(grid.getDevicesInformation());
+        // utils.readXML(grid.getDevicesInformation(), "android");
+        Client tempClient = grid.lockDeviceForExecution("newName", query, 5, 300000);
+        tempClient.setReporter("xml", "c:\\temp\\reports", "Untitled");
+        return tempClient;
     }
 
     @Test
     public void testUntitled() throws URISyntaxException, IOException {
-        String stubsApiBaseUri = "http://192.168.2.72:8787/api/keys";
-        String domain = "default";
-        String environment = "addNumbers";
-        String stubName = "1+1=2";
-        HttpClient httpClient = HttpClients.createDefault();
-
-        URIBuilder builder = new URIBuilder(stubsApiBaseUri);
-       /* builder.addParameter("domain", domain);
-        builder.addParameter("env", environment);
-        builder.addParameter("stub", stubName);*/
-        String listStubsUri = builder.build().toString();
-        HttpGet getStubMethod = new HttpGet(listStubsUri);
-
-
-        HttpResponse getStubResponse = httpClient.execute(getStubMethod);
-        int getStubStatusCode = getStubResponse.getStatusLine()
-                .getStatusCode();
-        if (getStubStatusCode < 200 || getStubStatusCode >= 300) {
-            // Handle non-2xx status code
-            return;
+        try {
+            client.sleep(2000);
+            client.sleep(2000);
+            client.sleep(2000);
+            client.sleep(2000);
+            client.sleep(2000);
+            client.sleep(2000);
+            client.sleep(2000);
+            client.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            client.collectSupportData(".", "", deviceName, "", "", "", true, true);
         }
 
-        client.waitForDevice(query,10000);
-       /* for (int i=0;i<1;i++) {
-            client.deviceAction("Home");
-            client.syncElements(2000,10000);
-            client.swipe("up",10,500);
-        }*/
-        PManager.getInstance().addProperty("app.name", "EriBankdasfadsf");
-        //PManager.getInstance().addProperty("status", "pass");
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
+        try {
+            System.out.println(client.generateReport(false));
+            client.releaseClient();
+        } catch (Exception e) {
+            e.printStackTrace();
+            client.collectSupportData(".", "", deviceName, "", "", "", true, true);
+        }
 
-        PManager.getInstance().addReportFolder(client.generateReport(false));
-
-        client.releaseDevice("",true,true,true);
-        client.releaseClient();
-
-        ResultPublisher.publishResult(null,"aarrrrrsdfgsrsdfggsdfga", "bbbb", null,true,null,null,false, 10000);
     }
+
+
 }
