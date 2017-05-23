@@ -1,8 +1,5 @@
 package FrameWork;
 
-/*import com.experitest.manager.client.PManager;
-import com.experitest.manager.client.ResultPublisher;*/
-
 import com.experitest.manager.client.PManager;
 
 import java.io.*;
@@ -25,7 +22,6 @@ public abstract class BaseTest {
     protected MyClient client;
     protected Map<String, Command> commandMap = null;
     public String deviceShortName = null;
-    String generatedReport = null;
 
     public BaseTest(String deviceOS, String deviceQuery, String testName, Map<String, Command> commandMap) {
         this.commandMap = commandMap;
