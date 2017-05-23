@@ -16,7 +16,7 @@ public class TenFreeApps extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
 
         client.launch("com.android.vending/.AssetBrowserActivity", false, true);
 
@@ -30,8 +30,8 @@ public class TenFreeApps extends BaseTest {
                 client.click("NATIVE", "xpath=//*[contains(@text,'TOP FREE')]", 0, 1);
                 int countOfOnScreenApps;
                 ArrayList<String> freeApps = new ArrayList<>();
-
-                while (freeApps.size() < 10) {
+                long startTime = System.currentTimeMillis();
+                while ((freeApps.size() < 10) || (System.currentTimeMillis() > startTime + 30000)) {
                     countOfOnScreenApps = client.getElementCount("NATIVE", "//*[@id='li_title' and @onScreen='true']");
                     for (int i = 0; i < countOfOnScreenApps; i++) {
                         String temp = client.elementGetText("NATIVE", "//*[@id='li_title' and @onScreen='true']", i);
@@ -69,42 +69,57 @@ public class TenFreeApps extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
 
         client.launch("com.apple.AppStore", false, true);
         client.setProperty("ios.non-instrumented.dump.parameters", "20 , 500 , 25");
         sync(1000, 0, 10000);
-        client.click("NATIVE", "xpath=//*[@text='Top Charts']", 0, 2);
+        client.click("NATIVE", "xpath=//*[@text='Top Charts']", 0, 1);
+        if(client.isElementFound("native","xpath=//*[@text='All Categories']",0)){
+            client.click("native","xpath=//*[@text='Cancel']",0,1);
+        }
         if (client.isElementFound("NATIVE", "xpath=//*[@text='Free' and @knownSuperClass='UIButton']", 0))
             client.click("NATIVE", "xpath=//*[@text='Free' and @knownSuperClass='UIButton']", 0, 1);
-        else if (!client.isElementFound("web", "xpath=//*[@text='Free' and @class='UIACollectionView']", 0))
+        else if (!client.isElementFound("web", "xpath=//*[@text='Free' and @class='UIACollectionView']", 0)) {
+            client.waitForElement("NATIVE", "xpath=//*[@text='Free' and (@knownSuperClass='UISegment' or @XCElementType='XCUIElementTypeButton')]", 0, 15000);
             client.click("NATIVE", "xpath=//*[@text='Free' and (@knownSuperClass='UISegment' or @XCElementType='XCUIElementTypeButton')]", 0, 1);
+        }
 
         int countOfOnScreenApps;
         ArrayList<String> freeApps = new ArrayList<>();
+        long startTime = System.currentTimeMillis();
+        String iPadCellString = "//XCUIElementTypeCollectionView[@text='Free']//XCUIElementTypeOther[@text]";
+//        String iPhoneCellString = "//XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeOther[@text]";
+        String iPhoneCellString = "//XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther[@x=0 and @y!=0]";
+        String cellIdentifier = (client.getDeviceProperty("device.category").contains("TABLET")) ? iPadCellString : iPhoneCellString;
+        while (freeApps.size() < 10 && (System.currentTimeMillis() < startTime + 30000)) {
 
-        while (freeApps.size() < 10) {
-            countOfOnScreenApps = client.getElementCount("NATIVE", "//*[@class='UIAView' and @knownSuperClass='UIView' and @enabled='true' and @y>0 and @width>0 and @height>0 and @hidden='false' and @onScreen='true']/../*/*/*[@text='GET' or @text='Download']/../../../*[contains(@text , ',')]");
+            countOfOnScreenApps = client.getElementCount("NATIVE", cellIdentifier);
             for (int i = 0; i < countOfOnScreenApps; i++) {
-                String temp = client.elementGetText("NATIVE", "//*[@class='UIAView' and @knownSuperClass='UIView' and @enabled='true' and @y>0 and @width>0 and @height>0 and @hidden='false' and @onScreen='true']/../*/*/*[@text='GET' or @text='Download']/../../../*[contains(@text , ',')]", i);
+                String temp = client.elementGetText("NATIVE", cellIdentifier, i);
+                System.out.println("text - " + temp);
                 if (!freeApps.contains(temp))
                     freeApps.add(temp);
             }
             if (client.isElementFound("NATIVE", "xpath=//*[@text='Free' and ./*[@class='UIAView']]", 0))
                 client.elementSwipe("NATIVE", "xpath=//*[@text='Free' and ./*[@class='UIAView']]", 0, "Down", 200, 3500);
             else
-                client.swipeWhileNotFound("Down", 200, 3500, "NATIVE", "//*[@class='UIAView' and @knownSuperClass='UIView' and @enabled='true' and @y>0 and @width>0 and @height>0 and @hidden='false' and @onScreen='true']/../*/*/*[@text='GET' or @text='Download']/../../../*[contains(@text , '" + (countOfOnScreenApps + 2) + ",')]", 0, 1000, 1, false);
+                client.swipe("Down", 200, 3500);
         }
 
         ArrayList<String> toPrint = new ArrayList<>();
         for (String temp : freeApps) {
-            String[] toCut = temp.split(",");
-            String toAdd = toCut[1];
-            toPrint.add(toAdd);
+            try {
+                String[] toCut = temp.split(",");
+                String toAdd = toCut[1];
+                toPrint.add(toAdd);
+            } catch (Exception e) {
+                // e.printStackTrace();
+            }
         }
 
-        System.out.println("------------------- 10's free apps today ------------------");
-        for (int i = 0; i < 10; i++) {
+        System.out.println("------------------- " + freeApps.size() + "'s free apps today ------------------");
+        for (int i = 0; i < toPrint.size(); i++) {
             System.out.println((i + 1) + ")" + toPrint.get(i));
         }
         System.out.println("-----------------------------------------------------------");

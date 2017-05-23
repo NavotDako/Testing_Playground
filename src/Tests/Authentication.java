@@ -48,12 +48,12 @@ public class Authentication extends BaseTest {
     private int[] waitTimes = {0,1000,2000,5000,7000,8000,10000,13000,15000,17000,20000};
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         //Assert.assertFalse(true);
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         client.install("http://192.168.2.72:8181/iOSApps/UICatalog.ipa",true,true);
         client.launch("com.experitest.UICatalog", true, true);
         client.elementListSelect("", "text=Authentication", 0, true);

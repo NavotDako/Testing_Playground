@@ -3,11 +3,10 @@ package FrameWork;
 import com.experitest.client.Client;
 import com.experitest.client.InternalException;
 import com.experitest.client.MobileListener;
-import com.experitest.client.Utils;
 import com.experitest.client.log.ILogger;
-import com.experitest.client.log.Level;
 
 import java.io.*;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -27,7 +26,7 @@ public class MyClient {
             deviceName = client.getDeviceProperty("device.name");
             deviceOS = client.getDeviceProperty("device.os");
         } else {
-            this.client = new Client(Runner.pr.getString("local_host"), Runner.pr.getPort("local_port"), true);
+            this.client = new Client(Runner.cpr.getString("local_host"), Runner.cpr.getInt("local_port"), true);
             System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
         }
     }
@@ -43,10 +42,8 @@ public class MyClient {
             commandMap.get(command).totalTime += time;
             commandMap.get(command).avgTime = commandMap.get(command).totalTime / commandMap.get(command).timeList.size();
 
-            stringToWrite = deviceOS + " --- " + deviceName.substring(deviceName.indexOf(":") + 1);
-            stringToWrite += " --- " + command + " --- " + commandMap.get(command).timeList.size();
-            stringToWrite += " --- " + detail + " --- " + time;
-            stringToWrite += " --- AVG --- " + commandMap.get(command).avgTime + "\n";
+            stringToWrite = String.format("%-10s%-30s%-30s%-5s%-50s%-10s%-10s%-10s\n", deviceOS, deviceName.substring(deviceName.indexOf(":") + 1), command, commandMap.get(command).timeList.size(), detail, time, "AVG", commandMap.get(command).avgTime);
+
         }
 
         try {
@@ -60,7 +57,7 @@ public class MyClient {
 
         String reportName = deviceName.substring(deviceName.indexOf(":") + 1);
         PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/" + reportName + ".txt", true)));
-        System.out.println(stringToWrite);
+        //System.out.println(stringToWrite);
         writer.append(stringToWrite);
         writer.close();
 
@@ -75,6 +72,9 @@ public class MyClient {
         }
         Finish("Launch", activityURL, before);
         client.capture("Launch Capture");
+        if(activityURL.contains("http") && client.isElementFound("native","//*[@text='cancel']",0)){
+            client.click("native","//*[@text='cancel']",0,1);
+        }
 
 
     }

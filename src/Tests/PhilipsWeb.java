@@ -17,7 +17,7 @@ public class PhilipsWeb extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         Map<String,String> Philips = new HashMap<>();
         Philips.put("click","xpath=//*[@nodeName='I' and @class='p-square p-icon-close p-small']");
         Philips.put("clickSearch","xpath=//*[@class='p-icon-magnifier p-icons-items']");
@@ -52,7 +52,7 @@ public class PhilipsWeb extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         Map<String,String> Philips = new HashMap<>();
         Philips.put("click","xpath=//*[@nodeName='I' and @class='p-square p-icon-close p-small']");
         Philips.put("clickSearch","xpath=//*[@class='p-icon-magnifier p-icons-items']");

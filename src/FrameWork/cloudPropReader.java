@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-public class PropReader {
+public class cloudPropReader {
+
+    private final String cloud;
+
     public Properties properties;
 
-    public PropReader() {
+    public cloudPropReader(String cloud) {
         File file = new File("CloudCreds.properties");
         properties = new Properties();
         try {
@@ -19,18 +22,19 @@ public class PropReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.cloud = cloud;
     }
 
     public String getString(String key){
-        return String.valueOf(properties.get(key));
+        return String.valueOf(properties.get(cloud+"_"+key));
     }
 
-    public int getPort(String key){
-        return Integer.parseInt((String) properties.get(key));
+    public int getInt(String key){
+        return Integer.parseInt((String) properties.get(cloud+"_"+key));
     }
 
     public boolean getBool(String key){
-        Boolean secured = (((String)properties.get(key)).contains("true")) ? true : false ;
+        Boolean secured = (((String)properties.get(cloud+"_"+key)).contains("true")) ? true : false ;
         return secured;
     }
 

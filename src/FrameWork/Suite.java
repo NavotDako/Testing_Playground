@@ -16,10 +16,10 @@ public class Suite implements Runnable {
     Map<String, Command> commandMap = new HashMap<>();
     private BaseTest test;
 
-    public Suite(int repNum, String reportFolder, String deviceToTest, String deviceQuery) {
+    public Suite(int repNum, String reportFolder, String deviceOS, String deviceQuery) {
         Suite.repNum = repNum;
         this.reportFolder = reportFolder;
-        this.deviceOS = deviceToTest;
+        this.deviceOS = deviceOS;
         this.deviceQuery = deviceQuery;
     }
 
@@ -32,8 +32,12 @@ public class Suite implements Runnable {
         test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
         updateDeviceProperties(test);
 
-        test = new AmitApp(deviceOS, deviceQuery, "AmitApp", commandMap);
-        updateDeviceProperties(test);
+
+        if (!test.deviceOS.equals("ios") || test.deviceOSVersion.contains("10")) {
+            test = new AmitApp(deviceOS, deviceQuery, "AmitApp", commandMap);
+            updateDeviceProperties(test);
+
+        }
 
         test = new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
         updateDeviceProperties(test);
@@ -44,7 +48,7 @@ public class Suite implements Runnable {
         test = new eBay(deviceOS, deviceQuery, "eBay", commandMap);
         updateDeviceProperties(test);
 
-        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
+        //new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
 
         new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
 
@@ -72,13 +76,8 @@ public class Suite implements Runnable {
                 sum = 0;
                 for (Long t : entry.getValue().timeList)
                     sum += t;
-                System.out.println("---------------" + deviceName + " - " + entry.getValue().commandName + " AVG - " + sum / entry.getValue().timeList.size() + " " + entry.getValue().commandName + " count - " + entry.getValue().timeList.size() + "-----------------");
+                System.out.println("---------------" + deviceQuery.replace("'", "").replace("@serialnumber=", "") + " - " + entry.getValue().commandName + " AVG - " + sum / entry.getValue().timeList.size() + " " + entry.getValue().commandName + " count - " + entry.getValue().timeList.size() + "-----------------");
             }
         }
     }
-
-    public String setDeviceQuery() {
-        return System.setProperty(Thread.currentThread().getName(), deviceQuery);
-    }
-
 }

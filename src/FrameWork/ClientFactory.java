@@ -1,5 +1,6 @@
 package FrameWork;
 
+import com.experitest.client.Client;
 import com.experitest.client.GridClient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,7 +12,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
@@ -19,12 +19,13 @@ import java.util.Map;
 
 public class ClientFactory {
 
-    public static MyClient SetUp(String testName, String deviceOS, String deviceQuery, Map<String, Command> commandMap, String serial) {
+    public synchronized static MyClient SetUp(String testName, String deviceOS, String deviceQuery, Map<String, Command> commandMap, String serial) {
 
         MyClient client = null;
         try {
             if (Runner.GRID) {
-                if (deviceQuery.equals("")) client = getGridClient(testName, commandMap, deviceOS, deviceQuery, serial);
+                if (deviceQuery.equals(""))
+                    client = getGridClient(testName, commandMap, deviceOS, deviceQuery, serial);
                 else {
                     client = getGridClientFromQuery(testName, commandMap, deviceQuery);
                 }
@@ -42,25 +43,28 @@ public class ClientFactory {
             System.out.println("---------------" + serial + " - CAN NOT GET A DEVICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return client;
         }
+
     }
 
-    private static MyClient getGridClientFromQuery(String testName, Map<String, Command> commandMap, String deviceQuery) {
-        System.out.println("Using query for - "+deviceQuery);
-        MyClient myclient = null;
-        GridClient grid = new GridClient(Runner.pr.getString("user"), Runner.pr.getString("password"), Runner.pr.getString("project"), Runner.pr.getString("server_host"), Runner.pr.getPort("server_port"), Runner.pr.getBool("secured"));
+    synchronized static MyClient getGridClientFromQuery(String testName, Map<String, Command> commandMap, String deviceQuery) {
+        System.out.println("Using query for - " + deviceQuery);
+        String cloud = Runner.cloud;
+        GridClient grid = new GridClient(Runner.cpr.getString("user"), Runner.cpr.getString("password"), Runner.cpr.getString("project"), Runner.cpr.getString("server_host"), Runner.cpr.getInt("server_port"), Runner.cpr.getBool("secured"));
+        Client client = null;
+        synchronized (Suite.class) {
+            client = grid.lockDeviceForExecution(testName, deviceQuery, Runner.repNum * 10, 300000);
+        }
 
-        myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, deviceQuery, Runner.repNum * 5, 300000));
-        return myclient;
+        return new MyClient(commandMap, client);
     }
 
     public static MyClient getGridClient(String testName, Map<String, Command> commandMap, String deviceOS, String deviceQuery, String serial) {
 
         MyClient myclient = null;
-        GridClient grid = new GridClient(Runner.pr.getString("user"), Runner.pr.getString("password"), Runner.pr.getString("project"), Runner.pr.getString("server_host"), Runner.pr.getPort("server_port"), Runner.pr.getBool("secured"));
+        GridClient grid = new GridClient(Runner.cpr.getString("user"), Runner.cpr.getString("password"), Runner.cpr.getString("project"), Runner.cpr.getString("server_host"), Runner.cpr.getInt("server_port"), Runner.cpr.getBool("secured"));
 
         String serialnumber = null;
         if (serial == null) {
-
             try {
                 serialnumber = readXML(grid.getDevicesInformation(), deviceOS);
             } catch (ParserConfigurationException e) {
@@ -73,12 +77,13 @@ public class ClientFactory {
         } else {
             serialnumber = serial;
         }
-        //  System.out.println(grid.getDevicesInformation());
         if (serialnumber != null) {
             System.out.println("@serialnumber='" + serialnumber + "'");
-            myclient = new MyClient(commandMap, grid.lockDeviceForExecution(testName, "@serialnumber='" + serialnumber + "'", Runner.repNum * 5, 300000));
-
-            //if (client.getDeviceProperty("deviceName.os").contains("android")) InstallChromeIfNeeded();
+            Client client = null;
+            synchronized (Suite.class) {
+                client = grid.lockDeviceForExecution(testName, "@serialnumber='" + serialnumber + "'", Runner.repNum * 5, 30000);
+            }
+            myclient = new MyClient(commandMap, client);
         } else {
             System.out.println(Thread.currentThread().getName() + " - NO DEVICE WAS FOUND!");
         }

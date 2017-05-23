@@ -13,7 +13,7 @@ public class EriBank extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
 
         client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk", true, false);
         client.launch("com.experitest.ExperiBank/.LoginActivity", true, true);
@@ -51,17 +51,21 @@ public class EriBank extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
 
         client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa", true, false);
         client.launch("com.experitest.ExperiBankO", true, true);
         client.syncElements(3000, 15000);
+        if(client.isElementFound("native","xpath=//*[@text='“EriBankO” May Slow Down Your iPad']",0)){
+            client.click("navite","xpath=//*[@text='OK']",0,1);
+        }
         client.verifyElementFound("NATIVE", "xpath=//*[@placeholder='Username']", 0);
         client.elementSendText("NATIVE", "xpath=//*[@placeholder='Username']", 0, "company");
 
         client.verifyElementFound("NATIVE", "xpath=//*[@placeholder='Password']", 0);
         client.elementSendText("NATIVE", "xpath=//*[@placeholder='Password']", 0, "company");
         client.closeKeyboard();
+
         client.verifyElementFound("NATIVE", "xpath=//*[@text='Login' or @text='loginButton']", 0);
         client.click("NATIVE", "xpath=//*[@text='Login' or @text='loginButton']", 0, 1);
         client.sendText("{LANDSCAPE}");

@@ -14,7 +14,7 @@ public class NonInstrumented extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' ) and not(contains(@contentDescription,'settings.'))]";
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
         client.swipe("Up", 0, 500);
@@ -47,7 +47,7 @@ public class NonInstrumented extends BaseTest {
             client.verifyElementFound("NATIVE", "xpath=//*[contains(@text,'Android version')]", 0);
             client.click("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back']", 0, 1);
         }
-
+        client.sleep(2000);
         if (client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0))
             client.click("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0, 1);
 
@@ -58,8 +58,8 @@ public class NonInstrumented extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
-        client.setProperty("ios.non-instrumented.dump.parameters", "20,1000,50");
+    protected void iOSRunTest() {
+
         String countriesString = "xpath=//*[(@knownSuperClass='UILabel' or @knownSuperClass='UICollectionViewCell' or @knownSuperClass='UIAccessibilityElement') and (not(contains(@text,'Today')) and not(contains(@text,':')) and not(contains(@text,'Add')))][1]";
         client.sendText("{HOME}");
         client.click("NATIVE", "xpath=//*[@accessibilityLabel='Clock']", 0, 1);

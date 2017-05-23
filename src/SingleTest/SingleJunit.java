@@ -19,11 +19,16 @@ import java.net.URISyntaxException;
  *
  */
 public class SingleJunit {
-    private String host = "192.168.2.13";
-    private int port = 8090;
+//    private String host = "cloud.experitest.com";private int port = 443;String user = "shelinonervous";String password = "Experi1989";boolean secured = true;
+
+//    private String host = "192.168.2.13";private int port = 8090;String user = "admin";String password = "Experitest2012";boolean secured = false;
+
+    private String host = "qacloud.experitest.com";private int port = 443;String user = "zekra";String password = "Zekra123";boolean secured = true;
+
+
     private String projectBaseDirectory = "C:\\Users\\DELL\\workspace\\project1";
     protected Client client = null;
-    private String query = "@serialnumber='f759ec5d8343175b2c68f856c9c47559aa1fc0fc'";
+    private String query = "@os";
     private boolean GRID = true;
     private String deviceName;
 
@@ -46,9 +51,7 @@ public class SingleJunit {
     }
 
     public Client getGridClient() throws IOException, SAXException, ParserConfigurationException {
-        GridClient grid = new GridClient("admin", "Experitest2012", "", host, port, false);
-        System.out.println(grid.getDevicesInformation());
-        // utils.readXML(grid.getDevicesInformation(), "android");
+        GridClient grid = new GridClient(user, password, "", host, port, secured);
         Client tempClient = grid.lockDeviceForExecution("newName", query, 5, 300000);
         tempClient.setReporter("xml", "c:\\temp\\reports", "Untitled");
         return tempClient;
@@ -56,19 +59,9 @@ public class SingleJunit {
 
     @Test
     public void testUntitled() throws URISyntaxException, IOException {
-        try {
-            client.sleep(2000);
-            client.sleep(2000);
-            client.sleep(2000);
-            client.sleep(2000);
-            client.sleep(2000);
-            client.sleep(2000);
-            client.sleep(2000);
-            client.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-            client.collectSupportData(".", "", deviceName, "", "", "", true, true);
-        }
+
+            client.collectSupportData("c:\\temp", "", deviceName, "", "", "", true, true);
+
 
     }
 

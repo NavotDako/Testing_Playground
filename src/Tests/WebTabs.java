@@ -15,7 +15,7 @@ public class WebTabs extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         // launch ebay
         client.launch("chrome:http://www.ebay.com", true, false);
 
@@ -43,7 +43,7 @@ public class WebTabs extends BaseTest {
 
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         client.hybridClearCache(true, true);
         client.launch("safari:http://www.ebay.com", true, false);
         // ebay test

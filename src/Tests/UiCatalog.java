@@ -15,12 +15,12 @@ public class UiCatalog extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
 
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         client.uninstall("com.experitest.UICatalog");
         client.sleep(500);
         client.install("http://192.168.2.72:8181/iOSApps/UICatalog.ipa",true,false);

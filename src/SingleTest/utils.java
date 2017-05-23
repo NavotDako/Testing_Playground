@@ -1,5 +1,9 @@
 package SingleTest;
 
+import FrameWork.MyClient;
+import FrameWork.cloudPropReader;
+import com.experitest.client.Client;
+import com.experitest.client.GridClient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,17 +14,38 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by navot.dako on 4/23/2017.
  */
 public class utils {
+    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+        //System.out.println("Using query for - "+deviceQuery);
+        cloudPropReader pr = new cloudPropReader("qa");
+        MyClient myclient = null;
+        System.out.println(pr.getString("user") + " " + pr.getString("password") + " " + pr.getString("project") + " " + pr.getString("server_host") + " " + pr.getInt("server_port") + " " + pr.getBool("secured"));
+        GridClient grid = new GridClient(pr.getString("user"), pr.getString("password"), pr.getString("project"), pr.getString("server_host"), pr.getInt("server_port"), pr.getBool("secured"));
+        System.out.println(grid.getDevicesInformation());
+        List<String> iosList = readXML(grid.getDevicesInformation(), "ios");
+        System.out.println(iosList);
+        List<String> androidList = readXML(grid.getDevicesInformation(), "android");
+        System.out.println(androidList);
+        Client client = grid.lockDeviceForExecution("testName", "@os='ios'", 10, 10000);
+        client.collectSupportData("C:\\Temp\\New folder", "", client.getDeviceProperty("device.name"), "", "", "", true, true);
 
-    public static String readXML(String devicesInformation, String os) throws ParserConfigurationException, IOException, SAXException {
+
+
+//        GridClient grid = new GridClient("user","password","project","server_host","server_port","secured");
+//        Client client = grid.lockDeviceForExecution("testName", "@os='ios'", 10, 10000);
+//        client.collectSupportData("C:\\Temp\\New folder", "", client.getDeviceProperty("device.name"), "", "", "", true, true);
+    }
+
+    public static List<String> readXML(String devicesInformation, String os) throws ParserConfigurationException, IOException, SAXException {
+        List<String> tempList = new ArrayList<>();
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -37,23 +62,14 @@ public class utils {
             Node nNode = nList.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) nNode;
-                //System.out.println("\nCurrent device :" + eElement.getAttribute("os") + " - " + eElement.getAttribute("name"));
-                if (os.equals(eElement.getAttribute("os"))) {
+                if (os.equals(eElement.getAttribute("os")) && eElement.getAttribute("status").equals("online") && eElement.getAttribute("currentuser").equals("")) {
                     System.out.println("id : "
                             + eElement.getAttribute("serialnumber"));
-                    return eElement.getAttribute("serialnumber");
+                    tempList.add(eElement.getAttribute("serialnumber"));
                 }
             }
         }
-        return null;
+        return tempList;
 
-    }
-
-    public static String writeStringToXML(String fileName, String devicesInformation) throws IOException {
-        File f = new File("devices" + System.currentTimeMillis() + ".xml");
-        FileWriter fw = new FileWriter(f);
-        fw.append(devicesInformation);
-        fw.close();
-        return f.getAbsolutePath();
     }
 }

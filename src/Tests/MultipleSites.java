@@ -16,7 +16,7 @@ public class MultipleSites extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         Map<String, String> sites = getSites();
         String prefix = "chrome:";
         String homeIdentifier = "//*[@class='android.widget.TextView']";
@@ -51,16 +51,16 @@ public class MultipleSites extends BaseTest {
         sitesMap.put("www.apple.com", "//*[@id='ac-gn-firstfocus-small' or @id='ac-gn-firstfocus']");
         //sitesMap.put("www.youtube.com", "xpath=//*[@class='_moec _mvgc']");
         sitesMap.put("www.facebook.com", "xpath=//*[@id='header' or @class='clearfix loggedout_menubar']");
-        sitesMap.put("www.baidu.com", "xpath=//*[@id='logo' or @alt='logo'] ");
+        //sitesMap.put("www.baidu.com", "xpath=//*[@id='logo' or @alt='logo'] ");
         sitesMap.put("www.wikipedia.org", "xpath=//*[@alt='WikipediA']");
         sitesMap.put("www.yahoo.com", "xpath=//*[@id='yucs-logo-img']");
-        sitesMap.put("www.twitter.com", "xpath=//*[@class='AppBar-icon Icon Icon--twitter' or @text='Welcome to Twitter']");
+       // sitesMap.put("www.twitter.com", "xpath=//*[@class='AppBar-icon Icon Icon--twitter' or @text='Welcome to Twitter']");
         sitesMap.put("www.instagram.com", "xpath=//*[@class='_du7bh _soakw coreSpriteLoggedOutWordmark']");
         sitesMap.put("www.reddit.com", "xpath=//*[@class='TopNav-text-vcentering']");
         sitesMap.put("www.linkedin.com", "xpath=//*[@alt='LinkedIn' and @class='lazy-loaded']");
-        sitesMap.put("www.aliexpress.com", "xpath=//*[@class='downloadbar-logo'or @text='AliExpress']");
+        //sitesMap.put("www.aliexpress.com", "xpath=//*[@class='downloadbar-logo'or @text='AliExpress']");
         sitesMap.put("www.netflix.com", "xpath=//*[@nodeName='svg']");
-        sitesMap.put("www.stackoverflow.com", "xpath=//*[@class='topbar-icon js-site-switcher-button icon-site-switcher-bubble']");
+        sitesMap.put("www.stackoverflow.com", "xpath=//*[@class='topbar-icon js-site-switcher-button icon-site-switcher-bubble' or @text='Stack Overflow']");
         sitesMap.put("www.imdb.com", "xpath=//*[@class='navbar-link' or @text='IMDb']");
         sitesMap.put("www.paypal.com", "xpath=//*[@text='PayPal' and @class='paypal-img-logo']");
         sitesMap.put("www.dropbox.com", "xpath=//*[@class='dropbox-logo__type' or @alt='Dropbox']");
@@ -70,7 +70,7 @@ public class MultipleSites extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         Map<String, String> sites = getSites();
         String prefix = "safari:";
         String homeIdentifier = "//*[@accessibilityLabel='Settings']";

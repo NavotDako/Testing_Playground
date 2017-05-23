@@ -16,7 +16,7 @@ public class Rebooting extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         //HUAWEI - @id='dock_divider'
         String HOME_SCREEN = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='dock_divider']";
         client.verifyElementFound("NATIVE", HOME_SCREEN, 0);
@@ -29,7 +29,7 @@ public class Rebooting extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         client.verifyElementFound("NATIVE", "xpath=//*[@accessibilityLabel='Settings']", 0);
         for (int i = 0; i < 2 ; i++) {
             client.reboot(150000);

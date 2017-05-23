@@ -16,7 +16,7 @@ public class LaunchBrowserLoop extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         //client.setProperty("chrome.load.timeout","60000");
         String google = "www.google.com";
         String ebay = "m.ebay.com";
@@ -40,7 +40,7 @@ public class LaunchBrowserLoop extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         String google = "www.google.com";
         String ebay = "http://m.ebay.com";
         String xpathToVerify="";

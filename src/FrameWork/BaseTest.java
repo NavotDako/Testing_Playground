@@ -1,15 +1,21 @@
 package FrameWork;
 
+/*import com.experitest.manager.client.PManager;
+import com.experitest.manager.client.ResultPublisher;*/
+
 import com.experitest.manager.client.PManager;
-import com.experitest.manager.client.ResultPublisher;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import static Utils.ExceptionExtractor.ExtractExceptions;
+
 public abstract class BaseTest {
     protected int success = 0;
+    public String deviceOSVersion = null;
     public String deviceSN = null;
     public String deviceName = null;
     protected String reportFolder;
@@ -40,19 +46,21 @@ public abstract class BaseTest {
     }
 
     public void StartTesting() {
-
+        int failedTests = 0;
         int failedToGetDeviceCounter = 0;
 
-        for (int i = 0; i < Runner.repNum; i++) {
+        for (int i = 0; (i < Runner.repNum && failedTests < Runner.retry); i++) {
             long time = System.currentTimeMillis();
             try {
                 getDevice(i);
                 if (client == null) {
+                    failedTests++;
                     failedToGetDeviceCounter++;
                     simpleGetDeviceFailure(i, null, time);
                     continue;
                 }
             } catch (Exception e) {
+                failedTests++;
                 if (failedToGetDeviceCounter < 3) {
                     failedToGetDeviceCounter++;
                     simpleGetDeviceFailure(i, e, time);
@@ -67,34 +75,37 @@ public abstract class BaseTest {
                 failedToGetDeviceCounter = 0;
                 prepareReporter(i);
             } catch (Exception e) {
-                failure("prepareReporter", 2, i, e, System.currentTimeMillis() - time);
+                failedTests++;
+                failure("prepareReporter", i, e, System.currentTimeMillis() - time);
                 continue;
             }
             try {
                 prepareDevice(i);
             } catch (Exception e) {
-                failure("prepareDevice", 3, i, e, System.currentTimeMillis() - time);
+                failedTests++;
+                failure("prepareDevice", i, e, System.currentTimeMillis() - time);
                 continue;
             }
             try {
                 executeTest(i);
             } catch (Exception e) {
-                failure("executeTest", 3, i, e, System.currentTimeMillis() - time);
+                failedTests++;
+                failure("executeTest", i, e, System.currentTimeMillis() - time);
                 continue;
             }
             try {
                 finishedSuccessIteration(i, System.currentTimeMillis() - time);
-                if (Runner.reporter) ResultPublisher.publishResult(null, testName, "", null, true, null, null, false, time);
             } catch (Exception e) {
-                failure("finish", 3, i, e, System.currentTimeMillis() - time);
+                failure("finish", i, e, System.currentTimeMillis() - time);
             }
+
         }
 
     }
 
     public void resetQuery(int i, long time, Exception e) {
 
-        failure("getDevice - RESETTING THE QUERY!!", 1, i, e, System.currentTimeMillis() - time);
+        failure("getDevice", i, e, System.currentTimeMillis() - time);
         deviceQuery = null;
         deviceName = null;
         deviceShortName = null;
@@ -103,7 +114,7 @@ public abstract class BaseTest {
     }
 
     public void simpleGetDeviceFailure(int i, Exception e, long time) {
-        failure("getDevice", 1, i, e, System.currentTimeMillis() - time);
+        failure("getDevice", i, e, System.currentTimeMillis() - time);
 
     }
 
@@ -136,10 +147,15 @@ public abstract class BaseTest {
             if (deviceSN == null) {
                 deviceSN = client.getDeviceProperty("device.sn");
             }
+            deviceOSVersion = client.getDeviceProperty("device.version");
+            client.capture();
             client.setShowPassImageInReport(false);
             client.setSpeed("FAST");
+            client.deviceAction("unlock");
             client.deviceAction("portrait");
             client.deviceAction("home");
+            client.capture();
+            if (deviceOS.contains("ios")) client.setProperty("ios.non-instrumented.dump.parameters", "20,1000,50");
 
         } else {
             System.out.println("CLIENT IS NULL!!!");
@@ -150,53 +166,67 @@ public abstract class BaseTest {
     private void executeTest(int i) {
 
         if (deviceOS.equals("ios")) {
-            IOSRunTest();
+            iOSRunTest();
         } else {
-            AndroidRunTest();
+            androidRunTest();
         }
         success++;
     }
 
-    public void failure(String failedStage, int stage, int i, Exception e, long time) {
+    public void failure(String failedStage, int i, Exception e, long time) {
         String stringToWrite = null;
         StringWriter errors = null;
 
         boolean collected = false;
-        switch (stage) {
-            case 1: //getDevice
+        switch (failedStage) {
+            case "getDevice": //getDevice
                 System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
                 stringToWrite = createStringToWrite(failedStage, i, time, false);
-                errors = GetErrors(e);
-                if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
-                WriteErrorsToSummaryReport(stringToWrite, errors, "No Report Was Generated");
+                errors = getErrors(e);
+                //    if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
+                writeErrorsToSummaryReport(stringToWrite, errors, "No Report Was Generated");
                 if (failedStage.contains("RESETTING")) {
-                    WriteToSummaryReport("RESETTING THE QUERY!! -> " + deviceName);
+                    writeToSummaryReport("RESETTING THE QUERY!! -> " + deviceName);
                 }
                 sleep(3000);
                 break;
-            case 2: // prepareReporter
+            case "prepareReporter": // prepareReporter
                 System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
                 stringToWrite = createStringToWrite(failedStage, i, time, false);
-                if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
-                errors = GetErrors(e);
+                //      if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
+                errors = getErrors(e);
                 tryToReleaseClient();
-                WriteErrorsToSummaryReport(stringToWrite, errors, "No Report Was Generated");
+                writeErrorsToSummaryReport(stringToWrite, errors, "No Report Was Generated");
                 sleep(3000);
                 break;
-            case 3: //prepareDevice & executeTest & finish
-                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
-                stringToWrite = createStringToWrite(failedStage, i, time, false);
-                if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
-                errors = GetErrors(e);
-                tryToCapture();
-                String generatedReportPath = tryToGenerateReport();
-                tryToCollectSupportData(errors, generatedReportPath);
-                tryToReleaseClient();
-                WriteErrorsToSummaryReport(stringToWrite, errors, generatedReportPath);
+            case "prepareDevice": //prepareDevice & executeTest & finish
+                failedWithDevice(failedStage, i, e, time);
+                break;
+            case "executeTest": //prepareDevice & executeTest & finish
+                failedWithDevice(failedStage, i, e, time);
+                break;
+            case "finish": //prepareDevice & executeTest & finish
+                failedWithDevice(failedStage, i, e, time);
                 break;
         }
 
-        if (Runner.reporter) ResultPublisher.publishResult(null, testName, "", null, false, errors.toString(), null, false, time);
+        // if (Runner.reporter) ResultPublisher.publishResult(null, testName, "", null, false, errors.toString(), null, false, time);
+    }
+
+    public void failedWithDevice(String failedStage, int i, Exception e, long time) {
+        String stringToWrite;
+        StringWriter errors;
+        System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+        stringToWrite = createStringToWrite(failedStage, i, time, false);
+        //         if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
+        errors = getErrors(e);
+        tryToCapture();
+        String generatedReportPath = tryToGenerateReport();
+        Boolean dataCollected = tryToCollectSupportData(errors, generatedReportPath);
+        tryToReleaseClient();
+        writeErrorsToSummaryReport(stringToWrite, errors, generatedReportPath);
+        if (!dataCollected)
+            writeToSummaryReport(Thread.currentThread().getName() + "  " + deviceName + " - " + " Failed to Collect Support Data" + "\n");
     }
 
     public void tryToReleaseClient() {
@@ -220,12 +250,11 @@ public abstract class BaseTest {
     public boolean tryToCollectSupportData(StringWriter errors, String generatedReport) {
         String supportData = null;
         try {
-            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceName, errors.toString(), "", "", true, false);
+            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceName, errors.toString(), "", "", true, true);
             supportData = generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip";
         } catch (Exception e) {
             System.out.println(Thread.currentThread().getName() + " - Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
             e.printStackTrace();
-            WriteToSummaryReport(Thread.currentThread().getName() + "  " + deviceName + " - " + " Failed to Collect Support Data" + "\n\n");
             return false;
         }
         if (supportData != null && Runner.reporter) addSupportDataToReporter(supportData);
@@ -238,28 +267,28 @@ public abstract class BaseTest {
         long startTime = System.currentTimeMillis();
         do {
             try {
-                 if (Runner.reporter) PManager.getInstance().addReportZipFile(supportData);
-                collected=true;
+                // if (Runner.reporter) PManager.getInstance().addReportZipFile(supportData);
+                collected = true;
             } catch (Exception e) {
                 System.out.println("Failed to COLLECT SUPPORT DATA");
                 System.out.println("Going to sleep for 5 seconds");
-                client.sleep(5000);
+                client.sleep(2000);
             }
-        } while (!collected && (System.currentTimeMillis() - startTime)>30000);
+        } while (!collected && (System.currentTimeMillis() - startTime) > 30000);
     }
 
     public String tryToGenerateReport() {
         String generatedReport = null;
         try {
             generatedReport = client.generateReport(false);
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+generatedReport+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + generatedReport + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         } catch (Exception e1) {
             System.out.println(Thread.currentThread().getName() + " - Failed to Generate Report- " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
             e1.printStackTrace();
         }
         client.sleep(1000);
-        if (generatedReport != null && Runner.reporter) if (Runner.reporter) PManager.getInstance().addReportFolder(generatedReport);
+        // if (generatedReport != null && Runner.reporter) if (Runner.reporter) PManager.getInstance().addReportFolder(generatedReport);
 
         if (generatedReport == null) {
             generatedReport = "c:\\Temp\\Reports";
@@ -272,21 +301,74 @@ public abstract class BaseTest {
     public void finishedSuccessIteration(int i, long time) throws InterruptedException {
 
         String stringToWrite = createStringToWrite("finished", i, time, true);
-        WriteToSummaryReport(stringToWrite);
+
         String generatedReportFolder = tryToGenerateReport();
+
+        writeToSummaryReport(stringToWrite);
+
+        if (Runner.GRID && Runner.scanLogs) {
+            getAndWriteExceptions(generatedReportFolder);
+        }
+
         System.out.println(Thread.currentThread().getName() + " - Finished Iteration - " + i + " - In - " + Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReportFolder);
         client.releaseClient();
+        //   if (Runner.reporter) ResultPublisher.publishResult(null, testName, "", null, true, null, null, false, time);
+
 
     }
 
-    private void WriteErrorsToSummaryReport(String stringToWrite, StringWriter errors, String generatedReport) {
-        WriteToSummaryReport(stringToWrite);
+    public void getAndWriteExceptions(String generatedReportFolder) {
+        ArrayList<String> exceptionArray = null;
+        exceptionArray = tryToCheckTheLogForExceptions(generatedReportFolder);
+        boolean flag = false;
+        try {
+            if (exceptionArray.size() > 0) {
+                for (int j = 0; j < exceptionArray.size(); j++) {
+                    if (j > 5) break;
+                    if (!exceptionArray.get(j).contains("start ui automationCould")) {
+                        if (!exceptionArray.get(j).contains("illegal node name")) {
+                            if (!exceptionArray.get(j).contains("Failed to scroll the element into view")) {
+                                String exceptionFinalString;
+                                try {
+                                    exceptionFinalString = exceptionArray.get(j).substring(0, exceptionArray.get(j).indexOf(" at ", 500));
+                                } catch (Exception e) {
+                                    exceptionFinalString = exceptionArray.get(j);
+                                }
+                                writeToSummaryReport("\t" + deviceName + " -\n" + "\t" + exceptionFinalString);
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+                if (flag)
+                    writeToSummaryReport(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReportFolder + " - file:///" + generatedReportFolder.replace('\\', '/') + "/index.html\n");
+
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    public ArrayList<String> tryToCheckTheLogForExceptions(String generatedReportFolder) {
+        ArrayList<String> exceptionArray = null;
+
+        try {
+            exceptionArray = ExtractExceptions(generatedReportFolder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return exceptionArray;
+    }
+
+    private void writeErrorsToSummaryReport(String stringToWrite, StringWriter errors, String generatedReport) {
+        writeToSummaryReport(stringToWrite);
         String errorString = (errors.toString().contains("<!DOCTYPE html><html>")) ? errors.toString().substring(errors.toString().indexOf("at com.experitest.")) : errors.toString();
-        WriteToSummaryReport("\t" + deviceName + " -\n" + "\t" + errorString);
-        WriteToSummaryReport(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReport + " - file:///" + generatedReport.replace('\\', '/') + "/index.html\n");
+        writeToSummaryReport("\t" + deviceName + " -\n" + "\t" + errorString);
+        writeToSummaryReport(Thread.currentThread().getName() + "  " + deviceName + " - " + "REPORT - " + generatedReport + " - file:///" + generatedReport.replace('\\', '/') + "/index.html\n");
     }
 
-    private StringWriter GetErrors(Exception e) {
+    private StringWriter getErrors(Exception e) {
         StringWriter errors = null;
         try {
             errors = new StringWriter();
@@ -303,7 +385,7 @@ public abstract class BaseTest {
         String status = (succeeded) ? "pass" : "fail";
         String stringToWrite = String.format("%-20s%-20s%-30s%-30s%-15s%-5s", status, Stage, deviceName, testName, success + "/" + (i + 1) + "=" + successRate, time / 1000 + "s");
 
-        if (Runner.reporter) addPropertiesToReporter(Stage, status);
+        //if (Runner.reporter) addPropertiesToReporter(Stage, status);
 
         return stringToWrite;
     }
@@ -318,16 +400,16 @@ public abstract class BaseTest {
         if (Runner.reporter) PManager.getInstance().addProperty("build", Runner.buildNum + "");
     }
 
-    protected abstract void AndroidRunTest();
+    protected abstract void androidRunTest();
 
-    protected abstract void IOSRunTest();
+    protected abstract void iOSRunTest();
 
-    public void WriteToSummaryReport(String stringToWrite) {
+    public void writeToSummaryReport(String stringToWrite) {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(new BufferedWriter(new FileWriter("Reports/report.txt", true)));
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            if (stringToWrite.contains("pass") || stringToWrite.contains("fail")) {
+            if (stringToWrite.startsWith("pass") || stringToWrite.startsWith("fail")) {
                 //writer.append(Runner.commandIndex + " \t" + sdf.format(new Date(System.currentTimeMillis())) + ": " + stringToWrite + "\n");
                 writer.append(String.format("%-5s %-10s %-60s\n", Runner.commandIndex + ".", sdf.format(new Date(System.currentTimeMillis())), stringToWrite));
                 Runner.commandIndex++;

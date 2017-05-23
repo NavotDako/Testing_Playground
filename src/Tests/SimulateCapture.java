@@ -19,7 +19,7 @@ public class SimulateCapture extends BaseTest {
     }
 
     @Override
-    protected void AndroidRunTest() {
+    protected void androidRunTest() {
         //checkAppData();
         client.setProperty("android.instrumentation.camera", "true");
         boolean found = false;
@@ -36,7 +36,7 @@ public class SimulateCapture extends BaseTest {
     }
 
     @Override
-    protected void IOSRunTest() {
+    protected void iOSRunTest() {
         client.setProperty("android.instrumentation.camera", "true");
 
         boolean found = false;

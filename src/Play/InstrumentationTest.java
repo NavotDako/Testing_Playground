@@ -27,7 +27,7 @@ public class InstrumentationTest {
     public String bundleName;
     public static String deviceName = null;
     public static String deviceQuery = "@os='android'";
-    public String appsDirectory = "C:\\Users\\DELL\\EclipseWorkspace\\Testing Playground STA\\lib\\AndroidApps\\";
+    public String appsDirectory = "lib\\AndroidApps\\";
 
     @Rule
     public TestName testName = new TestName();
@@ -35,12 +35,10 @@ public class InstrumentationTest {
 
     @Before
     public void setUp() {
-
         client = getClient(deviceQuery, GRID);
         deviceName = client.getDeviceProperty("device.name");
         deviceQuery = "@serialnumber='" + client.getDeviceProperty("device.sn") + "'";
         client.setReporter("xml", "reports", testName.getMethodName());
-
     }
 
     private Client getClient(String deviceQuery, Boolean grid) {

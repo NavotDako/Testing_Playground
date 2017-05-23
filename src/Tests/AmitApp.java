@@ -13,23 +13,25 @@ public class AmitApp extends BaseTest {
 	}
 
 	@Override
-	protected void AndroidRunTest() {
+	protected void androidRunTest() {
 		client.install("http://192.168.2.72:8181/AndroidApps/Conquest%20Game%20Android.apk",true,false);
 		client.launch("com.amitlicht.experitest.conquestgame/.StartActivity",true,true);
 
 		client.elementSendText("Native","xpath=//*[@id='edit_username']",0,"BOB");
 		client.elementSendText("Native","//*[@id='edit_passward']",0,"Not BOB");
 		client.click("Native","//*[@text='Log In']",0,1);
+		client.sleep(1000);
 		client.verifyElementFound("native","//*[@id='login_error_label']",0);
 		client.elementSendText("Native","xpath=//*[@id='edit_username']",0,"BOB");
 		client.elementSendText("Native","//*[@id='edit_passward']",0,"BOB");
 		client.click("Native","//*[@text='Log In']",0,1);
+		client.sleep(1000);
 		client.verifyElementFound("native","//*[@id='textView_wellcome']",0);
 		client.uninstall("com.amitlicht.experitest.conquestgame");
 	}
 
 	@Override
-	protected void IOSRunTest() {
+	protected void iOSRunTest() {
 		client.install("http://192.168.2.72:8181/iOSApps/Monster%20Island%20Game.ipa",true,false);
 		client.launch("com.Experitest.AmitLicht.Monster-Island-Game",true,true);
 		client.elementSendText("Native","xpath=//*[@placeholder='Enter user name']",0,"BOB");
