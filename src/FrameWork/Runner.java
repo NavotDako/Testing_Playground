@@ -1,42 +1,47 @@
 package FrameWork;
 
-import com.experitest.client.GridClient;
+import com.experitest.client.Client;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Runner {
-
-    static int repNum = 1;
-    static int retry = 3;
+    static int repNum = 10;
+    static int retry = 4;
     static String method = "all"; //file/all
-    static String cloud = "my"; //my/public/qa
     static boolean GRID = true;
-    static boolean scanLogs = true;
+    static boolean scanLogs = false;
 
     static String reportFolderString = "c:\\temp\\Reports";
-    static String deviceQuery = "";
     static int commandIndex = 1;
-    public static cloudPropReader cpr = null;
     public static serialPropReader spr = null;
     public static long buildNum;
     public static boolean reporter = false;
+    static CloudServer cloudServer;
+    static DeviceManager localDeviceManager;
 
     public static void main(String[] args) throws Exception {
+        if (GRID) cloudServer = new CloudServer(CloudServer.CloudServerName.MY);
+        else localDeviceManager = new DeviceManager("localhost", 8889);
+
         buildNum = System.currentTimeMillis();
-        cpr = new cloudPropReader(cloud);
 
         String resources = getResources();
+
         prepareReportsFolders();
 
         switch (method) {
@@ -53,121 +58,74 @@ public class Runner {
     }
 
     private static void runOnAllAvailableDevices() throws IOException, SAXException, ParserConfigurationException, InterruptedException {
-        List<Thread> threadList = new ArrayList<>();
-        GridClient grid = new GridClient(cpr.getString("user"), cpr.getString("password"), cpr.getString("project"), cpr.getString("server_host"), cpr.getInt("server_port"), cpr.getBool("secured"));
-        System.out.println(grid.getDevicesInformation());
-        List<String> iosList = readXMLForAllAvailableDevices(grid.getDevicesInformation(), "ios");
-        List<String> androidList = readXMLForAllAvailableDevices(grid.getDevicesInformation(), "android");
-        String deviceOS = "";
-        System.out.println("----------------------------");
-        System.out.println("----------------------------");
+
+        List<String> iosList = (GRID) ? cloudServer.getAllAvailableDevices("ios") : localDeviceManager.getDeviceList("ios");
+        List<String> androidList = (GRID) ? cloudServer.getAllAvailableDevices("android") : localDeviceManager.getDeviceList("android");
+        System.out.println("------------------------------------------------------------------------------------");
+        ExecutorService executorService = Executors.newFixedThreadPool(iosList.size() + androidList.size());
+
+        List<Future> res = new LinkedList<>();
 
         for (int i = 0; i < iosList.size(); i++) {
-            deviceOS = "ios";
-            String tempDeviceQuery = "@serialnumber='" + iosList.get(i) + "'";
-            System.out.println(tempDeviceQuery);
-            Thread thread = new Thread(new Suite(repNum, reportFolderString, deviceOS, tempDeviceQuery));
-            threadList.add(thread);
-            thread.start();
+            Suite suite = new Suite(iosList.get(i));
+            res.add(executorService.submit(suite));
+            System.out.println(String.format("%-50s%-15s%-3s", iosList.get(i), "- submitted -", (i + 1)));
         }
+        System.out.println("------------------------------------------------------------------------------------");
+
         for (int i = 0; i < androidList.size(); i++) {
-            deviceOS = "android";
-            String tempDeviceQuery = "@serialnumber='" + androidList.get(i) + "'";
-            System.out.println(tempDeviceQuery);
-
-            Thread thread = new Thread(new Suite(repNum, reportFolderString, deviceOS, tempDeviceQuery));
-            threadList.add(thread);
-            thread.start();
+            Suite suite = new Suite(androidList.get(i));
+            res.add(executorService.submit(suite));
+            System.out.println(String.format("%-50s%-15s%-3s", androidList.get(i), "- submitted -", (i + 1)));
         }
+        System.out.println("------------------------------------------------------------------------------------");
 
-        System.out.println("----------------------------");
-        System.out.println("----------------------------");
+        for (Future re : res) {
+            try {
+                re.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        executorService.shutdown();
+    }
 
-        waitForThreadsToFinish(threadList);
+    private static List<String> getLocalDevices(String os) {
 
+        return null;
     }
 
     public static void useSerialListToRunThreads() throws Exception {
         spr = new serialPropReader();
-        List<Thread> threadList = new ArrayList<>();
-        GridClient grid = new GridClient(cpr.getString("user"), cpr.getString("password"), cpr.getString("project"), cpr.getString("server_host"), cpr.getInt("server_port"), cpr.getBool("secured"));
-        String devicesInformation = grid.getDevicesInformation();
-        System.out.println(devicesInformation);
+        List<String> devicesList = new ArrayList<>();
+
         while (spr.hasNext()) {
             String deviceID = spr.getNext();
-            deviceQuery = "@serialnumber='" + deviceID + "'";
-            System.out.println(deviceQuery);
-            String deviceOS = readXMLForOS(deviceID, devicesInformation);
+            devicesList.add(deviceID);
 
-            Thread thread = new Thread(new Suite(repNum, reportFolderString, deviceOS, deviceQuery));
-            threadList.add(thread);
-            thread.start();
         }
-        waitForThreadsToFinish(threadList);
-    }
 
-    private static List<String> readXMLForAllAvailableDevices(String devicesInformation, String os) throws ParserConfigurationException, IOException, SAXException {
-        List<String> tempList = new ArrayList<>();
+        ExecutorService executorService = Executors.newFixedThreadPool(devicesList.size() + devicesList.size());
 
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
+        List<Future> res = new LinkedList<>();
+        for (int i = 0; i < devicesList.size(); i++) {
+            Suite suite = new Suite(devicesList.get(i));
+            res.add(executorService.submit(suite));
+            System.out.println(String.format("%-50s%-15s%-3s", devicesList.get(i), "- submitted -", (i + 1)));
+        }
 
-        InputSource is = new InputSource();
-        is.setCharacterStream(new StringReader(devicesInformation));
-        Document doc = db.parse(is);
-
-        System.out.println(os + " devices :");
-        NodeList nList = doc.getElementsByTagName("device");
-
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node nNode = nList.item(temp);
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) nNode;
-                if (os.equals(eElement.getAttribute("os")) && eElement.getAttribute("status").equals("online") && eElement.getAttribute("currentuser").equals("")) {
-                    System.out.println("id : "
-                            + eElement.getAttribute("serialnumber"));
-                    tempList.add(eElement.getAttribute("serialnumber"));
-                }
+        for (Future re : res) {
+            try {
+                re.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
         }
-        System.out.println("----------------------------");
-        return tempList;
-
-    }
-
-    private static void waitForThreadsToFinish(List<Thread> threadList) throws InterruptedException {
-        for (int i = 0; i < threadList.size(); i++) {
-            while (threadList.get(i).isAlive()) {
-                Thread.sleep(1000);
-            }
-        }
-    }
-
-    private static String readXMLForOS(String deviceID, String devicesInformation) throws ParserConfigurationException, IOException, SAXException {
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-
-        InputSource is = new InputSource();
-        is.setCharacterStream(new StringReader(devicesInformation));
-        Document doc = db.parse(is);
-
-        NodeList nList = doc.getElementsByTagName("device");
-        String tempOS = "";
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node nNode = nList.item(temp);
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) nNode;
-                if (deviceID.toLowerCase().equals(eElement.getAttribute("serialnumber"))) {
-                    System.out.println("id : " + eElement.getAttribute("serialnumber"));
-                    System.out.println("os : " + eElement.getAttribute("os"));
-                    System.out.println("--------------------------------------------------------------");
-                    tempOS = eElement.getAttribute("os");
-                }
-            }
-        }
-
-        return tempOS;
+        executorService.shutdown();
     }
 
     private static void prepareReportsFolders() {
@@ -208,5 +166,65 @@ public class Runner {
         return savedLine;
     }
 
+    static class DeviceManager {
+        NodeList deviceNodeList;
 
+        public DeviceManager(String host, int port) {
+            Client client = new Client(host, port, true);
+            String devicesXml = client.getDevicesInformation();
+            client.releaseClient();
+            try {
+                deviceNodeList = parseDocument(devicesXml);
+            } catch (Exception e) {
+                System.out.println("Couldn't parse connected devices list");
+                System.exit(0);
+            }
+        }
+
+        private NodeList parseDocument(String devicesXml) throws ParserConfigurationException, IOException, SAXException {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            StringBuilder xmlStringBuilder = new StringBuilder();
+            xmlStringBuilder.append(devicesXml);
+            ByteArrayInputStream input = new ByteArrayInputStream(xmlStringBuilder.toString().getBytes("UTF-8"));
+            Document doc = builder.parse(input);
+            doc.getDocumentElement().normalize();
+            System.out.println("Root element :"
+                    + doc.getDocumentElement().getNodeName());
+            return doc.getElementsByTagName("device");
+        }
+
+        private List<String> getDeviceList(String requestedOS) throws ParserConfigurationException, IOException, SAXException {
+            List<String> devicesList = new ArrayList<>();
+            for (int temp = 0; temp < deviceNodeList.getLength(); temp++) {
+                Node nNode = deviceNodeList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    if (eElement.getAttribute("remote").contains("false") || eElement.getAttribute("status").contains("unreserved online")) {
+                        if (eElement.getAttribute("os").contains(requestedOS)) {
+                            String serialnumber = eElement.getAttribute("serialnumber");
+                            devicesList.add(eElement.getAttribute("serialnumber"));
+                        }
+                    }
+
+                }
+            }
+            return devicesList;
+        }
+
+        public String getDeviceOSByUDID(String deviceSN) {
+            for (int temp = 0; temp < deviceNodeList.getLength(); temp++) {
+                Node nNode = deviceNodeList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    if (eElement.getAttribute("serialnumber").contains(deviceSN)) {
+                        return eElement.getAttribute("os");
+                    }
+                }
+            }
+            return null;
+        }
+    }
 }
+
+

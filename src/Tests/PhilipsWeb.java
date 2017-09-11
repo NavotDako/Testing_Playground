@@ -13,7 +13,7 @@ public class PhilipsWeb extends BaseTest {
 
 
     public PhilipsWeb(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery ,testName, commandMap);
+        super(deviceToTest, deviceQuery ,testName);
     }
 
     @Override

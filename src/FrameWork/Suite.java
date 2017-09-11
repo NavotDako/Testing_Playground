@@ -2,72 +2,65 @@ package FrameWork;
 
 import Tests.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class Suite implements Runnable {
-    static int repNum = 0;
 
-    String deviceName;
-    String reportFolder;
     String deviceOS;
-    public String deviceQuery = "";
+    public String deviceSN = "";
     Map<String, Command> commandMap = new HashMap<>();
-    private BaseTest test;
 
-    public Suite(int repNum, String reportFolder, String deviceOS, String deviceQuery) {
-        Suite.repNum = repNum;
-        this.reportFolder = reportFolder;
-        this.deviceOS = deviceOS;
-        this.deviceQuery = deviceQuery;
+    public Suite(String deviceSN) {
+
+        this.deviceSN = deviceSN;
+        try {
+            if (Runner.GRID) this.deviceOS = Runner.cloudServer.getDeviceOSByUDID(deviceSN);
+            else this.deviceOS = Runner.localDeviceManager.getDeviceOSByUDID(deviceSN);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (deviceOS==null){
+            System.out.println("Couldn't get the os of - "+deviceSN);
+            return;
+        }
     }
 
     @Override
     public void run() {
 
-        test = new EriBank(deviceOS, deviceQuery, "EriBank", commandMap);
-        updateDeviceProperties(test);
+        new EriBank(deviceOS, deviceSN, "EriBank");
+//
+//        new LaunchBrowserLoop(deviceOS, deviceSN, "LaunchBrowserLoop");
+//
+//        new TenFreeApps(deviceOS, deviceSN, "TenFreeApps");
+//
+//        new NonInstrumented(deviceOS, deviceSN, "Non-Instrumented");
+//
+//        new eBay(deviceOS, deviceSN, "eBay");
+//
+//        new MultipleSites(deviceOS, deviceSN, "MultipleSites");
 
-        test = new LaunchBrowserLoop(deviceOS, deviceQuery, "LaunchBrowserLoop", commandMap);
-        updateDeviceProperties(test);
 
+//        if (!test.deviceOS.equals("ios") || test.deviceOSVersion.contains("10")) {
+//            test = new AmitApp(deviceOS, deviceSN, "AmitApp");
+//        }
 
-        if (!test.deviceOS.equals("ios") || test.deviceOSVersion.contains("10")) {
-            test = new AmitApp(deviceOS, deviceQuery, "AmitApp", commandMap);
-            updateDeviceProperties(test);
-
-        }
-
-        test = new TenFreeApps(deviceOS, deviceQuery, "TenFreeApps", commandMap);
-        updateDeviceProperties(test);
-
-        test = new NonInstrumented(deviceOS, deviceQuery, "Non-Instrumented", commandMap);
-        updateDeviceProperties(test);
-
-        test = new eBay(deviceOS, deviceQuery, "eBay", commandMap);
-        updateDeviceProperties(test);
 
         //new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
 
-        new MultipleSites(deviceOS, deviceQuery, "MultipleSites", commandMap);
 
-        if (!deviceOS.contains("ios")) {
-            test = new SimulateCapture(deviceOS, deviceQuery, "SimulateCapture", commandMap);
-            updateDeviceProperties(test);
-        }
+//        if (!deviceOS.contains("ios")) {
+//            test = new SimulateCapture(deviceOS, deviceSN, "SimulateCapture");
+//        }
 
-        System.out.println("----------------------------------------- DONE WITH " + deviceName + "-----------------------------------------");
+        System.out.println("----------------------------------------- DONE WITH " + deviceSN + "-----------------------------------------");
 
-        WriteTimesForCommands();
+        //   WriteTimesForCommands();
     }
 
-    private void updateDeviceProperties(BaseTest test) {
-        if (test.deviceSN != null && !deviceQuery.contains("serialnumber")) {
-            deviceName = test.deviceName;
-            deviceQuery = "@serialnumber='" + test.deviceSN + "'";
-        }
-    }
 
     public void WriteTimesForCommands() {
         for (Map.Entry<String, Command> entry : commandMap.entrySet()) {
@@ -76,7 +69,7 @@ public class Suite implements Runnable {
                 sum = 0;
                 for (Long t : entry.getValue().timeList)
                     sum += t;
-                System.out.println("---------------" + deviceQuery.replace("'", "").replace("@serialnumber=", "") + " - " + entry.getValue().commandName + " AVG - " + sum / entry.getValue().timeList.size() + " " + entry.getValue().commandName + " count - " + entry.getValue().timeList.size() + "-----------------");
+                System.out.println("---------------" + deviceSN + " - " + entry.getValue().commandName + " AVG - " + sum / entry.getValue().timeList.size() + " " + entry.getValue().commandName + " count - " + entry.getValue().timeList.size() + "-----------------");
             }
         }
     }

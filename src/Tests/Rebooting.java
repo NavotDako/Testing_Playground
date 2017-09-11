@@ -12,7 +12,7 @@ public class Rebooting extends BaseTest {
 
 
     public Rebooting (String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery ,testName, commandMap);
+        super(deviceToTest, deviceQuery ,testName);
     }
 
     @Override

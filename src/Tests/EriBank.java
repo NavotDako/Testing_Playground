@@ -8,13 +8,13 @@ import java.util.Map;
 public class EriBank extends BaseTest {
 
 
-    public EriBank(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+    public EriBank(String deviceOS, String deviceSN, String testName) {
+
+        super(deviceOS, deviceSN, testName);
     }
 
     @Override
     protected void androidRunTest() {
-
         client.install("http://192.168.2.72:8181/AndroidApps/eribank.apk", true, false);
         client.launch("com.experitest.ExperiBank/.LoginActivity", true, true);
         client.syncElements(3000, 15000);
@@ -52,9 +52,8 @@ public class EriBank extends BaseTest {
 
     @Override
     protected void iOSRunTest() {
-
-        client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa", true, false);
-        client.launch("com.experitest.ExperiBankO", true, true);
+        client.install("http://192.168.2.72:8181/iOSApps/EriBank.ipa", true, false);
+        client.launch("com.experitest.ExperiBank", true, true);
         client.syncElements(3000, 15000);
         if(client.isElementFound("native","xpath=//*[@text='“EriBankO” May Slow Down Your iPad']",0)){
             client.click("navite","xpath=//*[@text='OK']",0,1);
@@ -101,6 +100,7 @@ public class EriBank extends BaseTest {
         client.click("NATIVE", "xpath=//*[@text='Logout']", 0, 1);
         client.sendText("{HOME}");
         client.uninstall("com.experitest.ExperiBankO");
+
     }
 
 }

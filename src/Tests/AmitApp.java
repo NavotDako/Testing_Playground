@@ -8,8 +8,9 @@ import java.util.Map;
 
 public class AmitApp extends BaseTest {
 
-	public AmitApp(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-		super(deviceToTest, deviceQuery, testName, commandMap);
+	public AmitApp(String deviceOS, String deviceSN, String testName) {
+
+		super(deviceOS, deviceSN, testName);
 	}
 
 	@Override

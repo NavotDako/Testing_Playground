@@ -8,14 +8,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Map;
 
-
-/**
- * Created by udi.valer on 8/30/2016.
- */
 public class SimulateCapture extends BaseTest {
 
-    public SimulateCapture(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+    public SimulateCapture(String deviceOS, String deviceSN, String testName) {
+
+        super(deviceOS, deviceSN, testName);
     }
 
     @Override

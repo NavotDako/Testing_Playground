@@ -10,10 +10,11 @@ import java.util.Map;
 
 public class LaunchBrowserLoop extends BaseTest {
 
-    public LaunchBrowserLoop(String deviceToTest,String deviceQuery,  String testName, Map<String, Command> commandMap) {
-        super(deviceToTest,deviceQuery, testName, commandMap);
+    public LaunchBrowserLoop(String deviceOS, String deviceSN, String testName) {
 
+        super(deviceOS, deviceSN, testName);
     }
+
 
     @Override
     protected void androidRunTest() {

@@ -11,7 +11,7 @@ import java.util.Map;
 public class UiCatalog extends BaseTest {
 
     public UiCatalog(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery ,testName, commandMap);
+        super(deviceToTest, deviceQuery ,testName);
     }
 
     @Override

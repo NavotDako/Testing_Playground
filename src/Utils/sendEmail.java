@@ -15,11 +15,14 @@ import javax.mail.internet.MimeMessage;
 
 
 public class SendEmail {
+
     public static final String userName=  "navot@experitest.com";
     public static final String password = "Seetest2015";
+
     public static void main(String[] args) throws MessagingException {
         SendEmail.Send("navotdk@gmail.com", "", "title","message");
     }
+
     private SendEmail() {
     }
 
@@ -46,10 +49,8 @@ public class SendEmail {
 
         Session session = Session.getInstance(props, null);
 
-        // -- Create a new message --
         final MimeMessage msg = new MimeMessage(session);
 
-        // -- Set the FROM and TO fields --
         msg.setFrom(new InternetAddress(userName));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
 

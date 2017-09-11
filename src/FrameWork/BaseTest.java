@@ -1,6 +1,6 @@
 package FrameWork;
 
-import com.experitest.manager.client.PManager;
+import com.experitest.client.Client;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -13,23 +13,27 @@ import static Utils.ExceptionExtractor.ExtractExceptions;
 public abstract class BaseTest {
     protected int success = 0;
     public String deviceOSVersion = null;
-    public String deviceSN = null;
     public String deviceName = null;
     protected String reportFolder;
     protected String deviceOS;
     protected String testName;
-    protected String deviceQuery = "";
+    protected String deviceSN = "";
     protected MyClient client;
-    protected Map<String, Command> commandMap = null;
     public String deviceShortName = null;
+    private boolean STOP_FLAG = false;
 
-    public BaseTest(String deviceOS, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        this.commandMap = commandMap;
+    public BaseTest(String deviceOS, String deviceSN, String testName) {
         this.reportFolder = Runner.reportFolderString;
         this.deviceOS = deviceOS;
-        this.deviceQuery = deviceQuery;
+        this.deviceSN = deviceSN;
         this.testName = testName;
-
+        if (Runner.GRID) {
+            try {
+                this.deviceName = Runner.cloudServer.getDeviceNameByUDID(deviceSN);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         StartTesting();
 
         printSummary(testName);
@@ -45,10 +49,10 @@ public abstract class BaseTest {
         int failedTests = 0;
         int failedToGetDeviceCounter = 0;
 
-        for (int i = 0; (i < Runner.repNum && failedTests < Runner.retry); i++) {
+        for (int i = 0; (i < Runner.repNum && !STOP_FLAG); i++) {
             long time = System.currentTimeMillis();
             try {
-                getDevice(i);
+                client = getDevice(i);
                 if (client == null) {
                     failedTests++;
                     failedToGetDeviceCounter++;
@@ -57,55 +61,40 @@ public abstract class BaseTest {
                 }
             } catch (Exception e) {
                 failedTests++;
-                if (failedToGetDeviceCounter < 3) {
-                    failedToGetDeviceCounter++;
-                    simpleGetDeviceFailure(i, e, time);
+                if (failedToGetDeviceCounter > 3) {
+                    STOP_FLAG = true;
                     continue;
                 } else {
-                    failedToGetDeviceCounter = 0;
-                    resetQuery(i, time, e);
+                    failedToGetDeviceCounter++;
+                    simpleGetDeviceFailure(i, null, time);
                     continue;
                 }
             }
-            try {
-                failedToGetDeviceCounter = 0;
-                prepareReporter(i);
-            } catch (Exception e) {
-                failedTests++;
-                failure("prepareReporter", i, e, System.currentTimeMillis() - time);
-                continue;
+            failedToGetDeviceCounter = 0;
+            if (client != null) {
+                try {
+                    prepareDevice(i);
+                } catch (Exception e) {
+                    failedTests++;
+                    failure("prepareDevice", i, e, System.currentTimeMillis() - time);
+                    continue;
+                }
+                try {
+                    executeTest(i);
+                } catch (Exception e) {
+                    failedTests++;
+                    failure("executeTest", i, e, System.currentTimeMillis() - time);
+                    continue;
+                }
+                try {
+                    finishedSuccessIteration(i, System.currentTimeMillis() - time);
+                } catch (Exception e) {
+                    failure("finish", i, e, System.currentTimeMillis() - time);
+                }
+            } else {
+                System.out.println("CLIENT IS NULL!!!");
             }
-            try {
-                prepareDevice(i);
-            } catch (Exception e) {
-                failedTests++;
-                failure("prepareDevice", i, e, System.currentTimeMillis() - time);
-                continue;
-            }
-            try {
-                executeTest(i);
-            } catch (Exception e) {
-                failedTests++;
-                failure("executeTest", i, e, System.currentTimeMillis() - time);
-                continue;
-            }
-            try {
-                finishedSuccessIteration(i, System.currentTimeMillis() - time);
-            } catch (Exception e) {
-                failure("finish", i, e, System.currentTimeMillis() - time);
-            }
-
         }
-
-    }
-
-    public void resetQuery(int i, long time, Exception e) {
-
-        failure("getDevice", i, e, System.currentTimeMillis() - time);
-        deviceQuery = null;
-        deviceName = null;
-        deviceShortName = null;
-        String devicesInfo = client.getDevicesInformation();
 
     }
 
@@ -133,30 +122,23 @@ public abstract class BaseTest {
         System.out.println(Thread.currentThread().getName() + " Coming Back From Sleeping - > Continuing...");
     }
 
-    public void getDevice(int i) throws Exception {
-        client = ClientFactory.SetUp(testName, this.deviceOS, this.deviceQuery, commandMap, deviceSN);
+    public MyClient getDevice(int i) throws Exception {
+        MyClient client = ClientFactory.SetUp(testName, deviceSN);
+        return client;
     }
 
     public void prepareDevice(int i) throws Exception {
-
-        if (client != null) {
-            if (deviceSN == null) {
-                deviceSN = client.getDeviceProperty("device.sn");
-            }
-            deviceOSVersion = client.getDeviceProperty("device.version");
-            client.capture();
-            client.setShowPassImageInReport(false);
-            client.setSpeed("FAST");
-            client.deviceAction("unlock");
-            client.deviceAction("portrait");
-            client.deviceAction("home");
-            client.capture();
-            if (deviceOS.contains("ios")) client.setProperty("ios.non-instrumented.dump.parameters", "20,1000,50");
-
-        } else {
-            System.out.println("CLIENT IS NULL!!!");
-            throw new Exception("CLIENT IS NULL!!! -> Moving to the next test");
-        }
+        client.setReporter("xml", Runner.reportFolderString, deviceSN + "_" + testName);
+        client.capture();
+        deviceOSVersion = client.getDeviceProperty("device.version");
+        client.capture();
+        client.setShowPassImageInReport(false);
+        client.setSpeed("FAST");
+        client.deviceAction("unlock");
+        client.deviceAction("portrait");
+        client.deviceAction("home");
+        client.capture();
+        if (deviceOS.contains("ios")) client.setProperty("ios.non-instrumented.dump.parameters", "20,1000,50");
     }
 
     private void executeTest(int i) {
@@ -176,7 +158,7 @@ public abstract class BaseTest {
         boolean collected = false;
         switch (failedStage) {
             case "getDevice": //getDevice
-                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceSN + " - test - " + testName);
                 stringToWrite = createStringToWrite(failedStage, i, time, false);
                 errors = getErrors(e);
                 //    if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
@@ -187,7 +169,7 @@ public abstract class BaseTest {
                 sleep(3000);
                 break;
             case "prepareReporter": // prepareReporter
-                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+                System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceSN + " - test - " + testName);
                 stringToWrite = createStringToWrite(failedStage, i, time, false);
                 //      if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
                 errors = getErrors(e);
@@ -212,7 +194,7 @@ public abstract class BaseTest {
     public void failedWithDevice(String failedStage, int i, Exception e, long time) {
         String stringToWrite;
         StringWriter errors;
-        System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceQuery + " - test - " + testName);
+        System.out.println("Failed on " + failedStage + " - " + Thread.currentThread().getName() + " - Device - " + deviceSN + " - test - " + testName);
         stringToWrite = createStringToWrite(failedStage, i, time, false);
         //         if (Runner.reporter) PManager.getInstance().addProperty("Error", e.getMessage());
         errors = getErrors(e);
@@ -245,9 +227,10 @@ public abstract class BaseTest {
 
     public boolean tryToCollectSupportData(StringWriter errors, String generatedReport) {
         String supportData = null;
+        if (generatedReport.contains("http")) generatedReport = Runner.reportFolderString;
         try {
-            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceName, errors.toString(), "", "", true, true);
-            supportData = generatedReport + "\\SupportDataFor_" + deviceShortName + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip";
+            client.collectSupportData(generatedReport + "\\SupportDataFor_" + deviceSN + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip", "", deviceName, errors.toString(), "", "", true, true);
+            supportData = generatedReport + "\\SupportDataFor_" + deviceSN + "_test_" + testName + "_" + System.currentTimeMillis() + ".zip";
         } catch (Exception e) {
             System.out.println(Thread.currentThread().getName() + " - Failed to Collect Support Data - " + Thread.currentThread().getName() + " - Device - " + deviceShortName + " - test - " + testName);
             e.printStackTrace();
@@ -277,7 +260,7 @@ public abstract class BaseTest {
         String generatedReport = null;
         try {
             generatedReport = client.generateReport(false);
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + generatedReport + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ - " + generatedReport + " - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         } catch (Exception e1) {
             System.out.println(Thread.currentThread().getName() + " - Failed to Generate Report- " + Thread.currentThread().getName() + " - Device - " + deviceName + " - test - " + testName);
@@ -384,16 +367,6 @@ public abstract class BaseTest {
         //if (Runner.reporter) addPropertiesToReporter(Stage, status);
 
         return stringToWrite;
-    }
-
-    private void addPropertiesToReporter(String Stage, String status) {
-        String isGrid = (Runner.GRID) ? "grid" : "local";
-        if (Runner.reporter) PManager.getInstance().addProperty("grid", isGrid);
-        if (Runner.reporter) PManager.getInstance().addProperty("status", status);
-        if (Runner.reporter) PManager.getInstance().addProperty("device", deviceName);
-        if (Runner.reporter) PManager.getInstance().addProperty("Stage", Stage);
-        if (Runner.reporter) PManager.getInstance().addProperty("testName", testName);
-        if (Runner.reporter) PManager.getInstance().addProperty("build", Runner.buildNum + "");
     }
 
     protected abstract void androidRunTest();

@@ -9,9 +9,8 @@ public class RunGridTests extends Thread {
 
     public static void main(String[] args) throws InterruptedException {
 
-
         for (int i = 0; i < 30; i++) {
-            Thread t = new Thread(new MyRunnable("@os"));
+            Thread t = new Thread(new MyRunnable("@os='android'"));
             t.start();
 
         }
@@ -52,15 +51,19 @@ class MyRunnable implements Runnable {
 
     private Client getGridClient() {
         GridClient grid = new GridClient("admin", "Experitest2012", "", "192.168.2.13", 8090, false);
-        System.out.println(grid.getDevicesInformation());
+        // System.out.println(grid.getDevicesInformation());
         Client client = grid.lockDeviceForExecution("test", device, 300, 300000);
         return client;
     }
 
     public void loop() {
+        String appString = (client.getDeviceProperty("device.os").contains("IOS")) ? "http://192.168.2.72:8181/iOSApps/EriBankO.ipa" : "http://192.168.2.72:8181/AndroidApps/eribank.apk";
         for (int i = 0; i < 300; i++) {
             client.launch("https://www.google.co.il/search?q=" + i + "&oq=1&aqs=chrome..69i60l3j69i57j69i60j69i65.1808j0j4&sourceid=chrome&ie=UTF-8", true, true);
-            //client.install("http://192.168.2.72:8181/iOSApps/EriBankO.ipa", true, false);
+          /*  client.swipeWhileNotFound("down",100,1000,"web","/*//*[@id='sfooter']",0,1000,5,true);
+            client.capture();
+            client.install(appString, true, false);*/
+
         }
     }
 

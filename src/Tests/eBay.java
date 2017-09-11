@@ -10,15 +10,17 @@ import java.util.Map;
 
 public class eBay extends BaseTest {
 
-    public eBay(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+    public eBay(String deviceOS, String deviceSN, String testName) {
+
+        super(deviceOS, deviceSN, testName);
     }
+
 
     @Override
     protected void androidRunTest() {
-        final String searchBox = "xpath=//*[(@id='kw' and @name='_nkw') or @id='gh-ac-box2']";
-        final String searchButton = "xpath=//*[@id='searchTxtBtn' or @id='gh-btn' or @id='ghs-submit']";
-        final String tabElement = "xpath=//*[@class='srp-item__title' or @class='grVwBg' or @class='s-item']";
+        final String searchBox = "//*[(@id='kw' and @name='_nkw') or @id='gh-ac-box2']";
+        final String searchButton = "//*[@id='searchTxtBtn' or @id='gh-btn' or @id='ghs-submit']";
+        final String tabElement = "//*[@class='srp-item__title' or @class='grVwBg' or @class='s-item']";
 
         client.launch("chrome:m.ebay.com", true, true);
         client.hybridWaitForPageLoad(30000);

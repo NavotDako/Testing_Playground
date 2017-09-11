@@ -11,7 +11,7 @@ import java.util.Map;
 public class WebTabs extends BaseTest {
 
     public WebTabs(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+        super(deviceToTest, deviceQuery, testName);
     }
 
     @Override

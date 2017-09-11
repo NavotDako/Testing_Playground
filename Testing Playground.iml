@@ -21,7 +21,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Reports" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -79,19 +79,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.8/clients/java" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 10.8/clients/java" />
-        </SOURCES>
-        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.8/clients/java" recursive="false" />
-        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 10.8/clients/java" recursive="false" type="SOURCES" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/activation.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -105,6 +92,19 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" />
+        </SOURCES>
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" recursive="false" />
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

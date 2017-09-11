@@ -6,14 +6,13 @@ import FrameWork.Command;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by richi.lebovich on 9/4/2016.
- */
 public class MultipleSites extends BaseTest {
 
-    public MultipleSites(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+    public MultipleSites(String deviceOS, String deviceSN, String testName) {
+
+        super(deviceOS, deviceSN, testName);
     }
+
 
     @Override
     protected void androidRunTest() {
@@ -44,28 +43,31 @@ public class MultipleSites extends BaseTest {
 
     private Map<String, String> getSites() {
         Map<String, String> sitesMap = new HashMap<>();
-        //sitesMap.put("www.cnn.com", "//*[@id='logo']");
         sitesMap.put("www.bbc.com", "//*[@alt='BBC']");
-        sitesMap.put("www.google.com", "//*[@id='hplogo']");
         sitesMap.put("www.amazon.com", "//*[@class='nav-logo-base nav-sprite']");
         sitesMap.put("www.apple.com", "//*[@id='ac-gn-firstfocus-small' or @id='ac-gn-firstfocus']");
-        //sitesMap.put("www.youtube.com", "xpath=//*[@class='_moec _mvgc']");
-        sitesMap.put("www.facebook.com", "xpath=//*[@id='header' or @class='clearfix loggedout_menubar']");
-        //sitesMap.put("www.baidu.com", "xpath=//*[@id='logo' or @alt='logo'] ");
-        sitesMap.put("www.wikipedia.org", "xpath=//*[@alt='WikipediA']");
-        sitesMap.put("www.yahoo.com", "xpath=//*[@id='yucs-logo-img']");
-       // sitesMap.put("www.twitter.com", "xpath=//*[@class='AppBar-icon Icon Icon--twitter' or @text='Welcome to Twitter']");
-        sitesMap.put("www.instagram.com", "xpath=//*[@class='_du7bh _soakw coreSpriteLoggedOutWordmark']");
-        sitesMap.put("www.reddit.com", "xpath=//*[@class='TopNav-text-vcentering']");
-        sitesMap.put("www.linkedin.com", "xpath=//*[@alt='LinkedIn' and @class='lazy-loaded']");
-        //sitesMap.put("www.aliexpress.com", "xpath=//*[@class='downloadbar-logo'or @text='AliExpress']");
-        sitesMap.put("www.netflix.com", "xpath=//*[@nodeName='svg']");
-        sitesMap.put("www.stackoverflow.com", "xpath=//*[@class='topbar-icon js-site-switcher-button icon-site-switcher-bubble' or @text='Stack Overflow']");
-        sitesMap.put("www.imdb.com", "xpath=//*[@class='navbar-link' or @text='IMDb']");
-        sitesMap.put("www.paypal.com", "xpath=//*[@text='PayPal' and @class='paypal-img-logo']");
-        sitesMap.put("www.dropbox.com", "xpath=//*[@class='dropbox-logo__type' or @alt='Dropbox']");
-        //sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA' or @class='sb-logo']");
-        //sitesMap.put("www.espn.com", "xpath=//*[@class='container']");
+        sitesMap.put("www.facebook.com", "//*[@id='header' or @class='clearfix loggedout_menubar']");
+        sitesMap.put("www.wikipedia.org", "//*[@alt='WikipediA']");
+        sitesMap.put("www.reddit.com", "//*[@class='TopNav-text-vcentering']");
+        sitesMap.put("www.linkedin.com", "//*[@alt='LinkedIn' and @class='lazy-loaded']");
+        sitesMap.put("www.stackoverflow.com", "//*[@class='topbar-icon js-site-switcher-button icon-site-switcher-bubble' or @text='Stack Overflow']");
+        sitesMap.put("www.imdb.com", "//*[@class='navbar-link' or @text='IMDb']");
+        sitesMap.put("www.paypal.com", "//*[@text='PayPal' and @class='paypal-img-logo']");
+
+
+
+//        sitesMap.put("www.instagram.com", "//*[@class='_du7bh _soakw coreSpriteLoggedOutWordmark']");
+//        sitesMap.put("www.google.com", "//*[@id='hplogo']");
+//        sitesMap.put("www.netflix.com", "//*[@nodeName='svg']");
+//        sitesMap.put("www.dropbox.com", "//*[@class='dropbox-logo__type' or @alt='Dropbox']");
+//        sitesMap.put("www.yahoo.com", "xpath=//*[@id='yucs-logo-img']");
+//        sitesMap.put("www.cnn.com", "//*[@id='logo']");
+//        sitesMap.put("www.youtube.com", "xpath=//*[@class='_moec _mvgc']");
+//        sitesMap.put("www.baidu.com", "xpath=//*[@id='logo' or @alt='logo'] ");
+//        sitesMap.put("www.twitter.com", "xpath=//*[@class='AppBar-icon Icon Icon--twitter' or @text='Welcome to Twitter']");
+//        sitesMap.put("www.aliexpress.com", "xpath=//*[@class='downloadbar-logo'or @text='AliExpress']");
+//        sitesMap.put("www.ask.com", "xpath=//*[@class='sb-logo posA' or @class='sb-logo']");
+//        sitesMap.put("www.espn.com", "xpath=//*[@class='container']");
         return sitesMap;
     }
 

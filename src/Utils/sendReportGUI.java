@@ -27,7 +27,8 @@ public class SendReportGUI extends JFrame {
         initTextField(reportFolder);
         initTextField(recipientName);
         initTextField(subject);
-        String[] choices = Arrays.asList(getAllRecipients()).toArray(new String[getAllRecipients().length]);;
+        String[] choices = Arrays.asList(getAllRecipients()).toArray(new String[getAllRecipients().length]);
+
 
         final JComboBox<String> cb = new JComboBox<String>(choices);
 
@@ -38,9 +39,10 @@ public class SendReportGUI extends JFrame {
                     ZipAndPutOnTheServer appZip = new ZipAndPutOnTheServer(reportFolder.getText());
                     String subjectString = subject.getText().replace(" ", "_");
                     String recipientEmail = getRecipient((String) cb.getSelectedItem());
-
+                    File reportFolderFile = new File(reportFolder.getText());
                     System.out.println("Subject - " + subjectString + "\nReport - " + reportFolder.getText() + "\nRecipientEmail - " + recipientEmail);
-                    if (!recipientEmail.equals("null") && !subjectString.equals("") && !reportFolder.getText().equals("")) {
+
+                    if (!recipientEmail.equals("null") && !subjectString.equals("") && !reportFolder.getText().equals("") && reportFolderFile.isDirectory()) {
                         appZip.generateFileList(new File(reportFolder.getText()));
                         appZip.zipIt(subjectString, reportFolder.getText());
 
@@ -57,9 +59,14 @@ public class SendReportGUI extends JFrame {
                         }
                     } else {
                         System.out.println("We did not sent anything... You can try again");
-                        JOptionPane.showMessageDialog(
+                        if(!reportFolderFile.isDirectory())JOptionPane.showMessageDialog(
                                 SendReportGUI.this,
-                                "We did not sent anything... You can try again");
+                                "This is not a folder!!");
+                        else{
+                            JOptionPane.showMessageDialog(
+                                    SendReportGUI.this,
+                                    "We did not sent anything... You can try again");
+                        }
                     }
 
                 }
@@ -103,6 +110,7 @@ public class SendReportGUI extends JFrame {
 
         return String.valueOf(properties.get(recipientName.toLowerCase()));
     }
+
     public static Object[] getAllRecipients() {
         File file = new File("src\\Utils\\emails.properties");
         Properties properties = new Properties();
@@ -114,7 +122,7 @@ public class SendReportGUI extends JFrame {
             e.printStackTrace();
         }
         Object[] arr = properties.keySet().toArray();
-        return arr ;
+        return arr;
     }
 }
 

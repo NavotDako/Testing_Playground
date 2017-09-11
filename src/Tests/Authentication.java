@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class Authentication extends BaseTest {
 
     public Authentication(String deviceToTest,String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery ,testName, commandMap);
+        super(deviceToTest, deviceQuery ,testName);
     }
 
     private String[] replies={

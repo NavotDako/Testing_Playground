@@ -18,39 +18,33 @@ public class MyClient {
     String deviceOS = "??";
     private String deviceName;
 
-    public MyClient(Map<String, Command> commandMap, Client client) {
+    public MyClient(Client client) {
+        this.client = client;
+        deviceName = client.getDeviceProperty("device.name");
+        deviceOS = client.getDeviceProperty("device.os");
 
-        this.commandMap = commandMap;
-        if (Runner.GRID) {
-            this.client = client;
-            deviceName = client.getDeviceProperty("device.name");
-            deviceOS = client.getDeviceProperty("device.os");
-        } else {
-            this.client = new Client(Runner.cpr.getString("local_host"), Runner.cpr.getInt("local_port"), true);
-            System.out.println("Boaz Hadad Is The King Of Client - Not Gridy");
-        }
     }
 
     public void Finish(String command, String detail, long before) {
-        long time = System.currentTimeMillis() - before;
-        String stringToWrite = "??";
-        if (!commandMap.containsKey(command)) {
-            commandMap.put(command, new Command(command));
-        }
-        if (commandMap.containsKey(command)) {
-            commandMap.get(command).timeList.add(time);
-            commandMap.get(command).totalTime += time;
-            commandMap.get(command).avgTime = commandMap.get(command).totalTime / commandMap.get(command).timeList.size();
-
-            stringToWrite = String.format("%-10s%-30s%-30s%-5s%-50s%-10s%-10s%-10s\n", deviceOS, deviceName.substring(deviceName.indexOf(":") + 1), command, commandMap.get(command).timeList.size(), detail, time, "AVG", commandMap.get(command).avgTime);
-
-        }
-
-        try {
-            Write(stringToWrite);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        long time = System.currentTimeMillis() - before;
+//        String stringToWrite = "??";
+//        if (!commandMap.containsKey(command)) {
+//            commandMap.put(command, new Command(command));
+//        }
+//        if (commandMap.containsKey(command)) {
+//            commandMap.get(command).timeList.add(time);
+//            commandMap.get(command).totalTime += time;
+//            commandMap.get(command).avgTime = commandMap.get(command).totalTime / commandMap.get(command).timeList.size();
+//
+//            stringToWrite = String.format("%-10s%-30s%-30s%-5s%-50s%-10s%-10s%-10s\n", deviceOS, deviceName.substring(deviceName.indexOf(":") + 1), command, commandMap.get(command).timeList.size(), detail, time, "AVG", commandMap.get(command).avgTime);
+//
+//        }
+//
+//        try {
+//            Write(stringToWrite);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void Write(String stringToWrite) throws IOException {
@@ -72,11 +66,15 @@ public class MyClient {
         }
         Finish("Launch", activityURL, before);
         client.capture("Launch Capture");
-        if(activityURL.contains("http") && client.isElementFound("native","//*[@text='cancel']",0)){
-            client.click("native","//*[@text='cancel']",0,1);
+        if (activityURL.contains("http") && client.isElementFound("native", "//*[@text='cancel']", 0)) {
+            client.click("native", "//*[@text='cancel']", 0, 1);
         }
 
 
+    }
+
+    public void setTestStatus(boolean status, String message) {
+        client.setTestStatus(status, message);
     }
 
     public boolean listSelect(String sendRest, String sendNavigation, int delay, String textToIdentify, String color, int rounds, String sendonfind) {

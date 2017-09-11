@@ -11,9 +11,11 @@ import java.util.Map;
  */
 public class TenFreeApps extends BaseTest {
 
-    public TenFreeApps(String deviceToTest, String deviceQuery, String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+    public TenFreeApps(String deviceOS, String deviceSN, String testName) {
+
+        super(deviceOS, deviceSN, testName);
     }
+
 
     @Override
     protected void androidRunTest() {
@@ -70,7 +72,6 @@ public class TenFreeApps extends BaseTest {
 
     @Override
     protected void iOSRunTest() {
-
         client.launch("com.apple.AppStore", false, true);
         client.setProperty("ios.non-instrumented.dump.parameters", "20 , 500 , 25");
         sync(1000, 0, 10000);

@@ -1,4 +1,5 @@
 package Tests;//package <set your MavenWorker package>;
+
 import static org.junit.Assert.fail;
 
 import FrameWork.BaseTest;
@@ -9,38 +10,44 @@ import java.util.Map;
 public class NonInstrumented extends BaseTest {
 
 
-    public NonInstrumented(String deviceToTest, String deviceQuery,String testName, Map<String, Command> commandMap) {
-        super(deviceToTest, deviceQuery, testName, commandMap);
+    public NonInstrumented(String deviceOS, String deviceSN, String testName) {
+
+        super(deviceOS, deviceSN, testName);
     }
+
 
     @Override
     protected void androidRunTest() {
         String settingsXpath = "xpath=//*[((contains(@contentDescription,'ettings') or @text='Settings') and not(contains(@text,'quick')) and not(contains(@text,'Edit')) and not (contains(@contentDescription,'Edit')) or contains(@id,'settings_button') or @id='settings_button' ) and not(contains(@contentDescription,'settings.'))]";
         String springboardIdentifier = "xpath=//*[contains(@contentDescription,'App') or contains(@contentDescription,'apps')  or @contentDescription='Xperia™ Home' or @id='workspace']";
+        boolean largeDevice = client.getDeviceProperty("device.screensize").contains("1536x2048");
         client.swipe("Up", 0, 500);
 
-        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
+        if (client.capture() == null) client.report("Can't Get Capture!!!", false);
 
-        if(!client.isElementFound("NATIVE", settingsXpath, 0)){
-            if (client.isElementFound("NATIVE","xpath=//*[@text='Shortcuts' and @id='toolbox_bt']",0))
-                client.click("NATIVE","xpath=//*[@text='Shortcuts' and @id='toolbox_bt']",0,1);
+        if (!client.isElementFound("NATIVE", settingsXpath, 0)) {
+            if (client.isElementFound("NATIVE", "xpath=//*[@text='Shortcuts' and @id='toolbox_bt']", 0))
+                client.click("NATIVE", "xpath=//*[@text='Shortcuts' and @id='toolbox_bt']", 0, 1);
             else client.swipe("Up", 0, 500);
         }
         client.click("NATIVE", settingsXpath, 0, 1);
-        client.syncElements(3000,10000);
-        int i=0;
+        client.syncElements(3000, 10000);
+        int i = 0;
         //HUAWEI - @text='More' and not(@class='android.widget.TextView'
-        if (client.isElementFound("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0))
-            client.click("NATIVE","xpath=//*[@text='More' and not(@class='android.widget.TextView')]",0,1);
-
+        if (!largeDevice && client.isElementFound("NATIVE", "xpath=//*[@text='More' and not(@class='android.widget.TextView')]", 0))
+            client.click("NATIVE", "xpath=//*[@text='More' and not(@class='android.widget.TextView')]", 0, 1);
 
         if (client.isElementFound("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0))
             client.click("NATIVE", "xpath=//*[@text='General' and @id='tab_custom_view_text']", 0, 1);
 
-        if (client.isElementFound("NATIVE","xpath=//*[@id='headers']",0))
-            client.elementSwipeWhileNotFound("NATIVE", "xpath=//*[@id='headers']","Down", 0, 1000, "Native",  "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, false);
+        if (client.isElementFound("NATIVE", "xpath=//*[@id='headers']", 0))
+            client.elementSwipeWhileNotFound("NATIVE", "xpath=//*[@id='headers']", "Down", 0, 1000, "Native", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, false);
 
-        client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, true);
+
+        if (client.getDeviceProperty("device.screensize").contains("1536x2048")) {
+            client.elementSwipeWhileNotFound("NATIVE", "xpath=//*[@id='dashboard_left' or @id='dahsboard_summary']", "Down", 200, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 5, true);
+        } else
+            client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[contains(@text,'About') and @onScreen='true']", 0, 1000, 10, true);
 
         if (!client.isElementFound("NATIVE", "xpath=//*[@text='Android version' and @id='title']", 0)) {
             client.swipeWhileNotFound("Down", 350, 2000, "NATIVE", "xpath=//*[(contains(@text,'oftware info'))]", 0, 1000, 5, true);
@@ -52,8 +59,8 @@ public class NonInstrumented extends BaseTest {
             client.click("NATIVE", "xpath=//*[@contentDescription='Navigate up' or @contentDescription='Back' or @id='up']", 0, 1);
 
         client.sendText("{HOME}");
-        if (client.capture()==null) client.report("Can't Get Capture!!!",false);
-        client.verifyElementFound("NATIVE",springboardIdentifier, 0);
+        if (client.capture() == null) client.report("Can't Get Capture!!!", false);
+        client.verifyElementFound("NATIVE", springboardIdentifier, 0);
 
     }
 
@@ -65,8 +72,8 @@ public class NonInstrumented extends BaseTest {
         client.click("NATIVE", "xpath=//*[@accessibilityLabel='Clock']", 0, 1);
         client.waitForElement("NATIVE", "xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')]", 0, 10000);
         client.click("NATIVE", "xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')]", 0, 1);
-
-        if(!client.isElementFound("NATIVE", "xpath=/*//*[@text='Add' and @x>0 and @onScreen='true']")){
+        client.waitForElement("NATIVE", "xpath=//*[@text='World Clock' and (@knownSuperClass='UITabBarButton' or @class='UIAButton')]", 0, 10000);
+        if (!client.isElementFound("NATIVE", "xpath=/*//*[@text='Add' and @x>0 and @onScreen='true']")) {
             String firstCountry = client.getAllValues("NATIVE", countriesString, "text")[0];
             deleteCountry(firstCountry);
         }
