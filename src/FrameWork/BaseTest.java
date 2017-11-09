@@ -82,6 +82,12 @@ public abstract class BaseTest {
                 try {
                     executeTest(i);
                 } catch (Exception e) {
+                    try {
+
+                        client.getVisualDump("Native");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                     failedTests++;
                     failure("executeTest", i, e, System.currentTimeMillis() - time);
                     continue;
@@ -132,7 +138,7 @@ public abstract class BaseTest {
         client.capture();
         deviceOSVersion = client.getDeviceProperty("device.version");
         client.capture();
-        client.setShowPassImageInReport(false);
+//        client.setShowPassImageInReport(false);
         client.setSpeed("FAST");
         client.deviceAction("unlock");
         client.deviceAction("portrait");

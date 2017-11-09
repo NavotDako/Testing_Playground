@@ -22,8 +22,8 @@ public class Suite implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (deviceOS==null){
-            System.out.println("Couldn't get the os of - "+deviceSN);
+        if (deviceOS == null) {
+            System.out.println("Couldn't get the os of - " + deviceSN);
             return;
         }
     }
@@ -32,24 +32,15 @@ public class Suite implements Runnable {
     public void run() {
 
         new EriBank(deviceOS, deviceSN, "EriBank");
-//
+        new NonInstrumented(deviceOS, deviceSN, "Non-Instrumented");
 //        new LaunchBrowserLoop(deviceOS, deviceSN, "LaunchBrowserLoop");
-//
 //        new TenFreeApps(deviceOS, deviceSN, "TenFreeApps");
-//
-//        new NonInstrumented(deviceOS, deviceSN, "Non-Instrumented");
-//
 //        new eBay(deviceOS, deviceSN, "eBay");
-//
 //        new MultipleSites(deviceOS, deviceSN, "MultipleSites");
-
-
 //        if (!test.deviceOS.equals("ios") || test.deviceOSVersion.contains("10")) {
 //            test = new AmitApp(deviceOS, deviceSN, "AmitApp");
 //        }
-
-
-        //new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
+//        new WebTabs(deviceOS, deviceQuery, "WebTabs", commandMap);
 
 
 //        if (!deviceOS.contains("ios")) {

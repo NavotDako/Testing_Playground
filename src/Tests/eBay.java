@@ -112,6 +112,8 @@ public class eBay extends BaseTest {
             if (client.isElementFound("native", "xpath=//*[@text='Save Password']", 0)) {
                 client.click("Native", "xpath=//*[@text='Not Now']", 0, 1);
             }
+
+
             try {
                 client.verifyElementFound("WEB", "xpath=//*[@class='error']", 0);
             } catch (Exception e) {

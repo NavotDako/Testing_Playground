@@ -94,17 +94,18 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="bcprov-jdk14-138" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" />
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 11.3/clients/java" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" />
+          <root url="file://C:/Program Files (x86)/Experitest/SeeTest 11.3/clients/java" />
         </SOURCES>
-        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" recursive="false" />
-        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 11.2/clients/java" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 11.3/clients/java" recursive="false" />
+        <jarDirectory url="file://C:/Program Files (x86)/Experitest/SeeTest 11.3/clients/java" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

@@ -26,8 +26,8 @@ public class TenFreeApps extends BaseTest {
             client.click("NATIVE", "xpath=//*[@text='ACCEPT']", 0, 1);
         }
 
-        if (client.waitForElement("NATIVE", "xpath=//*[@text='TOP CHARTS']", 0, 20000)) {
-            client.click("NATIVE", "xpath=//*[@text='TOP CHARTS']", 0, 1);
+        if (client.waitForElement("NATIVE", "xpath=//*[@text='TOP CHARTS' or @text='Top Charts']", 0, 20000)) {
+            client.click("NATIVE", "xpath=//*[@text='TOP CHARTS'or @text='Top Charts']", 0, 1);
             if (client.waitForElement("NATIVE", "xpath=//*[contains(@text,'TOP FREE')]", 0, 20000)) {
                 client.click("NATIVE", "xpath=//*[contains(@text,'TOP FREE')]", 0, 1);
                 int countOfOnScreenApps;
@@ -75,6 +75,7 @@ public class TenFreeApps extends BaseTest {
         client.launch("com.apple.AppStore", false, true);
         client.setProperty("ios.non-instrumented.dump.parameters", "20 , 500 , 25");
         sync(1000, 0, 10000);
+        if(client.isElementFound("native","//*[contains@text='Don't Allow']"))
         client.click("NATIVE", "xpath=//*[@text='Top Charts']", 0, 1);
         if(client.isElementFound("native","xpath=//*[@text='All Categories']",0)){
             client.click("native","xpath=//*[@text='Cancel']",0,1);

@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Runner {
-    static int repNum = 10;
+    static int repNum = 300;
     static int retry = 4;
     static String method = "all"; //file/all
     static boolean GRID = true;
@@ -43,6 +43,7 @@ public class Runner {
         String resources = getResources();
 
         prepareReportsFolders();
+//        startSuitesThreads(getDeviceList(method));
 
         switch (method) {
             case "all":
@@ -55,6 +56,24 @@ public class Runner {
 
         System.out.println("Start Resources:\n" + resources);
         System.out.println("End Resources:\n" + getResources());
+    }
+
+    private static void startSuitesThreads(List<String> deviceList) {
+        ExecutorService executorService = Executors.newFixedThreadPool(deviceList.size());
+
+        List<Future> res = new LinkedList<>();
+
+        for (int i = 0; i < deviceList.size(); i++) {
+            Suite suite = new Suite(deviceList.get(i));
+            res.add(executorService.submit(suite));
+            System.out.println(String.format("%-50s%-15s%-3s", deviceList.get(i), "- submitted -", (i + 1)));
+        }
+        System.out.println("------------------------------------------------------------------------------------");
+
+    }
+
+    private static List<String> getDeviceList(String method) {
+        return null;
     }
 
     private static void runOnAllAvailableDevices() throws IOException, SAXException, ParserConfigurationException, InterruptedException {
@@ -133,8 +152,13 @@ public class Runner {
         try {
             File Report = new File("Reports");
             for (File file : Report.listFiles()) file.delete();
-            File ReportFolder = new File(reportFolderString);
-            for (File file : ReportFolder.listFiles()) DeleteRecursive(file);
+
+            File reportFolder = new File(reportFolderString);
+            if(reportFolder.exists()){
+                for (File file : reportFolder.listFiles()) DeleteRecursive(file);
+            }else{
+                reportFolder.mkdir();
+            }
             System.out.println("Finished preparing the reports folder");
         } catch (Exception e) {
             e.printStackTrace();

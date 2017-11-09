@@ -25,8 +25,8 @@ public class SingleJunit {
     CloudServer cloudServer = new CloudServer(CloudServer.CloudServerName.MY);
     protected Client client = null;
     private String deviceName;
-    private String deviceSN = "LGD85589b241b0";
-    private boolean GRID = true;
+    private String deviceSN = "ee311eac774e828a2b3869047e3ec1abb78f16ef";
+    private boolean GRID = false;
 
     @Before
     public void setUp() throws IOException, SAXException, ParserConfigurationException {
@@ -40,9 +40,12 @@ public class SingleJunit {
     }
 
     public Client getClient() {
-        Client tempClient = new Client("localhost", 8889, true);
-        tempClient.waitForDevice("@serialNumber='" + deviceSN + "'", 10000);
+        Client tempClient = new Client("192.168.2.78", 8889, true);
+        tempClient.setDevice("ios_app:c9b0a74ee2827a3d36018241ee97380640de6a7f");
+        tempClient.closeDevice();
+//        tempClient.waitForDevice("@serialNumber='" + deviceSN + "'", 10000);
         tempClient.setReporter("xml", "c:\\temp\\reports", "Untitled");
+
         return tempClient;
     }
 
